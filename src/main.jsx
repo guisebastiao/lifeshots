@@ -1,6 +1,8 @@
 import { RouterProvider } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 
+import "@/global.css";
+
 import { AppContextProvider } from "@/context/index";
 import { router } from "@/routes/index";
 
