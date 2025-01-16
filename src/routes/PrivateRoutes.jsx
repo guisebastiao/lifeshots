@@ -1,6 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider";
 
+import { Header } from "@/components/Header";
+import { Nav } from "@/components/Nav";
+
 export const PrivateRoutes = () => {
   const { isAuthenticated } = useAuth();
 
@@ -8,5 +11,13 @@ export const PrivateRoutes = () => {
     return null;
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  return isAuthenticated ? (
+    <>
+      <Header />
+      <Outlet />
+      <Nav />
+    </>
+  ) : (
+    <Navigate to="/login" />
+  );
 };
