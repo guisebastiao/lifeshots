@@ -20,7 +20,8 @@ import { Separator } from "@/components/ui/separator";
 import { loginSchema } from "@/schemas/loginSchema";
 
 export const Login = () => {
-  const { mutate, data, isSuccess, isPending } = useLogin();
+  const { loginMutation } = useLogin();
+  const { mutate, data, isSuccess, isPending } = loginMutation();
   const navigate = useNavigate();
 
   const loginForm = useForm({

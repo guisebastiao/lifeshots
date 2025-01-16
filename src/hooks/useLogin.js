@@ -16,5 +16,5 @@ export const useLogin = () => {
     },
   });
 
-  return loginMutation;
+  return { loginMutation };
 };
