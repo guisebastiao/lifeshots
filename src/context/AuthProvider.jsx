@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   const login = ({ auth }) => {
-    localStorage.setItem("auth", auth);
+    localStorage.setItem("auth", JSON.stringify(auth));
     setIsAuthenticated(true);
   };
 
@@ -16,7 +16,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const auth = localStorage.getItem("auth");
+    const storage = localStorage.getItem("auth");
+    const auth = JSON.parse(storage);
 
     if (auth && auth.token) {
       setIsAuthenticated(true);

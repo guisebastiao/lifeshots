@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const auth = JSON.stringify(localStorage.getItem(auth));
+const auth = JSON.stringify(localStorage.getItem("auth"));
 const { token } = auth || {};
 
 export const axiosInstance = axios.create({
