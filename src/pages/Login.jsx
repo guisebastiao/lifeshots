@@ -55,6 +55,19 @@ export const Login = () => {
           <h1 className="text-zinc-50 font-black text-4xl text-center py-6">
             LifeShots
           </h1>
+          {Object.keys(loginForm.formState.errors).length > 0 && (
+            <div className="border border-red-500 bg-red-transparent px-3 py-1 rounded-md">
+              <ul className="text-sm space-y-1">
+                {Object.values(loginForm.formState.errors)
+                  .map((error) => error.message)
+                  .map((error, index) => (
+                    <li key={index}>
+                      <strong>-</strong> {error}
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          )}
           <FormField
             control={loginForm.control}
             name="email"
