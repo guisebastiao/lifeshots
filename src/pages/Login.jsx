@@ -21,7 +21,7 @@ import { loginSchema } from "@/schemas/loginSchema";
 
 export const Login = () => {
   const { loginMutation } = useLogin();
-  const { mutate, data, isSuccess, isPending } = loginMutation();
+  const { mutate, data, isSuccess, isPending } = loginMutation;
   const navigate = useNavigate();
 
   const loginForm = useForm({

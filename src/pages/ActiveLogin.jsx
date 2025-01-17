@@ -17,7 +17,7 @@ export const ActiveLogin = () => {
   const { login } = useAuth();
 
   const { activeLoginMutation } = useActiveLogin();
-  const { mutate, isPending, isSuccess, data } = activeLoginMutation();
+  const { mutate, isPending, isSuccess, data } = activeLoginMutation;
 
   const [code, setCode] = useState("");
 
