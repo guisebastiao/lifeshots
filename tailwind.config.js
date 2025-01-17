@@ -4,14 +4,22 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
+      height: {
+        container: "calc(100% - 48px - 64px)",
+      },
+      animation: {
+        like: "like 400ms ease-in-out",
+        deslike: "deslike 400ms ease-in-out",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      backgroundColor: {
+      backgroundImage: {
         gradient: "linear-gradient(to right, #FF512F, #F09819)",
-        "gradient-opacity": "linear-gradient(to top, #000000, transparent)",
+        "gradient-opacity":
+          "linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0))",
       },
       colors: {
         "primary-theme": "#FF512F",
