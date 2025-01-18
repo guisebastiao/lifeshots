@@ -12,7 +12,7 @@ export const useLogin = () => {
       );
     },
     onError: ({ response }) => {
-      toast.error(response?.data?.errors[0] || "Erro ao fazer o login.");
+      toast.error(response?.data?.errors[0] || "Erro ao entrar.");
     },
   });
 
