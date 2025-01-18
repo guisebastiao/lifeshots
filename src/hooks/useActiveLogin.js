@@ -7,9 +7,7 @@ export const useActiveLogin = () => {
   const activeLoginMutation = useMutation({
     mutationFn: activeLogin,
     onError: ({ response }) => {
-      toast.error(
-        response?.data?.errors[0] || "Erro ao fazer o ativar o login."
-      );
+      toast.error(response?.data?.errors[0] || "Erro ao ativar o login.");
     },
   });
 
