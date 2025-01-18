@@ -5,11 +5,11 @@ export const getUserStory = async () => {
   return response;
 };
 
-export const getAllStory = async ({ offset, limit }) => {
+export const getAllStory = async () => {
   const { data: response } = await axiosInstance.get("/stories/list/", {
     params: {
-      offset,
-      limit,
+      offset: 1,
+      limit: 10,
     },
   });
   return response;
