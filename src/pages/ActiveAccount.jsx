@@ -31,12 +31,7 @@ export const ActiveAccount = () => {
     <main className="flex h-screen items-center justify-center">
       {isPending ? (
         <div className="flex gap-1 items-center">
-          <TailSpin
-            width={24}
-            height={24}
-            color="text-zinc-50"
-            strokeWidth={6}
-          />
+          <TailSpin width={24} height={24} color="#fafafa" strokeWidth={6} />
           <h1 className="text-lg">Ativando Conta</h1>
         </div>
       ) : (

@@ -112,7 +112,7 @@ export const ResetPassword = () => {
                 <TailSpin
                   width={24}
                   height={24}
-                  color="text-zinc-50"
+                  color="#fafafa"
                   strokeWidth={6}
                 />
                 <span>Redefinindo Senha</span>
