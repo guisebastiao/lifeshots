@@ -9,10 +9,10 @@ export const registerSchema = z
       .string()
       .trim()
       .min(3, {
-        message: "Seu nome de usuário deve ter no mínimo 3 caracteres",
+        message: "Seu nome de usuário deve possuir no mínimo 3 caracteres",
       })
       .max(50, {
-        message: "Seu nome de usuário deve ter no máximo 50 caracteres",
+        message: "Seu nome de usuário deve possuir no máximo 50 caracteres",
       })
       .nonempty({ message: "O nome de usuário precisa ser preenchido" })
       .refine((value) => !/\s/.test(value), {
@@ -22,21 +22,23 @@ export const registerSchema = z
     name: z
       .string()
       .trim()
-      .min(3, { message: "Seu nome deve ter no mínimo 3 caracteres" })
-      .max(50, { message: "Seu nome deve ter no máximo 50 caracteres" })
+      .min(3, { message: "Seu nome deve possuir no mínimo 3 caracteres" })
+      .max(50, { message: "Seu nome deve possuir no máximo 50 caracteres" })
       .nonempty({ message: "O nome precisa ser preenchido" }),
 
     surname: z
       .string()
       .trim()
-      .min(3, { message: "Seu sobrenome deve ter no mínimo 3 caracteres" })
-      .max(50, { message: "Seu sobrenome deve ter no máximo 50 caracteres" })
+      .min(3, { message: "Seu sobrenome deve possuir no mínimo 3 caracteres" })
+      .max(50, {
+        message: "Seu sobrenome deve deve possuir máximo 50 caracteres",
+      })
       .nonempty({ message: "O sobrenome precisa ser preenchido" }),
-    email: z.string().email("Email inválido").min(1, "O email é obrigatório"),
+    email: z.string().min(1, "O email é obrigatório").email("Email inválido"),
     password: z
       .string()
-      .min(8, "A senha tem que ter no mínimo 8 caracteres")
-      .max(50, "A senha tem que ter no máximo 50 caracteres")
+      .min(8, "A senha deve possuir no mínimo 8 caracteres")
+      .max(50, "A senha deve possuir no máximo 50 caracteres")
       .regex(
         passwordRegex,
         "A senha deve possuir uma letra maiúscula, dois números e um caractere especial"
