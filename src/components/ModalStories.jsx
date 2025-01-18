@@ -17,7 +17,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ButtonLike } from "@/components/ButtonLike";
 
-export const ModalStories = ({ data }) => {
+export const ModalStories = ({ stories }) => {
   const [userCurrent, setUserCurrent] = useState(0);
   const [storyCurrent, setStoryCurrent] = useState(0);
   const [storyData, setStoryData] = useState(null);
@@ -26,11 +26,11 @@ export const ModalStories = ({ data }) => {
   const { mutate } = createLikeStory;
 
   useEffect(() => {
-    if (data.pages.length > 0) {
-      const allStories = data.pages.flatMap((page) => page.stories);
+    if (stories.pages.length > 0) {
+      const allStories = stories.pages.flatMap((page) => page.stories);
       setStoryData(allStories);
     }
-  }, [data]);
+  }, [stories]);
 
   const handlePrev = () => {
     if (storyCurrent > 0) {
@@ -82,13 +82,13 @@ export const ModalStories = ({ data }) => {
     return null;
   }
 
-  return data.pages.map((page) =>
-    page.stories.map((stories, index) => (
-      <Dialog key={stories.username} onOpenChange={() => handleOpen(index)}>
+  return stories.pages.map((page) =>
+    page.stories.map((userStory, index) => (
+      <Dialog key={userStory.username} onOpenChange={() => handleOpen(index)}>
         <DialogTrigger>
           <div className="relative w-[52px] h-[52px] rounded-full bg-gradient">
             <Avatar className="absolute w-full h-full border-[3px] border-transparent">
-              <AvatarImage src={stories.profilePicture} />
+              <AvatarImage src={userStory.profilePicture} />
               <AvatarFallback>
                 <img src="/notUserPicture.png" alt="user-not-picture" />
               </AvatarFallback>

@@ -15,8 +15,8 @@ export const Stories = () => {
 
   return (
     <section className="flex w-full overflow-x-scroll gap-1 p-2">
-      <ModalStory data={story} />
-      <ModalStories data={stories} />
+      <ModalStory story={story} />
+      <ModalStories stories={stories} />
     </section>
   );
 };
