@@ -157,7 +157,7 @@ export const Register = () => {
                 <TailSpin
                   width={24}
                   height={24}
-                  color="#fafafa"
+                  color="text-zinc-50"
                   strokeWidth={6}
                 />
                 <span>Registrando</span>
