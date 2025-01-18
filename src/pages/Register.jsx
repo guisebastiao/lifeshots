@@ -32,7 +32,7 @@ export const Register = () => {
       surname: "",
       email: "",
       password: "",
-      passwordRepeat: "",
+      passwordConfirm: "",
     },
   });
 
@@ -136,11 +136,11 @@ export const Register = () => {
           />
           <FormField
             control={registerForm.control}
-            name="passwordRepeat"
+            name="passwordConfirm"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="absolute left-3 top-0 px-2 bg-zinc-950 z-10">
-                  Repita a Senha
+                  Confirme sua Senha
                 </FormLabel>
                 <FormControl>
                   <Input type="password" autoComplete="off" {...field} />

@@ -41,9 +41,9 @@ export const registerSchema = z
         passwordRegex,
         "A senha deve possuir uma letra maiúscula, dois números e um caractere especial"
       ),
-    passwordRepeat: z.string().nonempty("Confirmação de senha é obrigatória"),
+    passwordConfirm: z.string().nonempty("Confirmação de senha é obrigatória"),
   })
-  .refine((data) => data.password === data.passwordRepeat, {
+  .refine((data) => data.password === data.passwordConfirm, {
     message: "As senhas não correspondem",
-    path: ["passwordRepeat"],
+    path: ["passwordConfirm"],
   });
