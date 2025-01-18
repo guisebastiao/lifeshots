@@ -11,6 +11,6 @@ export const loginSchema = z.object({
     .max(50, "A senha tem que ter no máximo 50 caracteres")
     .regex(
       passwordRegex,
-      "A senha deve conter uma letra maiúscula, dois números e um caractere especial"
+      "A senha deve possuir uma letra maiúscula, dois números e um caractere especial"
     ),
 });
