@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       height: {
-        container: "calc(100% - 48px - 64px)",
+        container: "calc(100% - 48px - 56px)",
       },
       animation: {
         like: "like 400ms ease-in-out",

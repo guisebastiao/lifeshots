@@ -7,7 +7,7 @@ export const PictureNav = ({ className }) => {
   const { data } = getProfilePicture;
 
   return (
-    <Avatar className={twMerge("w-6 h-6 border-2", className)}>
+    <Avatar className={twMerge("w-[22px] h-[22px] border-2", className)}>
       <AvatarImage src={data?.profilePicture} alt="profile-picture" />
       <AvatarFallback>
         <img src="/notUserPicture.png" alt="user-not-picture" />
