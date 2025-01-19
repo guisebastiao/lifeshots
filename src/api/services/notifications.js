@@ -1,12 +1,17 @@
 import { axiosInstance } from "@/utils/api";
 
 export const getAllNotifications = async ({ pageParam }) => {
-  const { data: response } = await axiosInstance.get("/notifications/", {
+  const { data: response } = await axiosInstance.get("/notifications/all/", {
     params: {
       offset: pageParam,
-      limit: 15,
+      limit: 20,
     },
   });
+  return response;
+};
+
+export const getNotificationIsRead = async () => {
+  const { data: response } = await axiosInstance.get("/notifications/");
   return response;
 };
 

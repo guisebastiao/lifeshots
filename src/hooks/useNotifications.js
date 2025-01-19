@@ -1,5 +1,6 @@
 import {
   useMutation,
+  useQuery,
   useInfiniteQuery,
   useQueryClient,
 } from "@tanstack/react-query";
@@ -7,6 +8,7 @@ import { toast } from "sonner";
 
 import {
   getAllNotifications,
+  getNotificationIsRead,
   updateNotificationsToRead,
   deleteAllNotifications,
 } from "@/api/services/notifications";
@@ -28,6 +30,17 @@ export const useNotifications = () => {
     },
   });
 
+  const notificationIsRead = useQuery({
+    queryFn: getNotificationIsRead,
+    queryKey: ["notification-is-read"],
+    onError: ({ response }) => {
+      toast.error(
+        response?.data?.errors[0] ||
+          "Erro ao tentar buscar as notificações como lidas"
+      );
+    },
+  });
+
   const updateNotifications = useMutation({
     mutationFn: updateNotificationsToRead,
     onError: ({ response }) => {
@@ -37,7 +50,7 @@ export const useNotifications = () => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["notifications"]);
+      queryClient.invalidateQueries(["notification-is-read"]);
     },
   });
 
@@ -53,5 +66,10 @@ export const useNotifications = () => {
     },
   });
 
-  return { getNotifications, updateNotifications, deleteNotifications };
+  return {
+    getNotifications,
+    notificationIsRead,
+    updateNotifications,
+    deleteNotifications,
+  };
 };

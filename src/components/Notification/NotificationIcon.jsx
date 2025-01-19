@@ -1,3 +1,12 @@
-export const NotificationIcon = ({ icon: Icon }) => {
-  return <Icon className="w-5 h-5 text-zinc-300 m-auto" />;
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+
+export const NotificationIcon = ({ icon }) => {
+  return (
+    <Avatar>
+      <AvatarImage src={icon} />
+      <AvatarFallback>
+        <img src="/notUserPicture.png" alt="user-not-picture" />
+      </AvatarFallback>
+    </Avatar>
+  );
 };
