@@ -1,6 +1,6 @@
 import { axiosInstance } from "@/utils/api";
 
-export const activeLogin = async ({ data }) => {
+export const Create = async ({ data }) => {
   const { data: response } = await axiosInstance.post("/active-login/", data);
   return response;
 };

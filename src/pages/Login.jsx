@@ -20,8 +20,8 @@ import { Loading } from "@/components/Loading";
 import { loginSchema } from "@/schemas/loginSchema";
 
 export const Login = () => {
-  const { loginMutation } = useLogin();
-  const { mutate, data, isSuccess, isPending } = loginMutation;
+  const { login } = useLogin();
+  const { mutate, data, isSuccess, isPending } = login();
   const navigate = useNavigate();
 
   const loginForm = useForm({

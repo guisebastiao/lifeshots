@@ -21,8 +21,8 @@ import { resetPasswordSchema } from "@/schemas/resetPasswordSchema";
 export const ResetPassword = () => {
   const { tokenId } = useParams();
 
-  const { resetPassword } = useResetPassword();
-  const { mutate, isPending, isSuccess } = resetPassword;
+  const { updatePassword } = useResetPassword();
+  const { mutate, isPending, isSuccess } = updatePassword();
 
   const navigate = useNavigate();
 

@@ -1,16 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { profilePicture } from "@/api/services/profilePicture";
+import { Get } from "@/api/services/profilePicture";
 
 export const useProfilePicture = () => {
-  const getProfilePicture = useQuery({
-    queryFn: profilePicture,
-    queryKey: ["profile-picture"],
-    onError: ({ response }) => {
-      toast.error(response?.data?.errors[0] || "Erro buscar a foto de perfil.");
-    },
-  });
+  const getProfilePicture = () => {
+    return useQuery({
+      queryFn: Get,
+      queryKey: ["get-profile-picture"],
+      onError: ({ response }) => {
+        toast.error(response?.data?.errors[0]);
+      },
+    });
+  };
 
   return { getProfilePicture };
 };

@@ -4,7 +4,7 @@ import { useProfilePicture } from "@/hooks/useProfilePicture";
 
 export const PictureNav = ({ className }) => {
   const { getProfilePicture } = useProfilePicture();
-  const { data } = getProfilePicture;
+  const { data } = getProfilePicture();
 
   return (
     <Avatar className={twMerge("w-[22px] h-[22px] border-2", className)}>

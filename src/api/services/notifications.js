@@ -1,6 +1,11 @@
 import { axiosInstance } from "@/utils/api";
 
-export const getAllNotifications = async ({ pageParam }) => {
+export const Get = async () => {
+  const { data: response } = await axiosInstance.get("/notifications/");
+  return response;
+};
+
+export const GetAll = async ({ pageParam }) => {
   const { data: response } = await axiosInstance.get("/notifications/all/", {
     params: {
       offset: pageParam,
@@ -10,17 +15,12 @@ export const getAllNotifications = async ({ pageParam }) => {
   return response;
 };
 
-export const getNotificationIsRead = async () => {
-  const { data: response } = await axiosInstance.get("/notifications/");
-  return response;
-};
-
-export const updateNotificationsToRead = async () => {
+export const Update = async () => {
   const { data: response } = await axiosInstance.put("/notifications/");
   return response;
 };
 
-export const deleteAllNotifications = async () => {
+export const Delete = async () => {
   const { data: response } = await axiosInstance.delete("/notifications/");
   return response;
 };

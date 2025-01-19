@@ -19,8 +19,8 @@ import { Loading } from "@/components/Loading";
 import { registerSchema } from "@/schemas/registerSchema";
 
 export const Register = () => {
-  const { registerMutation } = useRegister();
-  const { mutate, isPending } = registerMutation;
+  const { register } = useRegister();
+  const { mutate, isPending } = register();
   const navigate = useNavigate();
 
   const registerForm = useForm({

@@ -27,7 +27,7 @@ export const ModalStory = ({ story }) => {
   const [storyCurrent, setStoryCurrent] = useState(0);
 
   const { getProfilePicture } = useProfilePicture();
-  const { data, isLoading } = getProfilePicture;
+  const { data, isLoading } = getProfilePicture();
 
   const handlePrev = () => {
     if (storyCurrent > 0) {

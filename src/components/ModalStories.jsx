@@ -22,8 +22,8 @@ export const ModalStories = ({ stories }) => {
   const [storyCurrent, setStoryCurrent] = useState(0);
   const [storyData, setStoryData] = useState(null);
 
-  const { createLikeStory } = useLikeStory();
-  const { mutate } = createLikeStory;
+  const { likeStory } = useLikeStory();
+  const { mutate } = likeStory();
 
   useEffect(() => {
     if (stories.pages.length > 0) {

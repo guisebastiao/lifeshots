@@ -8,7 +8,7 @@ export const Header = () => {
   const [isRead, setIsRead] = useState(true);
 
   const { notificationIsRead } = useNotifications();
-  const { data, isLoading } = notificationIsRead;
+  const { data, isLoading } = notificationIsRead();
 
   const navigation = useNavigate();
 
@@ -19,7 +19,7 @@ export const Header = () => {
   }, [isLoading, data]);
 
   return (
-    <section className="fixed top-0 w-full h-14 flex justify-center border-b bg-zinc-950 z-10">
+    <section className="fixed top-0 w-full h-14 flex justify-center bg-zinc-950 z-10">
       <header className="max-w-md w-full h-full flex items-center justify-between px-3">
         <h1 className="text-2xl font-bold text-zinc-50">LifeShots</h1>
         <button

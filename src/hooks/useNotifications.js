@@ -6,70 +6,61 @@ import {
 } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import {
-  getAllNotifications,
-  getNotificationIsRead,
-  updateNotificationsToRead,
-  deleteAllNotifications,
-} from "@/api/services/notifications";
+import { Get, GetAll, Update, Delete } from "@/api/services/notifications";
 
 export const useNotifications = () => {
   const queryClient = useQueryClient();
 
-  const getNotifications = useInfiniteQuery({
-    queryFn: ({ pageParam }) => getAllNotifications({ pageParam }),
-    queryKey: ["notifications"],
-    initialPageParam: 1,
-    getNextPageParam: (lastPage) => {
-      return lastPage.paging.next;
-    },
-    onError: ({ response }) => {
-      toast.error(
-        response?.data?.errors[0] || "Erro ao tentar buscar as notificações"
-      );
-    },
-  });
+  const notificationIsRead = () => {
+    return useQuery({
+      queryFn: Get,
+      queryKey: ["notification-is-read"],
+      onError: ({ response }) => {
+        toast.error(response?.data?.errors[0]);
+      },
+    });
+  };
 
-  const notificationIsRead = useQuery({
-    queryFn: getNotificationIsRead,
-    queryKey: ["notification-is-read"],
-    onError: ({ response }) => {
-      toast.error(
-        response?.data?.errors[0] ||
-          "Erro ao tentar buscar as notificações como lidas"
-      );
-    },
-  });
+  const getAllNotifications = () => {
+    return useInfiniteQuery({
+      queryFn: ({ pageParam }) => GetAll({ pageParam }),
+      queryKey: ["get-all-notifications"],
+      initialPageParam: 1,
+      getNextPageParam: (lastPage) => lastPage.paging.next,
+      onError: ({ response }) => {
+        toast.error(response?.data?.errors[0]);
+      },
+    });
+  };
 
-  const updateNotifications = useMutation({
-    mutationFn: updateNotificationsToRead,
-    onError: ({ response }) => {
-      toast.error(
-        response?.data?.errors[0] ||
-          "Erro ao tentar marcar como lida as suas notificações."
-      );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["notification-is-read"]);
-    },
-  });
+  const updateAllNotifications = () => {
+    return useMutation({
+      mutationFn: Update,
+      onError: ({ response }) => {
+        toast.error(response?.data?.errors[0]);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(["notification-is-read"]);
+      },
+    });
+  };
 
-  const deleteNotifications = useMutation({
-    mutationFn: deleteAllNotifications,
-    onError: ({ response }) => {
-      toast.error(
-        response?.data?.errors[0] || "Erro ao tentar deletar suas notificações."
-      );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["notifications"]);
-    },
-  });
+  const deleteAllNotifications = () => {
+    return useMutation({
+      mutationFn: Delete,
+      onError: ({ response }) => {
+        toast.error(response?.data?.errors[0]);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(["get-all-notifications"]);
+      },
+    });
+  };
 
   return {
-    getNotifications,
     notificationIsRead,
-    updateNotifications,
-    deleteNotifications,
+    getAllNotifications,
+    updateAllNotifications,
+    deleteAllNotifications,
   };
 };

@@ -12,8 +12,8 @@ export const ActiveAccount = () => {
 
   const { login } = useAuth();
 
-  const { activeAccountMutation } = useActiveAccount();
-  const { mutate, data, isPending, isSuccess } = activeAccountMutation;
+  const { activeAccount } = useActiveAccount();
+  const { mutate, data, isPending, isSuccess } = activeAccount();
 
   useEffect(() => {
     if (activeToken) {

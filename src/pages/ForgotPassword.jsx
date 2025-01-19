@@ -18,7 +18,7 @@ import { forgotPasswordSchema } from "@/schemas/forgotPasswordSchema";
 
 export const ForgotPassword = () => {
   const { createReset } = useResetPassword();
-  const { mutate, isPending } = createReset;
+  const { mutate, isPending } = createReset();
 
   const forgotPasswordForm = useForm({
     resolver: zodResolver(forgotPasswordSchema),

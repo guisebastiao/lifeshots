@@ -1,20 +1,20 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { login } from "@/api/services/login";
+import { Create } from "@/api/services/login";
 
 export const useLogin = () => {
-  const loginMutation = useMutation({
-    mutationFn: login,
-    onSuccess: ({ response }) => {
-      toast.success(
-        response?.data?.success[0] || "Um código foi enviado para seu e-mail."
-      );
-    },
-    onError: ({ response }) => {
-      toast.error(response?.data?.errors[0] || "Erro ao entrar.");
-    },
-  });
+  const login = () => {
+    return useMutation({
+      mutationFn: Create,
+      onSuccess: ({ response }) => {
+        toast.success(response?.data?.success[0]);
+      },
+      onError: ({ response }) => {
+        toast.error(response?.data?.errors[0]);
+      },
+    });
+  };
 
-  return { loginMutation };
+  return { login };
 };

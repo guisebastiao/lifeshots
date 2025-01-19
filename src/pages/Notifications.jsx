@@ -9,10 +9,10 @@ import { Notification } from "@/components/Notification";
 import { Loading } from "@/components/Loading";
 
 export const Notifications = () => {
-  const { getNotifications, updateNotifications } = useNotifications();
+  const { getAllNotifications, updateAllNotifications } = useNotifications();
 
-  const { data, isLoading, hasNextPage, fetchNextPage } = getNotifications;
-  const { mutate } = updateNotifications;
+  const { data, isLoading, hasNextPage, fetchNextPage } = getAllNotifications();
+  const { mutate } = updateAllNotifications();
 
   const navigate = useNavigate();
   const { ref, inView } = useInView();
@@ -26,8 +26,6 @@ export const Notifications = () => {
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
-
-  console.log(data && data.pages[0].notifications.length <= 0);
 
   return (
     <main className="relative w-screen h-screen flex items-center justify-center">

@@ -1,11 +1,11 @@
 import { axiosInstance } from "@/utils/api";
 
-export const getUserStory = async () => {
+export const Get = async () => {
   const { data: response } = await axiosInstance.get("/stories/");
   return response;
 };
 
-export const getAllStory = async () => {
+export const GetAll = async () => {
   const { data: response } = await axiosInstance.get("/stories/list/", {
     params: {
       offset: 1,

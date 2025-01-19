@@ -16,8 +16,8 @@ export const ActiveLogin = () => {
   const { token } = useParams();
   const { login } = useAuth();
 
-  const { activeLoginMutation } = useActiveLogin();
-  const { mutate, isPending, isSuccess, data } = activeLoginMutation;
+  const { activeLogin } = useActiveLogin();
+  const { mutate, isPending, isSuccess, data } = activeLogin();
 
   const [code, setCode] = useState("");
 

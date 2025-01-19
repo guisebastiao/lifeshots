@@ -4,10 +4,10 @@ import { ModalStory } from "@/components/ModalStory";
 import { useStories } from "@/hooks/useStories";
 
 export const Stories = () => {
-  const { getAllStories, getStory } = useStories();
+  const { getAllStories, getUserStory } = useStories();
 
-  const { data: story, isLoading: isLoadingStory } = getStory;
-  const { data: stories, isLoading: isLoadingStories } = getAllStories;
+  const { data: story, isLoading: isLoadingStory } = getUserStory();
+  const { data: stories, isLoading: isLoadingStories } = getAllStories();
 
   if (isLoadingStory || isLoadingStories) {
     return null;
