@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TailSpin } from "react-loader-spinner";
 import { useForm } from "react-hook-form";
 
 import { useResetPassword } from "@/hooks/useResetPassword";
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loading } from "@/components/Loading";
 
 import { forgotPasswordSchema } from "@/schemas/forgotPasswordSchema";
 
@@ -81,12 +81,7 @@ export const ForgotPassword = () => {
             className="bg-primary-theme hover:bg-primary-theme-hover mt-5 text-zinc-50">
             {isPending ? (
               <>
-                <TailSpin
-                  width={24}
-                  height={24}
-                  color="#fafafa"
-                  strokeWidth={6}
-                />
+                <Loading />
                 <span>Enviando email</span>
               </>
             ) : (

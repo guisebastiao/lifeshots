@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TailSpin } from "react-loader-spinner";
 import { useForm } from "react-hook-form";
 
 import { useRegister } from "@/hooks/useRegister";
@@ -15,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Loading } from "@/components/Loading";
 
 import { registerSchema } from "@/schemas/registerSchema";
 
@@ -154,12 +154,7 @@ export const Register = () => {
             className="bg-primary-theme hover:bg-primary-theme-hover mt-5 text-zinc-50">
             {isPending ? (
               <>
-                <TailSpin
-                  width={24}
-                  height={24}
-                  color="#fafafa"
-                  strokeWidth={6}
-                />
+                <Loading />
                 <span>Registrando</span>
               </>
             ) : (

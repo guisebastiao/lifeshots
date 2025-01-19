@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TailSpin } from "react-loader-spinner";
 import { useForm } from "react-hook-form";
 
 import { useLogin } from "@/hooks/useLogin";
@@ -16,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Loading } from "@/components/Loading";
 
 import { loginSchema } from "@/schemas/loginSchema";
 
@@ -100,12 +100,7 @@ export const Login = () => {
             className="bg-primary-theme hover:bg-primary-theme-hover mt-5 text-zinc-50">
             {isPending ? (
               <>
-                <TailSpin
-                  width={24}
-                  height={24}
-                  color="#fafafa"
-                  strokeWidth={6}
-                />
+                <Loading />
                 <span>Entrando</span>
               </>
             ) : (

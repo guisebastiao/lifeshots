@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { TailSpin } from "react-loader-spinner";
 import { useAuth } from "@/context/AuthProvider";
 import { useParams } from "react-router-dom";
 
@@ -11,6 +10,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
+import { Loading } from "@/components/Loading";
 
 export const ActiveLogin = () => {
   const { token } = useParams();
@@ -65,12 +65,7 @@ export const ActiveLogin = () => {
             type="submit">
             {isPending ? (
               <>
-                <TailSpin
-                  width={24}
-                  height={24}
-                  color="#fafafa"
-                  strokeWidth={6}
-                />
+                <Loading />
                 <span>Verificando</span>
               </>
             ) : (

@@ -1,13 +1,10 @@
 import { useEffect, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
-import { TailSpin } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { BellOff } from "lucide-react";
 
 import { useNotifications } from "@/hooks/useNotifications";
 
-import { Button } from "@/components/ui/button";
-import { NotificationSection } from "@/components/NotificationSection";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,6 +16,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { NotificationSection } from "@/components/NotificationSection";
+import { Loading } from "@/components/Loading";
 
 export const Notifications = () => {
   const { getNotifications, updateNotifications, deleteNotifications } =
@@ -27,8 +27,7 @@ export const Notifications = () => {
     updateNotifications;
   const { mutate: deleteAllNotifications, isPending: pendingDelete } =
     deleteNotifications;
-  const { data, isLoading, isFetching, hasNextPage, fetchNextPage } =
-    getNotifications;
+  const { data, isLoading, hasNextPage, fetchNextPage } = getNotifications;
 
   const navigate = useNavigate();
   const { ref, inView } = useInView();
@@ -68,14 +67,7 @@ export const Notifications = () => {
               disabled={pendingUpdate}
               onClick={() => updateAllNotifications()}
               className="h-6 rounded bg-zinc-700 hover:bg-zinc-800 text-zinc-50">
-              {pendingUpdate && (
-                <TailSpin
-                  width={16}
-                  height={16}
-                  strokeWidth={5}
-                  color="#fafafa"
-                />
-              )}
+              {pendingUpdate && <Loading className="w-4 h-4" />}
               Marcar como lido
             </Button>
             <AlertDialog>
@@ -83,14 +75,7 @@ export const Notifications = () => {
                 <Button
                   size="xs"
                   className="h-6 rounded bg-red-500 hover:bg-red-600 text-zinc-50">
-                  {pendingDelete && (
-                    <TailSpin
-                      width={16}
-                      height={16}
-                      strokeWidth={5}
-                      color="#fafafa"
-                    />
-                  )}
+                  {pendingDelete && <Loading className="w-4 h-4" />}
                   Excluir tudo
                 </Button>
               </AlertDialogTrigger>
@@ -108,15 +93,7 @@ export const Notifications = () => {
                     disabled={pendingDelete}
                     onClick={() => deleteAllNotifications()}
                     className="bg-red-500 hover:bg-red-600 text-bg-zinc-50 flex items-center">
-                    {pendingDelete && (
-                      <TailSpin
-                        width={16}
-                        height={16}
-                        strokeWidth={5}
-                        color="#fafafa"
-                        className="mr-1"
-                      />
-                    )}
+                    {pendingDelete && <Loading className="w-4 h-4" />}
                     Confirmar
                   </AlertDialogAction>
                 </AlertDialogFooter>
@@ -124,15 +101,7 @@ export const Notifications = () => {
             </AlertDialog>
           </div>
         </div>
-        {isLoading && (
-          <TailSpin
-            width={24}
-            height={24}
-            strokeWidth={6}
-            color="text-zinc-50"
-            wrapperClass="self-center"
-          />
-        )}
+        {isLoading && <Loading />}
         {!isLoading &&
           (unreadNotifications.length <= 0 && readNotifications.length <= 0 ? (
             <div className="flex items-center justify-center flex-col py-5 gap-2">
@@ -157,13 +126,7 @@ export const Notifications = () => {
           ))}
         {hasNextPage && (
           <div ref={ref} className="py-1 flex items-center justify-center">
-            <TailSpin
-              width={20}
-              height={20}
-              strokeWidth={6}
-              visible={isFetching}
-              color="#fafafa"
-            />
+            <Loading />
           </div>
         )}
       </section>

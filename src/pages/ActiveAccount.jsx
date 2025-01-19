@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { TailSpin } from "react-loader-spinner";
 
 import { useActiveAccount } from "@/hooks/useActiveAccount";
 
 import { useAuth } from "@/context/AuthProvider";
+
+import { Loading } from "@/components/Loading";
 
 export const ActiveAccount = () => {
   const { activeToken } = useParams();
@@ -31,7 +32,7 @@ export const ActiveAccount = () => {
     <main className="flex h-screen items-center justify-center">
       {isPending ? (
         <div className="flex gap-1 items-center">
-          <TailSpin width={24} height={24} color="#fafafa" strokeWidth={6} />
+          <Loading />
           <h1 className="text-lg">Ativando Conta</h1>
         </div>
       ) : (
