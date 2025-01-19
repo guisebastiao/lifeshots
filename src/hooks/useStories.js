@@ -16,8 +16,8 @@ export const useStories = () => {
     queryFn: getAllStory,
     queryKey: ["get-stories"],
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 0 ? null : allPages.length + 1;
+    getNextPageParam: (lastPage) => {
+      return lastPage.paging.next;
     },
     onError: ({ response }) => {
       toast.error(response?.data?.errors[0] || "Erro ao buscar stories.");
