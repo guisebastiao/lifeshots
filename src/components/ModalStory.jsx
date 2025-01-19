@@ -58,7 +58,7 @@ export const ModalStory = ({ story }) => {
             story.length > 0 ? "bg-gradient" : "bg-zinc-500"
           )}>
           <Avatar className="absolute w-full h-full border-[3px] border-transparent">
-            <AvatarImage src={!isLoading && data.profilePicture} />
+            <AvatarImage src={!isLoading && data?.profilePicture} />
             <AvatarFallback>
               <img src="/notUserPicture.png" alt="user-not-picture" />
             </AvatarFallback>
