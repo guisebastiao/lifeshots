@@ -25,7 +25,7 @@ export default {
         "red-transparent": "rgba(239, 68, 68, 0.1)",
         "primary-theme": "#FF512F",
         "secondary-theme": "#F09819",
-        "primary-theme-hover": "#D1563E",
+        "primary-theme-hover": "#ff3f19",
         "transparent-color": "rgba(0, 0, 0, 0.5)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

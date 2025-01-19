@@ -10,6 +10,7 @@ import { ActiveAccount } from "@/pages/ActiveAccount";
 import { ForgotPassword } from "@/pages/ForgotPassword";
 import { ResetPassword } from "@/pages/ResetPassword";
 import { Feed } from "@/pages/Feed";
+import { Notifications } from "@/pages/Notifications";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Feed />,
+      },
+      {
+        path: "/notifications",
+        element: <Notifications />,
       },
     ],
   },
