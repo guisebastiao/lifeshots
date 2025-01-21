@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 import { Create, Get, GetAll, Update, Delete } from "@/api/services/post";
 
-export const usePost = ({ postId, userId }) => {
+export const usePost = () => {
   const queryClient = useQueryClient();
 
   const createPost = () => {
