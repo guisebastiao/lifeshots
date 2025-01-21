@@ -40,7 +40,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ButtonLike } from "@/components/ButtonLike";
-// import { Comment } from "@/components/Comment";
+import { Comment } from "@/components/Comment";
 import { Loading } from "@/components/Loading";
 
 export const Post = ({ post }) => {
@@ -173,7 +173,7 @@ export const Post = ({ post }) => {
                   </button>
                 </DrawerTrigger>
                 <DrawerContent className="flex items-center">
-                  {/* <Comment postId={post.id} isMyPost={post.isMyPost} /> */}
+                  <Comment postId={post.id} isMyPost={post.isMyPost} />
                 </DrawerContent>
               </Drawer>
               <span className="text-zinc-200 text-[13px]">
