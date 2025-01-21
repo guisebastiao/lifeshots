@@ -1,14 +1,27 @@
+import {
+  EllipsisVertical,
+  PencilRuler,
+  Trash,
+  User,
+  ShieldBan,
+} from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 import { useCommentTree } from "@/hooks/useCommentTree";
 import { useLikeCommentTree } from "@/hooks/useLikeCommentTree";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ButtonLike } from "@/components/ButtonLike";
 import { Loading } from "@/components/Loading";
 
-export const CommentTree = ({ commentId }) => {
+export const CommentTree = ({ commentId, isMyPost }) => {
   const { getAllCommentTree } = useCommentTree();
   const { likeCommentTree } = useLikeCommentTree();
 
@@ -66,17 +79,70 @@ export const CommentTree = ({ commentId }) => {
                         {formatDistance(commentTree.createdAt)}
                       </span>
                     </div>
-                    <button
-                      onClick={() =>
-                        handleLikeTree({
-                          commentTreeId: commentTree.id,
-                        })
-                      }>
-                      <ButtonLike isLiked={commentTree.isLiked} size={14} />
-                      <span className="text-[9px] text-zinc-50">
-                        {commentTree.amountLikes}
-                      </span>
-                    </button>
+                    <div className="flex gap-1">
+                      <button
+                        onClick={() =>
+                          handleLikeTree({
+                            commentTreeId: commentTree.id,
+                          })
+                        }>
+                        <ButtonLike isLiked={commentTree.isLiked} size={14} />
+                        <span className="text-[9px] text-zinc-50">
+                          {commentTree.amountLikes}
+                        </span>
+                      </button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <EllipsisVertical size={20} />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          {commentTree.isMyCommentTree ? (
+                            <>
+                              <DropdownMenuItem>
+                                <PencilRuler size={17} />
+                                <span>Editar</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                <Trash size={17} />
+                                <span>Excluir</span>
+                              </DropdownMenuItem>
+                            </>
+                          ) : (
+                            <>
+                              {isMyPost && (
+                                <DropdownMenuItem>
+                                  <Trash size={17} />
+                                  <span>Excluir</span>
+                                </DropdownMenuItem>
+                              )}
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  navigate(
+                                    `/user/${commentTree.userCommentsTree.username}`
+                                  )
+                                }>
+                                <User size={17} />
+                                <span>Ver perfil</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleBlock({
+                                    blocked:
+                                      commentTree.userCommentsTree.username,
+                                  })
+                                }>
+                                {pendingBlock ? (
+                                  <Loading />
+                                ) : (
+                                  <ShieldBan size={17} />
+                                )}
+                                <span>Bloquear</span>
+                              </DropdownMenuItem>
+                            </>
+                          )}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
                   <p className="text-xs py-1 w-full">{commentTree.content}</p>
                 </div>

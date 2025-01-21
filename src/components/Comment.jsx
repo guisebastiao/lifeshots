@@ -215,7 +215,7 @@ export const Comment = ({ postId, isMyPost }) => {
                   )}
                 </div>
                 {comment.id === commentId && (
-                  <CommentTree commentId={commentId} />
+                  <CommentTree commentId={commentId} isMyPost={isMyPost} />
                 )}
               </div>
             ))
