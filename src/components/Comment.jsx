@@ -104,6 +104,17 @@ export const Comment = ({ postId, isMyPost }) => {
     mutateBlock({ data });
   };
 
+  const handleNavigate = ({ userId }) => {
+    const { username } = JSON.parse(localStorage.getItem("auth"));
+    document.body.style.pointerEvents = "auto";
+
+    if (username.toLowerCase() === userId.toLowerCase().trim()) {
+      navigate("/profile");
+    } else {
+      navigate(`/user/${userId}`);
+    }
+  };
+
   return (
     <>
       <DrawerHeader>
@@ -176,7 +187,9 @@ export const Comment = ({ postId, isMyPost }) => {
                           )}
                           <DropdownMenuItem
                             onClick={() =>
-                              navigate(`/user/${comment.userComments.username}`)
+                              handleNavigate({
+                                userId: comment.userComments.username,
+                              })
                             }>
                             <User size={17} />
                             <span>Ver perfil</span>

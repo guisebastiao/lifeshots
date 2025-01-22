@@ -10,7 +10,7 @@ export const Header = () => {
   const { notificationIsRead } = useNotifications();
   const { data, isLoading } = notificationIsRead();
 
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoading) {
@@ -24,7 +24,7 @@ export const Header = () => {
         <h1 className="text-2xl font-bold text-zinc-50">LifeShots</h1>
         <button
           className="relative cursor-pointer"
-          onClick={() => navigation("/notifications")}>
+          onClick={() => navigate("/notifications")}>
           <Bell size={21} />
           {!isRead && (
             <div className="absolute top-3 right-4 w-2 h-2">

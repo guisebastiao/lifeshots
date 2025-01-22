@@ -80,6 +80,17 @@ export const Post = ({ post }) => {
     mutateBlock({ data });
   };
 
+  const handleNavigate = ({ userId }) => {
+    const { username } = JSON.parse(localStorage.getItem("auth"));
+    document.body.style.pointerEvents = "auto";
+
+    if (username.toLowerCase() === userId.toLowerCase().trim()) {
+      navigate("/profile");
+    } else {
+      navigate(`/user/${userId}`);
+    }
+  };
+
   const editPost = ({ postId }) => {
     console.log(postId);
   };
@@ -120,7 +131,9 @@ export const Post = ({ post }) => {
             ) : (
               <>
                 <DropdownMenuItem
-                  onClick={() => navigate(`/user/${post.author.username}`)}>
+                  onClick={() =>
+                    handleNavigate({ userId: post.author.username })
+                  }>
                   <User size={18} />
                   <span>Ver Perfil</span>
                 </DropdownMenuItem>
@@ -195,9 +208,7 @@ export const Post = ({ post }) => {
           {post.amountLikes >= 1 && (
             <div className="flex items-center gap-1 py-2 cursor-pointer">
               <Avatar className="w-6 h-6">
-                <AvatarImage
-                  src={post.likes[0].userLikedPost?.profilePicture}
-                />
+                <AvatarImage src={post.likes[0].userLikedPost.profilePicture} />
                 <AvatarFallback>
                   <img src="/notUserPicture.png" alt="user-not-picture" />
                 </AvatarFallback>
@@ -223,9 +234,11 @@ export const Post = ({ post }) => {
             </div>
           )}
         </DialogTrigger>
-        <DialogContent className="h-[88%]" posClose="right-3 top-2">
+        <DialogContent
+          className="h-[88%] rounded-lg"
+          posClose="right-3 top-[11px]">
           <DialogHeader>
-            <div className="py-3">
+            <div className="py-4">
               <DialogTitle className="text-center">Curtidas</DialogTitle>
               <DialogDescription />
             </div>
@@ -282,7 +295,9 @@ export const Post = ({ post }) => {
                       <DropdownMenuContent>
                         <DropdownMenuItem
                           onClick={() =>
-                            navigate(`/user/${like.userLikedPost.username}`)
+                            handleNavigate({
+                              userId: like.userLikedPost.username,
+                            })
                           }>
                           <User size={18} />
                           <span>Ver Perfil</span>

@@ -76,11 +76,16 @@ export const User = () => {
     mutateFollow({ data });
   };
 
-  useEffect(() => {
+  const handleNavigate = ({ userId }) => {
+    const { username } = JSON.parse(localStorage.getItem("auth"));
+    document.body.style.pointerEvents = "auto";
+
     if (username.toLowerCase() === userId.toLowerCase().trim()) {
       navigate("/profile");
+    } else {
+      navigate(`/user/${userId}`);
     }
-  }, [username, userId]);
+  };
 
   const { ref, inView } = useInView();
 
@@ -309,7 +314,7 @@ export const User = () => {
                               <Button
                                 className="px-2 h-7 text-xs font-bold mr-2"
                                 onClick={() =>
-                                  navigate(`/user/${following.username}`)
+                                  handleNavigate({ userId: following.username })
                                 }>
                                 Ver Perfil
                               </Button>

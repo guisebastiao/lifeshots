@@ -6,6 +6,7 @@ import {
   ShieldBan,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { ptBR } from "date-fns/locale";
 
 import { useCommentTree } from "@/hooks/useCommentTree";
@@ -33,6 +34,8 @@ export const CommentTree = ({ commentId, isMyPost }) => {
   const { mutate: mutateLikeCommentTree } = likeCommentTree();
   const { mutate: mutateBlock, isPending: pendingBlock } = blockUser();
 
+  const navigate = useNavigate();
+
   const handleLikeTree = ({ commentTreeId }) => {
     const data = { commentTreeId };
     mutateLikeCommentTree({ data });
@@ -43,6 +46,17 @@ export const CommentTree = ({ commentId, isMyPost }) => {
       addSuffix: true,
       locale: ptBR,
     });
+  };
+
+  const handleNavigate = ({ userId }) => {
+    const { username } = JSON.parse(localStorage.getItem("auth"));
+    document.body.style.pointerEvents = "auto";
+
+    if (username.toLowerCase() === userId.toLowerCase().trim()) {
+      navigate("/profile");
+    } else {
+      navigate(`/user/${userId}`);
+    }
   };
 
   const handleBlock = ({ blocked }) => {
@@ -125,20 +139,19 @@ export const CommentTree = ({ commentId, isMyPost }) => {
                               )}
                               <DropdownMenuItem
                                 onClick={() =>
-                                  navigate(
-                                    `/user/${commentTree.userCommentsTree.username}`
-                                  )
+                                  handleNavigate({
+                                    userId:
+                                      commentTree.userCommentsTree.username,
+                                  })
                                 }>
                                 <User size={17} />
                                 <span>Ver perfil</span>
                               </DropdownMenuItem>
                               <DropdownMenuItem
-                                onClick={() =>
-                                  handleBlock({
-                                    blocked:
-                                      commentTree.userCommentsTree.username,
-                                  })
-                                }>
+                                onClick={handleBlock({
+                                  blocked:
+                                    commentTree.userCommentsTree.username,
+                                })}>
                                 {pendingBlock ? (
                                   <Loading />
                                 ) : (
