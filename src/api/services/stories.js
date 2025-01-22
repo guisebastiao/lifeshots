@@ -6,7 +6,7 @@ export const Get = async () => {
 };
 
 export const GetAll = async () => {
-  const { data: response } = await axiosInstance.get("/stories/list/", {
+  const { data: response } = await axiosInstance.get("/stories/all/", {
     params: {
       offset: 1,
       limit: 10,

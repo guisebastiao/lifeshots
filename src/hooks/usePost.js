@@ -23,7 +23,7 @@ export const usePost = () => {
     });
   };
 
-  const getPost = () => {
+  const getPost = ({ postId }) => {
     return useQuery({
       queryFn: () => Get({ postId }),
       queryKey: ["posts", postId],
@@ -45,9 +45,9 @@ export const usePost = () => {
     });
   };
 
-  const updatePost = () => {
+  const updatePost = ({ postId }) => {
     return useMutation({
-      mutationFn: Update,
+      mutationFn: () => Update({ postId }),
       onError: ({ response }) => {
         toast.error(response?.data?.errors[0]);
       },

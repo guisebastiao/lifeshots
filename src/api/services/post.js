@@ -15,7 +15,7 @@ export const Get = async ({ postId }) => {
 };
 
 export const GetAll = async ({ userId, pageParam }) => {
-  const { data: response } = await axiosInstance.get(`/posts/${userId}`, {
+  const { data: response } = await axiosInstance.get(`/posts/all/${userId}`, {
     params: {
       offset: pageParam,
       limit: 10,

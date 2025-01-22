@@ -7,8 +7,8 @@ export const useLogin = () => {
   const login = () => {
     return useMutation({
       mutationFn: Create,
-      onSuccess: ({ response }) => {
-        toast.success(response?.data?.success[0]);
+      onSuccess: (response) => {
+        toast.success(response?.success[0]);
       },
       onError: ({ response }) => {
         toast.error(response?.data?.errors[0]);
