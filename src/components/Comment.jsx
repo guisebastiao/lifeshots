@@ -121,7 +121,7 @@ export const Comment = ({ postId, isMyPost }) => {
         <DrawerTitle>Comentários</DrawerTitle>
         <DrawerDescription />
       </DrawerHeader>
-      <div className="max-w-md w-full min-h-[500px] h-full flex flex-col gap-4 overflow-y-scroll">
+      <div className="max-w-md w-full max-h-[500px] h-full flex flex-col gap-4 overflow-y-scroll">
         {isLoading ? (
           <Loading />
         ) : data.pages[0].commentsPosts.length <= 0 ? (
@@ -179,7 +179,7 @@ export const Comment = ({ postId, isMyPost }) => {
                         </>
                       ) : (
                         <>
-                          {isMyPost && (
+                          {!!isMyPost && (
                             <DropdownMenuItem>
                               <Trash size={17} />
                               <span>Excluir</span>

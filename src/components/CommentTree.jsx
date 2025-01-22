@@ -131,7 +131,7 @@ export const CommentTree = ({ commentId, isMyPost }) => {
                             </>
                           ) : (
                             <>
-                              {isMyPost && (
+                              {!!isMyPost && (
                                 <DropdownMenuItem>
                                   <Trash size={17} />
                                   <span>Excluir</span>
@@ -148,10 +148,12 @@ export const CommentTree = ({ commentId, isMyPost }) => {
                                 <span>Ver perfil</span>
                               </DropdownMenuItem>
                               <DropdownMenuItem
-                                onClick={handleBlock({
-                                  blocked:
-                                    commentTree.userCommentsTree.username,
-                                })}>
+                                onClick={() =>
+                                  handleBlock({
+                                    blocked:
+                                      commentTree.userCommentsTree.username,
+                                  })
+                                }>
                                 {pendingBlock ? (
                                   <Loading />
                                 ) : (

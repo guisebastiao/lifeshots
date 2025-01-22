@@ -77,7 +77,6 @@ export const User = () => {
   };
 
   const handleNavigate = ({ userId }) => {
-    const { username } = JSON.parse(localStorage.getItem("auth"));
     document.body.style.pointerEvents = "auto";
 
     if (username.toLowerCase() === userId.toLowerCase().trim()) {
@@ -95,6 +94,12 @@ export const User = () => {
     }
   }, [inView]);
 
+  useEffect(() => {
+    if (username.toLowerCase() === userId.toLowerCase().trim()) {
+      navigate("/profile");
+    }
+  }, []);
+
   return (
     <main className="relative w-screen h-screen flex items-center justify-center">
       <section className=" absolute top-14 max-w-md w-full h-container flex flex-col items-center justify-start pt-5 px-4 gap-2 overflow-y-scroll">
@@ -105,8 +110,8 @@ export const User = () => {
             <div className="w-14 h-14 rounded-full border border-white flex items-center justify-center">
               <UserRoundSearch strokeWidth={1} />
             </div>
-            <span className="text-xl font-black">
-              {username} não está em LifeShots
+            <span className="text-xl font-semibold">
+              {userId} não está em LifeShots
             </span>
           </div>
         ) : (
@@ -439,7 +444,7 @@ export const User = () => {
                   <ShieldBan strokeWidth={1} />
                 </div>
                 <span className="text-xl font-semibold">
-                  Você bloqueou esse usuário
+                  Este usuário está bloqueado
                 </span>
               </div>
             ) : userData.privateAccount && !userData.followedAccount ? (
