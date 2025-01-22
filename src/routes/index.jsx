@@ -11,6 +11,7 @@ import { ForgotPassword } from "@/pages/ForgotPassword";
 import { ResetPassword } from "@/pages/ResetPassword";
 import { Feed } from "@/pages/Feed";
 import { Notifications } from "@/pages/Notifications";
+import { User } from "@/pages/User";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: "/notifications",
         element: <Notifications />,
+      },
+      {
+        path: "/user/:userId",
+        element: <User />,
       },
     ],
   },
