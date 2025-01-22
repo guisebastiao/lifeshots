@@ -10,6 +10,7 @@ import { ptBR } from "date-fns/locale";
 
 import { useCommentTree } from "@/hooks/useCommentTree";
 import { useLikeCommentTree } from "@/hooks/useLikeCommentTree";
+import { useBlock } from "@/hooks/useBlock";
 
 import {
   DropdownMenu,
@@ -24,11 +25,13 @@ import { Loading } from "@/components/Loading";
 export const CommentTree = ({ commentId, isMyPost }) => {
   const { getAllCommentTree } = useCommentTree();
   const { likeCommentTree } = useLikeCommentTree();
+  const { blockUser } = useBlock();
 
   const { data, fetchNextPage, isFetching, isLoading } = getAllCommentTree({
     commentId,
   });
   const { mutate: mutateLikeCommentTree } = likeCommentTree();
+  const { mutate: mutateBlock, isPending: pendingBlock } = blockUser();
 
   const handleLikeTree = ({ commentTreeId }) => {
     const data = { commentTreeId };
@@ -40,6 +43,11 @@ export const CommentTree = ({ commentId, isMyPost }) => {
       addSuffix: true,
       locale: ptBR,
     });
+  };
+
+  const handleBlock = ({ blocked }) => {
+    const data = { blocked };
+    mutateBlock({ data });
   };
 
   const handleNext = () => {
