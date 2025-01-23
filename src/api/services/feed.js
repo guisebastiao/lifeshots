@@ -4,7 +4,7 @@ export const GetAll = async ({ pageParam }) => {
   const { data: response } = await axiosInstance.get("/feed/", {
     params: {
       offset: pageParam,
-      limit: 2,
+      limit: 5,
     },
   });
   return response;
