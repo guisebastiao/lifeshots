@@ -9,9 +9,10 @@ import { ActiveLogin } from "@/pages/ActiveLogin";
 import { ActiveAccount } from "@/pages/ActiveAccount";
 import { ForgotPassword } from "@/pages/ForgotPassword";
 import { ResetPassword } from "@/pages/ResetPassword";
-import { Feed } from "@/pages/Feed";
 import { Notifications } from "@/pages/Notifications";
+import { Feed } from "@/pages/Feed";
 import { User } from "@/pages/User";
+import { Profile } from "@/pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: "/user/:userId",
         element: <User />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },
