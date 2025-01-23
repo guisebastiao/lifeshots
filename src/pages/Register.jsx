@@ -17,10 +17,11 @@ import { Separator } from "@/components/ui/separator";
 import { Loading } from "@/components/Loading";
 
 import { registerSchema } from "@/schemas/registerSchema";
+import { useEffect } from "react";
 
 export const Register = () => {
   const { register } = useRegister();
-  const { mutate, isPending } = register();
+  const { mutate, isPending, isSuccess } = register();
   const navigate = useNavigate();
 
   const registerForm = useForm({
@@ -41,6 +42,12 @@ export const Register = () => {
     mutate({ data });
     registerForm.reset();
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/user-pending");
+    }
+  }, [isSuccess]);
 
   return (
     <main className="w-screen h-screen flex items-center justify-center bg-zinc-950">

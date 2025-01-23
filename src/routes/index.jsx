@@ -7,6 +7,7 @@ import { Login } from "@/pages/Login";
 import { Register } from "@/pages/Register";
 import { ActiveLogin } from "@/pages/ActiveLogin";
 import { ActiveAccount } from "@/pages/ActiveAccount";
+import { UserPending } from "@/pages/UserPending";
 import { ForgotPassword } from "@/pages/ForgotPassword";
 import { ResetPassword } from "@/pages/ResetPassword";
 import { Notifications } from "@/pages/Notifications";
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: "/active-account/:activeToken",
         element: <ActiveAccount />,
+      },
+      {
+        path: "/user-pending",
+        element: <UserPending />,
       },
       {
         path: "/forgot-password/",
