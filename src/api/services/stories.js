@@ -5,10 +5,10 @@ export const Get = async () => {
   return response;
 };
 
-export const GetAll = async () => {
+export const GetAll = async ({ pageParam }) => {
   const { data: response } = await axiosInstance.get("/stories/all/", {
     params: {
-      offset: 1,
+      offset: pageParam,
       limit: 10,
     },
   });

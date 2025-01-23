@@ -16,7 +16,7 @@ export const useStories = () => {
 
   const getAllStories = () => {
     return useInfiniteQuery({
-      queryFn: GetAll,
+      queryFn: ({ pageParam }) => GetAll({ pageParam }),
       queryKey: ["get-all-stories"],
       initialPageParam: 1,
       getNextPageParam: (lastPage) => lastPage.paging.next,
