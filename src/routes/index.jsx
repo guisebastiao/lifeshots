@@ -13,6 +13,7 @@ import { Notifications } from "@/pages/Notifications";
 import { Feed } from "@/pages/Feed";
 import { User } from "@/pages/User";
 import { Profile } from "@/pages/Profile";
+import { Search } from "@/pages/Search";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
       },
     ],
   },
