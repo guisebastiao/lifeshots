@@ -336,8 +336,8 @@ export const Profile = () => {
                 </DialogContent>
               </Dialog>
             </div>
-            <div className="w-full h-full pb-3 rounded">
-              <div className="w-full h-full grid grid-cols-3 gap-1">
+            <div className="w-full h-full pb-3">
+              <div className="w-full grid grid-cols-3 gap-1">
                 {!loadingPost &&
                   postData.pages.length > 0 &&
                   postData.pages.map((page) =>

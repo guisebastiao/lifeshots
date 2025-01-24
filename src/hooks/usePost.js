@@ -1,16 +1,9 @@
-import {
-  useMutation,
-  useQuery,
-  useInfiniteQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { Create, Get, GetAll, Update, Delete } from "@/api/services/post";
 
 export const usePost = () => {
-  const queryClient = useQueryClient();
-
   const createPost = () => {
     return useMutation({
       mutationFn: Create,
@@ -20,9 +13,9 @@ export const usePost = () => {
             "Algo deu errado, tente novamente mais tarde."
         );
       },
-      // onSuccess: () => {
-      //   queryClient.invalidateQueries(["notification-is-read"]);
-      // },
+      onSuccess: (response) => {
+        toast.success(response?.success[0]);
+      },
     });
   };
 
@@ -63,9 +56,6 @@ export const usePost = () => {
             "Algo deu errado, tente novamente mais tarde."
         );
       },
-      // onSuccess: () => {
-      //   queryClient.invalidateQueries(["notification-is-read"]);
-      // },
     });
   };
 
@@ -78,9 +68,6 @@ export const usePost = () => {
             "Algo deu errado, tente novamente mais tarde."
         );
       },
-      // onSuccess: () => {
-      //   queryClient.invalidateQueries(["notifications"]);
-      // },
     });
   };
 

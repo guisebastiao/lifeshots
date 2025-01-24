@@ -98,7 +98,7 @@ export const ModalStories = ({ stories }) => {
         {currentUser?.stories.map((story) => (
           <DialogContent
             key={story.id}
-            className="h-full border-none px-0"
+            className="media-448:h-screen media-448:border-none px-0"
             posClose="right-4 top-7">
             <DialogHeader>
               <div className="w-full h-full space-y-1.5 z-20 bg-gradient-opacity">
