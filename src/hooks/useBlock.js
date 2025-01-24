@@ -17,7 +17,10 @@ export const useBlock = () => {
         queryClient.invalidateQueries(["block-user"]);
       },
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };
@@ -29,7 +32,10 @@ export const useBlock = () => {
       initialPageParam: 1,
       getNextPageParam: (lastPage) => lastPage.paging.next,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };

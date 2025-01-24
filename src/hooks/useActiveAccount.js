@@ -8,7 +8,10 @@ export const useActiveAccount = () => {
     return useMutation({
       mutationFn: Create,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };

@@ -14,7 +14,10 @@ export const useCommentTree = () => {
     return useMutation({
       mutationFn: Create,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       onSuccess: () => {
         queryClient.invalidateQueries(["get-all-comment-tree"]);
@@ -29,7 +32,10 @@ export const useCommentTree = () => {
       initialPageParam: 1,
       getNextPageParam: (lastPage) => lastPage.paging.next,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };
@@ -38,7 +44,10 @@ export const useCommentTree = () => {
     return useMutation({
       mutationFn: Update,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       onSuccess: () => {
         queryClient.invalidateQueries(["get-all-comment-tree"]);
@@ -50,7 +59,10 @@ export const useCommentTree = () => {
     return useMutation({
       mutationFn: Delete,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       onSuccess: () => {
         queryClient.invalidateQueries(["get-all-comment-tree"]);

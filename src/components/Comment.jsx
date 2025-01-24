@@ -121,7 +121,7 @@ export const Comment = ({ postId, isMyPost }) => {
         <DrawerTitle>Comentários</DrawerTitle>
         <DrawerDescription />
       </DrawerHeader>
-      <div className="max-w-md w-full max-h-[500px] h-full flex flex-col gap-4 overflow-y-scroll">
+      <div className="max-w-md w-full flex flex-col gap-4 overflow-y-scroll">
         {isLoading ? (
           <Loading />
         ) : data.pages[0].commentsPosts.length <= 0 ? (
@@ -136,7 +136,7 @@ export const Comment = ({ postId, isMyPost }) => {
         ) : (
           data.pages.map((pages) =>
             pages.commentsPosts.map((comment) => (
-              <div key={comment.id} className="flex flex-col items-center">
+              <div key={comment.id} className="flex flex-col items-center px-2">
                 <div className="flex w-full gap-1">
                   <div className="flex w-full items-center gap-1">
                     <Avatar className="w-8 h-8">

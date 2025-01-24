@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
-import { formatDistanceToNow } from "date-fns";
-import { ptBR } from "date-fns/locale";
 
 import { useLikePost } from "@/hooks/useLikePost";
 import { useBlock } from "@/hooks/useBlock";
@@ -43,6 +41,8 @@ import { ButtonLike } from "@/components/ButtonLike";
 import { Comment } from "@/components/Comment";
 import { Loading } from "@/components/Loading";
 
+import { formatDistance } from "@/utils/formatDate";
+
 export const Post = ({ post }) => {
   const { likePost, getLikesPost } = useLikePost();
   const { blockUser } = useBlock();
@@ -66,13 +66,6 @@ export const Post = ({ post }) => {
   const handleLike = ({ postId }) => {
     const data = { postId };
     mutateLikePost({ data });
-  };
-
-  const formatDistance = (date) => {
-    return formatDistanceToNow(new Date(date), {
-      addSuffix: true,
-      locale: ptBR,
-    });
   };
 
   const handleBlock = ({ blocked }) => {
@@ -167,8 +160,8 @@ export const Post = ({ post }) => {
         </CarouselContent>
         <CarouselDots />
       </Carousel>
-      <div className="w-full flex py-3 justify-between">
-        <div className="flex gap-4">
+      <div className="w-full flex py-2 justify-between gap-3">
+        <div className="flex gap-3">
           <div className="flex items-center gap-1">
             <button onClick={() => handleLike({ postId: post.id })}>
               <ButtonLike isLiked={post.isLiked} />
@@ -177,32 +170,32 @@ export const Post = ({ post }) => {
               {post.amountLikes}
             </span>
           </div>
-          <div>
-            <div className="flex items-center gap-1">
-              <Drawer>
-                <DrawerTrigger asChild>
+          <div className="flex items-center gap-1">
+            <Drawer>
+              <DrawerTrigger asChild>
+                <div className="flex items-center">
                   <button>
                     <MessageCircle size={22} className="text-zinc-50" />
                   </button>
-                </DrawerTrigger>
-                <DrawerContent className="flex items-center">
-                  <Comment postId={post.id} isMyPost={post.isMyPost} />
-                </DrawerContent>
-              </Drawer>
-              <span className="text-zinc-200 text-[13px]">
-                {post.amountComments}
-              </span>
-            </div>
+                </div>
+              </DrawerTrigger>
+              <DrawerContent className="flex items-center max-h-[600px] h-full">
+                <Comment postId={post.id} isMyPost={post.isMyPost} />
+              </DrawerContent>
+            </Drawer>
+            <span className="text-zinc-200 text-[13px]">
+              {post.amountComments}
+            </span>
           </div>
           <button className="flex items-center">
             <Send size={20} className="text-zinc-50" />
           </button>
         </div>
-        <span className="text-xs text-zinc-400">
-          publicada {formatDistance(post.createdAt)}
+        <span className="text-[11px] flex items-center text-zinc-400">
+          Publicada {formatDistance(post.createdAt)}
         </span>
       </div>
-      <p className="text-sm text-zinc-50 py-1">{post.content}</p>
+      <p className="text-[13px] text-zinc-50 py-1">{post.content}</p>
       <Dialog>
         <DialogTrigger>
           {post.amountLikes >= 1 && (
@@ -234,9 +227,7 @@ export const Post = ({ post }) => {
             </div>
           )}
         </DialogTrigger>
-        <DialogContent
-          className="h-[88%] rounded-lg"
-          posClose="right-3 top-[11px]">
+        <DialogContent posClose="right-3 top-[11px]">
           <DialogHeader>
             <div className="py-4">
               <DialogTitle className="text-center">Curtidas</DialogTitle>

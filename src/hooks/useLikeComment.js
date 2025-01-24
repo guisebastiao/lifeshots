@@ -13,7 +13,10 @@ export const useLikeComment = () => {
         queryClient.invalidateQueries(["get-all-comments"]);
       },
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };

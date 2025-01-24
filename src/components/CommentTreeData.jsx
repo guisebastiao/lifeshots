@@ -54,7 +54,7 @@ export const CommentTreeData = ({ commentId }) => {
       <DialogTrigger className="flex" onClick={() => setIsOpen(true)}>
         <span className="text-xs text-zinc-400">Comentar</span>
       </DialogTrigger>
-      <DialogContent className="rounded-lg" posClose="top-[11px] right-3">
+      <DialogContent posClose="top-[11px] right-3">
         <DialogHeader>
           <div className="py-4 px-3">
             <DialogTitle>Comentar</DialogTitle>

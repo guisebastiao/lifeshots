@@ -9,6 +9,8 @@ import { Notification } from "@/components/Notification";
 import { Loading } from "@/components/Loading";
 
 export const Notifications = () => {
+  const { username } = JSON.parse(localStorage.getItem("auth"));
+
   const { getAllNotifications, updateAllNotifications } = useNotifications();
 
   const { data, isLoading, hasNextPage, fetchNextPage } = getAllNotifications();
@@ -27,9 +29,19 @@ export const Notifications = () => {
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
+  const handleNavigate = ({ userId }) => {
+    document.body.style.pointerEvents = "auto";
+
+    if (username.toLowerCase() === userId.toLowerCase().trim()) {
+      navigate("/profile");
+    } else {
+      navigate(`/user/${userId}`);
+    }
+  };
+
   return (
     <main className="relative w-screen h-screen flex items-center justify-center">
-      <section className="absolute top-14 max-w-md w-full h-container flex flex-col overflow-y-scroll space-y-1 py-2">
+      <section className="absolute top-14 max-w-md w-full h-container flex flex-col overflow-y-scroll space-y-1 p-2">
         {isLoading ? (
           <Loading />
         ) : data.pages[0].notifications.length <= 0 ? (
@@ -55,7 +67,11 @@ export const Notifications = () => {
                     <Notification.Action
                       description="Ver Perfil"
                       className="bg-primary-theme hover:bg-primary-theme-hover"
-                      onClick={() => navigate(`/user/${notification.senderId}`)}
+                      onClick={() =>
+                        navigate(
+                          handleNavigate({ userId: notification.senderId })
+                        )
+                      }
                     />
                   )}
                 </Notification.Actions>

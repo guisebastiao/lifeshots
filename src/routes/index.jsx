@@ -12,9 +12,10 @@ import { ForgotPassword } from "@/pages/ForgotPassword";
 import { ResetPassword } from "@/pages/ResetPassword";
 import { Notifications } from "@/pages/Notifications";
 import { Feed } from "@/pages/Feed";
-import { User } from "@/pages/User";
-import { Profile } from "@/pages/Profile";
+import { Explorer } from "@/pages/Explorer";
 import { Search } from "@/pages/Search";
+import { Profile } from "@/pages/Profile";
+import { User } from "@/pages/User";
 
 export const router = createBrowserRouter([
   {
@@ -54,12 +55,20 @@ export const router = createBrowserRouter([
     element: <PrivateRoutes />,
     children: [
       {
+        path: "/notifications",
+        element: <Notifications />,
+      },
+      {
         path: "/",
         element: <Feed />,
       },
       {
-        path: "/notifications",
-        element: <Notifications />,
+        path: "/explorer",
+        element: <Explorer />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
       },
       {
         path: "/user/:userId",
@@ -68,10 +77,6 @@ export const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
-      },
-      {
-        path: "/search",
-        element: <Search />,
       },
     ],
   },

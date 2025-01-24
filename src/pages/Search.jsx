@@ -81,12 +81,11 @@ export const Search = () => {
                 </FormItem>
               )}
             />
-            <Button
-              variant="outline"
+            <button
               onClick={() => setSearchParams({})}
-              className="absolute w-5 h-5 rounded-sm p-0 bg-transparent hover:bg-transparent hover:border-zinc-500 right-6">
+              className="absolute w-5 h-5 right-6">
               <X size={18} />
-            </Button>
+            </button>
           </form>
         </Form>
         {isLoading ? (

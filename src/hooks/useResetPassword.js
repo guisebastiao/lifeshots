@@ -11,7 +11,10 @@ export const useResetPassword = () => {
         toast.success(response?.data?.success[0]);
       },
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };
@@ -23,7 +26,10 @@ export const useResetPassword = () => {
         toast.success(response?.data.success[0]);
       },
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };

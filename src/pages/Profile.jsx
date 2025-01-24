@@ -110,7 +110,7 @@ export const Profile = () => {
                   </div>
                 </DialogTrigger>
                 <DialogContent
-                  className="h-[88%] flex flex-col gap-2 rounded-lg px-5"
+                  className="flex flex-col gap-2 px-5"
                   posClose="right-3 top-[11px]">
                   <DialogHeader>
                     <div className="p-4">
@@ -147,7 +147,7 @@ export const Profile = () => {
                   </div>
                 </DialogTrigger>
                 <DialogContent
-                  className="h-[88%] flex flex-col gap-2 rounded-lg px-5"
+                  className="flex flex-col gap-2 px-5"
                   posClose="right-3 top-[11px]">
                   <DialogHeader>
                     <div className="p-4">
@@ -160,78 +160,79 @@ export const Profile = () => {
                   {loadingFollow ? (
                     <Loading />
                   ) : (
-                    followData &&
-                    type === "followers" && (
-                      <div className="flex flex-col gap-1">
-                        {followData.pages.map((page) =>
-                          page.followers.map((following) => (
-                            <div
-                              key={following.username}
-                              className="flex flex-col overflow-y-scroll gap-2">
-                              <div className="w-full flex items-center gap-2 px-1 py-1 bg-zinc-900 rounded-md border">
-                                <div className="flex w-full gap-2">
-                                  <Avatar className="w-10 h-10">
-                                    <AvatarImage
-                                      src={following.profilePicture}
-                                      alt="profile-picture"
-                                    />
-                                    <AvatarFallback>
-                                      <img
-                                        src="/notUserPicture.png"
-                                        alt="user-not-picture"
+                    <div className="overflow-y-scroll space-y-1 pb-3">
+                      {followData && type === "followers" && (
+                        <div className="flex flex-col gap-1">
+                          {followData.pages.map((page) =>
+                            page.followers.map((following) => (
+                              <div
+                                key={following.username}
+                                className="flex flex-col overflow-y-scroll gap-2">
+                                <div className="w-full flex items-center gap-2 px-1 py-1 bg-zinc-900 rounded-md border">
+                                  <div className="flex w-full gap-2">
+                                    <Avatar className="w-10 h-10">
+                                      <AvatarImage
+                                        src={following.profilePicture}
+                                        alt="profile-picture"
                                       />
-                                    </AvatarFallback>
-                                  </Avatar>
-                                  <div className="flex flex-col">
-                                    <span className="text-sm">
-                                      {following.username}
-                                    </span>
-                                    <div className="flex gap-2">
-                                      <div className="flex gap-1 items-center">
-                                        <span className="text-[11px] text-zinc-300 font-bold">
-                                          {following.amountPosts}
-                                        </span>
-                                        <span className="text-[10px] text-zinc-400">
-                                          {following.amountPosts === 1
-                                            ? "Publicação"
-                                            : "Publicações"}
-                                        </span>
-                                      </div>
-                                      <div className="flex gap-1 items-center">
-                                        <span className="text-[11px] text-zinc-300 font-bold">
-                                          {following.amountFollowers}
-                                        </span>
-                                        <span className="text-[10px] text-zinc-400">
-                                          {following.amountFollowers === 1
-                                            ? "Seguidor"
-                                            : "Seguidores"}
-                                        </span>
+                                      <AvatarFallback>
+                                        <img
+                                          src="/notUserPicture.png"
+                                          alt="user-not-picture"
+                                        />
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex flex-col">
+                                      <span className="text-sm">
+                                        {following.username}
+                                      </span>
+                                      <div className="flex gap-2">
+                                        <div className="flex gap-1 items-center">
+                                          <span className="text-[11px] text-zinc-300 font-bold">
+                                            {following.amountPosts}
+                                          </span>
+                                          <span className="text-[10px] text-zinc-400">
+                                            {following.amountPosts === 1
+                                              ? "Publicação"
+                                              : "Publicações"}
+                                          </span>
+                                        </div>
+                                        <div className="flex gap-1 items-center">
+                                          <span className="text-[11px] text-zinc-300 font-bold">
+                                            {following.amountFollowers}
+                                          </span>
+                                          <span className="text-[10px] text-zinc-400">
+                                            {following.amountFollowers === 1
+                                              ? "Seguidor"
+                                              : "Seguidores"}
+                                          </span>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
+                                  <Button
+                                    className="px-2 h-7 text-xs font-bold mr-2"
+                                    onClick={() =>
+                                      handleNavigate({
+                                        userId: following.username,
+                                      })
+                                    }>
+                                    Ver Perfil
+                                  </Button>
                                 </div>
-                                <Button
-                                  className="px-2 h-7 text-xs font-bold mr-2"
-                                  onClick={() =>
-                                    handleNavigate({
-                                      userId: following.username,
-                                    })
-                                  }>
-                                  Ver Perfil
-                                </Button>
                               </div>
+                            ))
+                          )}
+                          {hasFollow && (
+                            <div
+                              ref={refFollow}
+                              className="py-1 flex items-center justify-center">
+                              <Loading />
                             </div>
-                          ))
-                        )}
-                        {hasFollow && (
-                          <div
-                            ref={refFollow}
-                            className="py-1 flex items-center justify-center">
-                            <Loading />
-                          </div>
-                        )}
-                      </div>
-                    )
+                          )}
+                        </div>
+                      )}
+                    </div>
                   )}
                 </DialogContent>
               </Dialog>
@@ -245,7 +246,7 @@ export const Profile = () => {
                   </div>
                 </DialogTrigger>
                 <DialogContent
-                  className="h-[88%] flex flex-col gap-2 rounded-lg px-5"
+                  className="flex flex-col gap-2 px-5"
                   posClose="right-3 top-[11px]">
                   <DialogHeader>
                     <div className="p-4">
@@ -258,78 +259,79 @@ export const Profile = () => {
                   {loadingFollow ? (
                     <Loading />
                   ) : (
-                    followData &&
-                    type === "following" && (
-                      <div className="flex flex-col gap-1">
-                        {followData.pages.map((page) =>
-                          page.following.map((followers) => (
-                            <div
-                              key={followers.username}
-                              className="flex flex-col overflow-y-scroll gap-2">
-                              <div className="w-full flex items-center gap-2 px-1 py-1 bg-zinc-900 rounded-md border">
-                                <div className="flex w-full gap-2">
-                                  <Avatar className="w-10 h-10">
-                                    <AvatarImage
-                                      src={followers.profilePicture}
-                                      alt="profile-picture"
-                                    />
-                                    <AvatarFallback>
-                                      <img
-                                        src="/notUserPicture.png"
-                                        alt="user-not-picture"
+                    <div className="overflow-y-scroll space-y-1 pb-3">
+                      {followData && type === "following" && (
+                        <div className="flex flex-col gap-1">
+                          {followData.pages.map((page) =>
+                            page.following.map((followers) => (
+                              <div
+                                key={followers.username}
+                                className="flex flex-col overflow-y-scroll gap-2">
+                                <div className="w-full flex items-center gap-2 px-1 py-1 bg-zinc-900 rounded-md border">
+                                  <div className="flex w-full gap-2">
+                                    <Avatar className="w-10 h-10">
+                                      <AvatarImage
+                                        src={followers.profilePicture}
+                                        alt="profile-picture"
                                       />
-                                    </AvatarFallback>
-                                  </Avatar>
-                                  <div className="flex flex-col">
-                                    <span className="text-sm">
-                                      {followers.username}
-                                    </span>
-                                    <div className="flex gap-2">
-                                      <div className="flex gap-1 items-center">
-                                        <span className="text-[11px] text-zinc-300 font-bold">
-                                          {followers.amountPosts}
-                                        </span>
-                                        <span className="text-[10px] text-zinc-400">
-                                          {followers.amountPosts === 1
-                                            ? "Publicação"
-                                            : "Publicações"}
-                                        </span>
-                                      </div>
-                                      <div className="flex gap-1 items-center">
-                                        <span className="text-[11px] text-zinc-300 font-bold">
-                                          {followers.amountFollowers}
-                                        </span>
-                                        <span className="text-[10px] text-zinc-400">
-                                          {followers.amountFollowers === 1
-                                            ? "Seguidor"
-                                            : "Seguidores"}
-                                        </span>
+                                      <AvatarFallback>
+                                        <img
+                                          src="/notUserPicture.png"
+                                          alt="user-not-picture"
+                                        />
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex flex-col">
+                                      <span className="text-sm">
+                                        {followers.username}
+                                      </span>
+                                      <div className="flex gap-2">
+                                        <div className="flex gap-1 items-center">
+                                          <span className="text-[11px] text-zinc-300 font-bold">
+                                            {followers.amountPosts}
+                                          </span>
+                                          <span className="text-[10px] text-zinc-400">
+                                            {followers.amountPosts === 1
+                                              ? "Publicação"
+                                              : "Publicações"}
+                                          </span>
+                                        </div>
+                                        <div className="flex gap-1 items-center">
+                                          <span className="text-[11px] text-zinc-300 font-bold">
+                                            {followers.amountFollowers}
+                                          </span>
+                                          <span className="text-[10px] text-zinc-400">
+                                            {followers.amountFollowers === 1
+                                              ? "Seguidor"
+                                              : "Seguidores"}
+                                          </span>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
+                                  <Button
+                                    className="px-2 h-7 text-xs font-bold mr-2"
+                                    onClick={() =>
+                                      handleNavigate({
+                                        userId: followers.username,
+                                      })
+                                    }>
+                                    Ver Perfil
+                                  </Button>
                                 </div>
-                                <Button
-                                  className="px-2 h-7 text-xs font-bold mr-2"
-                                  onClick={() =>
-                                    handleNavigate({
-                                      userId: followers.username,
-                                    })
-                                  }>
-                                  Ver Perfil
-                                </Button>
                               </div>
+                            ))
+                          )}
+                          {hasFollow && (
+                            <div
+                              ref={refFollow}
+                              className="py-1 flex items-center justify-center">
+                              <Loading />
                             </div>
-                          ))
-                        )}
-                        {hasFollow && (
-                          <div
-                            ref={refFollow}
-                            className="py-1 flex items-center justify-center">
-                            <Loading />
-                          </div>
-                        )}
-                      </div>
-                    )
+                          )}
+                        </div>
+                      )}
+                    </div>
                   )}
                 </DialogContent>
               </Dialog>
@@ -368,7 +370,7 @@ export const Profile = () => {
                           </div>
                         </DialogTrigger>
                         <DialogContent
-                          className="h-[88%] flex flex-col gap-2 rounded-lg px-5"
+                          className="px-5 overflow-y-scroll"
                           posClose="right-3 top-[11px]">
                           <DialogHeader>
                             <div className="p-4">
@@ -378,9 +380,7 @@ export const Profile = () => {
                             </div>
                             <DialogDescription />
                           </DialogHeader>
-                          <div className="overflow-y-scroll">
-                            <Post post={post} />
-                          </div>
+                          <Post post={post} />
                         </DialogContent>
                       </Dialog>
                     ))

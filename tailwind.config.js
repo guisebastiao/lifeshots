@@ -4,6 +4,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
+      screens: {
+        "media-370": "370px",
+        "media-448": "448px",
+      },
       height: {
         container: "calc(100% - 48px - 56px)",
       },

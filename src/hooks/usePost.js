@@ -15,7 +15,10 @@ export const usePost = () => {
     return useMutation({
       mutationFn: Create,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       // onSuccess: () => {
       //   queryClient.invalidateQueries(["notification-is-read"]);
@@ -28,7 +31,10 @@ export const usePost = () => {
       queryFn: () => Get({ postId }),
       queryKey: ["posts", postId],
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };
@@ -40,7 +46,10 @@ export const usePost = () => {
       initialPageParam: 1,
       getNextPageParam: (lastPage) => lastPage.paging.next,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };
@@ -49,7 +58,10 @@ export const usePost = () => {
     return useMutation({
       mutationFn: () => Update({ postId }),
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       // onSuccess: () => {
       //   queryClient.invalidateQueries(["notification-is-read"]);
@@ -61,7 +73,10 @@ export const usePost = () => {
     return useMutation({
       mutationFn: Delete,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       // onSuccess: () => {
       //   queryClient.invalidateQueries(["notifications"]);

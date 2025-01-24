@@ -11,7 +11,10 @@ export const useUser = () => {
       queryFn: () => Get({ userId }),
       queryKey: ["users", userId],
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };
@@ -20,7 +23,10 @@ export const useUser = () => {
     return useMutation({
       mutationFn: Update,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       onSuccess: () => {
         queryClient.invalidateQueries(["users"]);
@@ -32,7 +38,10 @@ export const useUser = () => {
     return useMutation({
       mutationFn: Delete,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       onSuccess: () => {
         queryClient.invalidateQueries(["users"]);

@@ -15,7 +15,10 @@ export const useSearch = () => {
       initialPageParam: 1,
       getNextPageParam: (lastPage) => lastPage.paging.next,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };

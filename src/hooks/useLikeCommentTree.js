@@ -13,7 +13,10 @@ export const useLikeCommentTree = () => {
         queryClient.invalidateQueries(["get-all-comment-tree"]);
       },
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };

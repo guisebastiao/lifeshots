@@ -16,7 +16,10 @@ export const useNotifications = () => {
       queryFn: Get,
       queryKey: ["notification-is-read"],
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };
@@ -28,7 +31,10 @@ export const useNotifications = () => {
       initialPageParam: 1,
       getNextPageParam: (lastPage) => lastPage.paging.next,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
     });
   };
@@ -37,7 +43,10 @@ export const useNotifications = () => {
     return useMutation({
       mutationFn: Update,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       onSuccess: () => {
         queryClient.invalidateQueries(["notification-is-read"]);
@@ -49,7 +58,10 @@ export const useNotifications = () => {
     return useMutation({
       mutationFn: Delete,
       onError: ({ response }) => {
-        toast.error(response?.data?.errors[0]);
+        toast.error(
+          response?.data?.errors[0] ||
+            "Algo deu errado, tente novamente mais tarde."
+        );
       },
       onSuccess: () => {
         queryClient.invalidateQueries(["get-all-notifications"]);
