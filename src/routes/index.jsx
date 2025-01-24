@@ -13,6 +13,7 @@ import { ResetPassword } from "@/pages/ResetPassword";
 import { Notifications } from "@/pages/Notifications";
 import { Feed } from "@/pages/Feed";
 import { Explorer } from "@/pages/Explorer";
+import { Post } from "@/pages/Post";
 import { Search } from "@/pages/Search";
 import { Profile } from "@/pages/Profile";
 import { User } from "@/pages/User";
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/post",
+        element: <Post />,
       },
     ],
   },

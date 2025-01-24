@@ -7,9 +7,14 @@ export default {
       screens: {
         "media-370": "370px",
         "media-448": "448px",
+        "h-caroseul-800": { raw: "(max-height: 800px)" },
+        "h-caroseul-700": { raw: "(max-height: 700px)" },
+        "h-caroseul-630": { raw: "(max-height: 630px)" },
+        "h-caroseul-565": { raw: "(max-height: 565px)" },
       },
       height: {
         container: "calc(100% - 48px - 56px)",
+        "container-tabs": "calc(100% - 36px)",
       },
       animation: {
         like: "like 400ms ease-in-out",
