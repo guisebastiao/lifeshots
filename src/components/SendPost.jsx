@@ -143,7 +143,7 @@ export const SendPost = () => {
           <Button type="submit" disabled={isPending}>
             {isPending ? (
               <>
-                <Loading />
+                <Loading className="border-black" />
                 <span>Publicando</span>
               </>
             ) : (
