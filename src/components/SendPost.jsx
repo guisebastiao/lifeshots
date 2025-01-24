@@ -42,8 +42,6 @@ export const SendPost = () => {
   const { createPost } = usePost();
   const { mutate, isPending } = createPost();
 
-  const fileRef = sendForm.register("files");
-
   useEffect(() => {
     const files = Array.from(sendForm.watch("files") || []);
     const urls = files.map((file) => URL.createObjectURL(file));
@@ -51,6 +49,18 @@ export const SendPost = () => {
 
     return () => urls.forEach((url) => URL.revokeObjectURL(url));
   }, [sendForm.watch("files")]);
+
+  const handleFileChange = (event) => {
+    const currentFiles = Array.from(sendForm.getValues("files") || []);
+    const newFiles = Array.from(event.target.files || []);
+
+    const allFiles = [...currentFiles, ...newFiles];
+
+    const dataTransfer = new DataTransfer();
+    allFiles.forEach((file) => dataTransfer.items.add(file));
+
+    sendForm.setValue("files", dataTransfer.files);
+  };
 
   const handleSend = () => {
     const formData = new FormData();
@@ -94,7 +104,7 @@ export const SendPost = () => {
                           accept={mimetypes.join(",")}
                           multiple
                           className="absolute w-14 h-14 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-zinc-400"
-                          {...fileRef}
+                          onChange={handleFileChange}
                         />
                       </FormControl>
                       <FormMessage className="absolute left-0 top-3/4 w-full text-center text-red-500" />
