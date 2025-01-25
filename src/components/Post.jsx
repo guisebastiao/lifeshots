@@ -15,7 +15,8 @@ import {
   EllipsisVertical,
   Send,
   MessageCircle,
-  ShieldOff,
+  ShieldBan,
+  ShieldX,
   User,
   Trash,
   PencilRuler,
@@ -134,12 +135,25 @@ export const Post = ({ post }) => {
                   onClick={() =>
                     handleBlock({ blocked: post.author.username })
                   }>
-                  {isPending ? (
-                    <Loading className="w-5 h-5 text-zinc-50 border-2" />
+                  {post.author?.isBlockedUser ? (
+                    <>
+                      {isPending ? (
+                        <Loading className="w-4 h-4" />
+                      ) : (
+                        <ShieldX size={18} />
+                      )}
+                      <span>Desbloquear</span>
+                    </>
                   ) : (
-                    <ShieldOff size={18} />
+                    <>
+                      {isPending ? (
+                        <Loading className="w-4 h-4" />
+                      ) : (
+                        <ShieldBan size={18} />
+                      )}
+                      <span>Bloquear</span>
+                    </>
                   )}
-                  <span>Bloquear</span>
                 </DropdownMenuItem>
               </>
             )}
