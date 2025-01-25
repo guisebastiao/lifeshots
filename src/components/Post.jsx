@@ -220,7 +220,7 @@ export const Post = ({ post }) => {
                   <img src="/notUserPicture.png" alt="user-not-picture" />
                 </AvatarFallback>
               </Avatar>
-              <span className="text-zinc-400 text-xs">
+              <span className="text-zinc-400 text-xs text-left">
                 {post.amountLikes === 1 ? (
                   <>
                     Curtido por{" "}
@@ -250,7 +250,7 @@ export const Post = ({ post }) => {
           </DialogHeader>
           <div className="flex flex-col flex-1 overflow-y-scroll h-full gap-3 px-4 pt-3">
             {isLoading ? (
-              <Loading className="w-5 h-5 text-zinc-50 border-2" />
+              <Loading />
             ) : (
               data.pages.map((page) =>
                 page.likesPost.map((like) => (
@@ -315,7 +315,7 @@ export const Post = ({ post }) => {
             )}
             {hasNextPage && (
               <div ref={ref} className="flex items-center justify-center px-1">
-                <Loading className="w-5 h-5 text-zinc-50 border-2" />
+                <Loading />
               </div>
             )}
           </div>
