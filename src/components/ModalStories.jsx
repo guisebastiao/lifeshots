@@ -124,7 +124,7 @@ export const ModalStories = ({ stories }) => {
                   </Avatar>
                   <div className="flex flex-col">
                     <span className="text-sm">{currentUser.username}</span>
-                    <span className="text-xs text-zinc-300">
+                    <span className="text-xs text-zinc-300 text-left">
                       {formatDistance(currentStory.createdAt)}
                     </span>
                   </div>

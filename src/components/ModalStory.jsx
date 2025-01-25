@@ -58,7 +58,7 @@ export const ModalStory = ({ story }) => {
             story.length > 0 ? "bg-gradient" : "bg-zinc-500"
           )}>
           <Avatar className="absolute w-full h-full border-[3px] border-transparent">
-            <AvatarImage src={!isLoading && data?.profilePicture} />
+            <AvatarImage src={!isLoading && data.profilePicture} />
             <AvatarFallback>
               <img src="/notUserPicture.png" alt="user-not-picture" />
             </AvatarFallback>
@@ -108,7 +108,7 @@ export const ModalStory = ({ story }) => {
               <div className="flex gap-2 px-3 py-1 pb-5">
                 <Avatar className="w-10 h-10">
                   <AvatarImage
-                    src={story[storyCurrent].author?.profilePicture}
+                    src={story[storyCurrent].author.profilePicture}
                   />
                   <AvatarFallback>
                     <img src="/notUserPicture.png" alt="user-not-picture" />
@@ -118,7 +118,7 @@ export const ModalStory = ({ story }) => {
                   <span className="text-sm">
                     {story[storyCurrent].author.username}
                   </span>
-                  <span className="text-xs text-zinc-300">
+                  <span className="text-xs text-zinc-300 text-left">
                     {formatDistance({ date: story[storyCurrent].createdAt })}
                   </span>
                 </div>
