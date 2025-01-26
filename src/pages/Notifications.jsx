@@ -57,7 +57,9 @@ export const Notifications = () => {
           data.pages.map((page) =>
             page.notifications.map((notification) => (
               <Notification.Root key={notification.id}>
-                <Notification.Icon icon={notification.sender.profilePicture} />
+                <Notification.Icon
+                  icon={notification.sender.profilePicture?.url}
+                />
                 <Notification.Content
                   message={notification.message}
                   createdAt={notification.createdAt}

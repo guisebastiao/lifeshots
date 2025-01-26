@@ -169,7 +169,7 @@ export const User = () => {
             </DropdownMenu>
             <Avatar className="w-24 h-24 border-4 border-zinc-700">
               <AvatarImage
-                src={userData.profilePicture}
+                src={userData.profilePicture?.url}
                 alt="profile-picture"
               />
               <AvatarFallback>
@@ -279,7 +279,7 @@ export const User = () => {
                                   <div className="flex w-full gap-2">
                                     <Avatar className="w-10 h-10">
                                       <AvatarImage
-                                        src={following?.profilePicture}
+                                        src={following.profilePicture?.url}
                                         alt="profile-picture"
                                       />
                                       <AvatarFallback>
@@ -387,7 +387,7 @@ export const User = () => {
                                   <div className="flex w-full gap-2">
                                     <Avatar className="w-10 h-10">
                                       <AvatarImage
-                                        src={followers.profilePicture}
+                                        src={followers.profilePicture?.url}
                                         alt="profile-picture"
                                       />
                                       <AvatarFallback>

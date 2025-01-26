@@ -58,7 +58,7 @@ export const ModalStory = ({ story }) => {
             story.length > 0 ? "bg-gradient" : "bg-zinc-500"
           )}>
           <Avatar className="absolute w-full h-full border-[3px] border-transparent">
-            <AvatarImage src={!isLoading && data.profilePicture} />
+            <AvatarImage src={!isLoading && data?.profilePicture} />
             <AvatarFallback>
               <img src="/notUserPicture.png" alt="user-not-picture" />
             </AvatarFallback>
@@ -108,7 +108,7 @@ export const ModalStory = ({ story }) => {
               <div className="flex gap-2 px-3 py-1 pb-5">
                 <Avatar className="w-10 h-10">
                   <AvatarImage
-                    src={story[storyCurrent].author.profilePicture}
+                    src={story[storyCurrent].author.profilePicture?.url}
                   />
                   <AvatarFallback>
                     <img src="/notUserPicture.png" alt="user-not-picture" />

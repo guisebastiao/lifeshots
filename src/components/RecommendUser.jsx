@@ -46,7 +46,7 @@ export const RecommendedUser = () => {
               key={user.username}
               className="flex justify-around items-center flex-col max-w-28 h-32 w-full bg-zinc-900 border rounded-md">
               <Avatar className="w-11 h-11">
-                <AvatarImage src={user.profilePicture} />
+                <AvatarImage src={user.profilePicture?.url} />
                 <AvatarFallback>
                   <img src="/notUserPicture.png" alt="user-not-picture" />
                 </AvatarFallback>

@@ -84,7 +84,7 @@ export const CommentTree = ({ commentId, isMyPost }) => {
                     <div className="flex items-center w-full gap-1">
                       <Avatar className="w-6 h-6">
                         <AvatarImage
-                          src={commentTree.userCommentsTree.profilePicture}
+                          src={commentTree.userCommentsTree.profilePicture?.url}
                           alt="profile-picture"
                         />
                         <AvatarFallback>

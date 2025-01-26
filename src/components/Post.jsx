@@ -98,7 +98,7 @@ export const Post = ({ post }) => {
       <div className="w-full flex py-2">
         <div className="w-full flex items-center gap-2 pl-1">
           <Avatar className="w-8 h-8">
-            <AvatarImage src={post.author?.profilePicture} />
+            <AvatarImage src={post.author.profilePicture?.url} />
             <AvatarFallback>
               <img src="/notUserPicture.png" alt="user-not-picture" />
             </AvatarFallback>
@@ -215,7 +215,9 @@ export const Post = ({ post }) => {
           {post.amountLikes >= 1 && (
             <div className="flex items-center gap-1 py-2 cursor-pointer">
               <Avatar className="w-6 h-6">
-                <AvatarImage src={post.likes[0].userLikedPost.profilePicture} />
+                <AvatarImage
+                  src={post.likes[0].userLikedPost.profilePicture?.url}
+                />
                 <AvatarFallback>
                   <img src="/notUserPicture.png" alt="user-not-picture" />
                 </AvatarFallback>
@@ -257,7 +259,9 @@ export const Post = ({ post }) => {
                   <div key={like.id} className="flex items-center">
                     <div className="w-full flex items-center gap-2">
                       <Avatar className="w-10 h-10">
-                        <AvatarImage src={like.userLikedPost.profilePicture} />
+                        <AvatarImage
+                          src={like.userLikedPost.profilePicture?.url}
+                        />
                         <AvatarFallback>
                           <img
                             src="/notUserPicture.png"

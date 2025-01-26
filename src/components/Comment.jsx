@@ -141,7 +141,7 @@ export const Comment = ({ postId, isMyPost }) => {
                   <div className="flex w-full items-center gap-1">
                     <Avatar className="w-8 h-8">
                       <AvatarImage
-                        src={comment.userComments.profilePicture}
+                        src={comment.userComments.profilePicture?.url}
                         alt="profile-picture"
                       />
                       <AvatarFallback>

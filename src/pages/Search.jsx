@@ -102,7 +102,7 @@ export const Search = () => {
                   <div className="flex w-full gap-2">
                     <Avatar className="w-10 h-10">
                       <AvatarImage
-                        src={user.profilePicture}
+                        src={user.profilePicture?.url}
                         alt="profile-picture"
                       />
                       <AvatarFallback>

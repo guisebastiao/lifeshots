@@ -88,7 +88,7 @@ export const ModalStories = ({ stories }) => {
         <DialogTrigger>
           <div className="relative w-[52px] h-[52px] rounded-full bg-gradient">
             <Avatar className="absolute w-full h-full border-[3px] border-transparent">
-              <AvatarImage src={userStory.profilePicture} />
+              <AvatarImage src={userStory.profilePicture?.url} />
               <AvatarFallback>
                 <img src="/notUserPicture.png" alt="user-not-picture" />
               </AvatarFallback>
@@ -117,7 +117,7 @@ export const ModalStories = ({ stories }) => {
                 </div>
                 <div className="flex gap-2 px-3 py-1 pb-5">
                   <Avatar className="w-10 h-10">
-                    <AvatarImage src={currentUser.profilePicture} />
+                    <AvatarImage src={currentUser.profilePicture?.url} />
                     <AvatarFallback>
                       <img src="/notUserPicture.png" alt="user-not-picture" />
                     </AvatarFallback>
@@ -133,7 +133,7 @@ export const ModalStories = ({ stories }) => {
             </DialogHeader>
             <section className="absolute top-0 w-full h-[92%] rounded-b-lg bg-zinc-800 overflow-hidden">
               <img
-                src={currentStory.storyImages[0].url}
+                src={currentStory.storyImages[0]?.url}
                 alt="story-image"
                 className="absolute top-0 w-full h-full object-cover"
               />
