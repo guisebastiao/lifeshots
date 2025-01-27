@@ -8,7 +8,7 @@ export const useLikeCommentTree = () => {
 
   const likeCommentTree = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onSuccess: () => {
         queryClient.invalidateQueries(["get-all-comment-tree"]);
       },

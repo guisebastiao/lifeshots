@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { Heart, EllipsisVertical, PencilRuler, Trash } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import { ptBR } from "date-fns/locale";
 
 import { useProfilePicture } from "@/hooks/useProfilePicture";
+import { useStories } from "@/hooks/useStories";
 
+import { Loading } from "@/components/Loading";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
@@ -22,11 +28,45 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+
+import { editStorySchema } from "@/schemas/editStorySchema";
 
 export const ModalStory = ({ story }) => {
-  const [storyCurrent, setStoryCurrent] = useState(0);
+  const editStoryForm = useForm({
+    resolver: zodResolver(editStorySchema),
+    mode: "onSubmit",
+    defaultValues: {
+      content: "",
+    },
+  });
 
+  const [storyCurrent, setStoryCurrent] = useState(0);
+  const [isAlertDeleteOpen, setIsAlertDeleteOpen] = useState(false);
+  const [isAlertUpdateOpen, setIsAlertUpdateOpen] = useState(false);
+
+  const { deleteStory, updateStory } = useStories();
   const { getProfilePicture } = useProfilePicture();
+
+  const { mutate: mutateUpdate, isLoading: loadingUpdate } = updateStory();
+  const { mutate: mutateDelete, isLoading: loadingDelete } = deleteStory();
   const { data, isLoading } = getProfilePicture();
 
   const handlePrev = () => {
@@ -47,6 +87,20 @@ export const ModalStory = ({ story }) => {
 
   const handleOpen = () => {
     setStoryCurrent(0);
+  };
+
+  const handleUpdate = () => {
+    const { id } = story[storyCurrent];
+    const { content } = editStoryForm.watch();
+    const data = { content };
+    mutateUpdate({ data: data, storyId: id });
+    setIsAlertUpdateOpen(false);
+  };
+
+  const handleDelete = () => {
+    const { id } = story[storyCurrent];
+    mutateDelete({ storyId: id });
+    setIsAlertDeleteOpen(false);
   };
 
   return (
@@ -94,17 +148,106 @@ export const ModalStory = ({ story }) => {
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => setIsAlertUpdateOpen(true)}>
                       <PencilRuler />
                       <span>Editar</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => setIsAlertDeleteOpen(true)}>
                       <Trash />
                       <span>Excluir</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
+              <Dialog
+                open={isAlertUpdateOpen}
+                onOpenChange={setIsAlertUpdateOpen}>
+                <DialogTrigger asChild>
+                  <button className="hidden" />
+                </DialogTrigger>
+                <DialogContent
+                  className="media-448:h-auto px-4 py-5 flex flex-col justify-center"
+                  posClose="right-3 top-[11px]">
+                  <DialogHeader>
+                    <DialogTitle>Editar Story</DialogTitle>
+                    <DialogDescription>
+                      Editar a descrição do seu story
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="flex w-full py-4">
+                    <Form {...editStoryForm}>
+                      <form
+                        className="w-full space-y-3"
+                        onSubmit={editStoryForm.handleSubmit(handleUpdate)}>
+                        <FormField
+                          control={editStoryForm.control}
+                          name="content"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Textarea
+                                  placeholder="Descrição"
+                                  className="h-20 resize-none text-sm"
+                                  maxLength={150}
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage className="text-red-500" />
+                            </FormItem>
+                          )}
+                        />
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => setIsAlertUpdateOpen(false)}>
+                            Cancelar
+                          </Button>
+                          <Button type="submit" disabled={loadingUpdate}>
+                            {loadingUpdate ? (
+                              <>
+                                <Loading />
+                                <span>Salvando</span>
+                              </>
+                            ) : (
+                              <span className="font-semibold">Salvar</span>
+                            )}
+                          </Button>
+                        </div>
+                      </form>
+                    </Form>
+                  </div>
+                </DialogContent>
+              </Dialog>
+              <AlertDialog
+                open={isAlertDeleteOpen}
+                onOpenChange={setIsAlertDeleteOpen}>
+                <AlertDialogTrigger asChild>
+                  <button className="hidden" />
+                </AlertDialogTrigger>
+                <AlertDialogContent className="max-w-md">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Excluir Story</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Você tem certeza que deseja excluir esse story?
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDelete}
+                      className="bg-red-500 hover:bg-red-600 text-white">
+                      {loadingDelete ? (
+                        <Loading className="w-4 h-4" />
+                      ) : (
+                        <span>Excluir</span>
+                      )}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
               <div className="flex gap-2 px-3 py-1 pb-5">
                 <Avatar className="w-10 h-10">
                   <AvatarImage

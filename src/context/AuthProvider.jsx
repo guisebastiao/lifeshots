@@ -4,6 +4,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [username, setUsername] = useState(null);
 
   const login = ({ auth }) => {
     localStorage.setItem("auth", JSON.stringify(auth));
@@ -21,12 +22,14 @@ export const AuthProvider = ({ children }) => {
 
     if (auth && auth.token) {
       setIsAuthenticated(true);
+      setUsername(auth.username);
     } else {
       setIsAuthenticated(false);
     }
   }, []);
 
   const value = {
+    username,
     isAuthenticated,
     login,
     logout,

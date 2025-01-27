@@ -13,7 +13,7 @@ export const useStories = () => {
 
   const createStory = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
@@ -55,32 +55,34 @@ export const useStories = () => {
     });
   };
 
-  const updateStory = ({ storyId }) => {
+  const updateStory = () => {
     return useMutation({
-      mutationFn: () => Update({ storyId }),
+      mutationFn: ({ data, storyId }) => Update({ data, storyId }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
             "Algo deu errado, tente novamente mais tarde."
         );
       },
-      onSuccess: () => {
+      onSuccess: (response) => {
         queryClient.invalidateQueries(["get-user-story"]);
+        toast.success(response?.success[0]);
       },
     });
   };
 
   const deleteStory = () => {
     return useMutation({
-      mutationFn: Delete,
+      mutationFn: ({ storyId }) => Delete({ storyId }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
             "Algo deu errado, tente novamente mais tarde."
         );
       },
-      onSuccess: () => {
+      onSuccess: (response) => {
         queryClient.invalidateQueries(["get-user-story"]);
+        toast.success(response?.success[0]);
       },
     });
   };

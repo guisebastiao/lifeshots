@@ -1,4 +1,10 @@
 import { useState, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { formatDistanceToNow } from "date-fns";
+import { useForm } from "react-hook-form";
+import { ptBR } from "date-fns/locale";
 import {
   MessageCircleOff,
   SendHorizontal,
@@ -8,12 +14,8 @@ import {
   User,
   ShieldBan,
 } from "lucide-react";
-import { useInView } from "react-intersection-observer";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-import { formatDistanceToNow } from "date-fns";
-import { useForm } from "react-hook-form";
-import { ptBR } from "date-fns/locale";
+
+import { useAuth } from "@/context/AuthProvider";
 
 import { useComment } from "@/hooks/useComment";
 import { useLikeComment } from "@/hooks/useLikeComment";
@@ -58,19 +60,22 @@ export const Comment = ({ postId, isMyPost }) => {
     },
   });
 
-  const navigate = useNavigate();
+  const { username } = useAuth();
+
   const [commentId, setCommentId] = useState(null);
+
   const { ref, inView } = useInView();
+  const navigate = useNavigate();
 
   const { createComment, getAllComments } = useComment();
   const { likeComment } = useLikeComment();
   const { blockUser } = useBlock();
 
+  const { mutate: mutateComment, isPending: pendingComment } = createComment();
+  const { mutate: mutateLikeComment } = likeComment();
   const { data, fetchNextPage, hasNextPage, isLoading } = getAllComments({
     postId,
   });
-  const { mutate: mutateComment, isPending: pendingComment } = createComment();
-  const { mutate: mutateLikeComment } = likeComment();
 
   const { mutate: mutateBlock, isPending: pendingBlock } = blockUser();
 
@@ -105,7 +110,6 @@ export const Comment = ({ postId, isMyPost }) => {
   };
 
   const handleNavigate = ({ userId }) => {
-    const { username } = JSON.parse(localStorage.getItem("auth"));
     document.body.style.pointerEvents = "auto";
 
     if (username.toLowerCase() === userId.toLowerCase().trim()) {
@@ -161,7 +165,9 @@ export const Comment = ({ postId, isMyPost }) => {
                       {comment.amountLikes}
                     </span>
                   </button>
-                  <DropdownMenu>
+                  <DropdownMenu
+                    open={dropdownMenuIsOpen}
+                    onOpenChange={setDropdownMenuIsOpen}>
                     <DropdownMenuTrigger>
                       <EllipsisVertical size={22} />
                     </DropdownMenuTrigger>
@@ -186,11 +192,13 @@ export const Comment = ({ postId, isMyPost }) => {
                             </DropdownMenuItem>
                           )}
                           <DropdownMenuItem
-                            onClick={() =>
+                            onClick={() => {
+                              setDropdownMenuIsOpen(false);
+
                               handleNavigate({
                                 userId: comment.userComments.username,
-                              })
-                            }>
+                              });
+                            }}>
                             <User size={17} />
                             <span>Ver perfil</span>
                           </DropdownMenuItem>

@@ -7,6 +7,10 @@ import { mimetypes } from "@/utils/mimetypes";
 
 import { usePost } from "@/hooks/usePost";
 
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Loading } from "@/components/Loading";
 import {
   Carousel,
   CarouselContent,
@@ -20,10 +24,6 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Loading } from "@/components/Loading";
 
 import { sendPostSchema } from "@/schemas/sendPostSchema";
 
@@ -88,7 +88,7 @@ export const SendPost = () => {
       <Form {...sendForm}>
         <form
           onSubmit={sendForm.handleSubmit(handleSend)}
-          className="max-w-md w-full h-full flex flex-col justify-center items-center overflow-y-scroll py-6 px-4 gap-4">
+          className="max-w-md w-full h-full flex flex-col justify-center items-center py-6 px-4 gap-4">
           <FormField
             control={sendForm.control}
             name="files"
@@ -140,9 +140,9 @@ export const SendPost = () => {
               <FormItem className="w-full">
                 <FormControl>
                   <Textarea
-                    placeholder="Digite uma legenda para sua publicação"
+                    placeholder="Digite uma descrição para sua publicação"
                     maxLength={300}
-                    className="h-36 resize-none text-sm"
+                    className="h-20 resize-none text-sm"
                     {...field}
                   />
                 </FormControl>

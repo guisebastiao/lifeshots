@@ -1,16 +1,6 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
-
-import { useLikePost } from "@/hooks/useLikePost";
-import { useBlock } from "@/hooks/useBlock";
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselDots,
-} from "@/components/ui/carousel";
 import {
   EllipsisVertical,
   Send,
@@ -21,9 +11,19 @@ import {
   Trash,
   PencilRuler,
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 
+import { useAuth } from "@/context/AuthProvider";
+
+import { useLikePost } from "@/hooks/useLikePost";
+import { useBlock } from "@/hooks/useBlock";
+import { usePost } from "@/hooks/usePost";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselDots,
+} from "@/components/ui/carousel";
 import {
   Dialog,
   DialogContent,
@@ -38,16 +38,36 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { ButtonLike } from "@/components/ButtonLike";
 import { Comment } from "@/components/Comment";
 import { Loading } from "@/components/Loading";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 
 import { formatDistance } from "@/utils/formatDate";
 
 export const Post = ({ post }) => {
+  const [isOpenDialogDelete, setIsOpenDialogDelete] = useState(false);
+  const [dropdownMenuIsOpen, setDropdownMenuIsOpen] = useState(false);
+
+  const { username } = useAuth();
+
   const { likePost, getLikesPost } = useLikePost();
+  const { deletePost } = usePost();
   const { blockUser } = useBlock();
 
+  const { mutate: mutateDeletePost, isPending: deletePending } = deletePost();
   const { mutate: mutateLikePost } = likePost();
   const { data, isLoading, fetchNextPage, hasNextPage } = getLikesPost({
     postId: post.id,
@@ -75,7 +95,6 @@ export const Post = ({ post }) => {
   };
 
   const handleNavigate = ({ userId }) => {
-    const { username } = JSON.parse(localStorage.getItem("auth"));
     document.body.style.pointerEvents = "auto";
 
     if (username.toLowerCase() === userId.toLowerCase().trim()) {
@@ -85,12 +104,12 @@ export const Post = ({ post }) => {
     }
   };
 
-  const editPost = ({ postId }) => {
-    console.log(postId);
+  const updatePostFn = ({ postId }) => {
+    navigate(`/edit-post/${postId}`);
   };
 
-  const deletePost = ({ postId }) => {
-    console.log(postId);
+  const deletePostFn = ({ postId }) => {
+    mutateDeletePost({ postId });
   };
 
   return (
@@ -105,19 +124,52 @@ export const Post = ({ post }) => {
           </Avatar>
           <span className="text-sm text-zinc-50">{post.author.username}</span>
         </div>
-        <DropdownMenu>
+        <AlertDialog
+          open={isOpenDialogDelete}
+          onOpenChange={setIsOpenDialogDelete}>
+          <AlertDialogTrigger asChild>
+            <button className="hidden" />
+          </AlertDialogTrigger>
+          <AlertDialogContent className="max-w-md">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Excluir Publicação</AlertDialogTitle>
+              <AlertDialogDescription>
+                Você tem certeza que deseja excluir sua publicação?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => deletePostFn({ postId: post.id })}
+                className="bg-red-500 hover:bg-red-600 text-white">
+                {deletePending ? (
+                  <Loading className="w-4 h-4" />
+                ) : (
+                  <span>Excluir</span>
+                )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+        <DropdownMenu
+          open={dropdownMenuIsOpen}
+          onOpenChange={setDropdownMenuIsOpen}>
           <DropdownMenuTrigger>
             <EllipsisVertical size={20} />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             {post.isMyPost ? (
               <>
-                <DropdownMenuItem onClick={() => editPost({ postId: post.id })}>
+                <DropdownMenuItem
+                  onClick={() => updatePostFn({ postId: post.id })}>
                   <PencilRuler size={18} />
                   <span>Editar</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => deletePost({ postId: post.id })}>
+                  onClick={() => {
+                    setIsOpenDialogDelete(true);
+                    setDropdownMenuIsOpen(false);
+                  }}>
                   <Trash size={18} />
                   <span>Excluir</span>
                 </DropdownMenuItem>

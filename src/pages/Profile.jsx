@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Bolt, Heart, MessageCircle } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 
+import { useAuth } from "@/context/AuthProvider";
+
 import { useUser } from "@/hooks/useUser";
 import { usePost } from "@/hooks/usePost";
 import { useFollow } from "@/hooks/useFollow";
@@ -21,7 +23,7 @@ import { Loading } from "@/components/Loading";
 import { Post } from "@/components/Post";
 
 export const Profile = () => {
-  const { username } = JSON.parse(localStorage.getItem("auth"));
+  const { username } = useAuth();
   const [type, setType] = useState(null);
 
   const navigate = useNavigate();
@@ -78,7 +80,9 @@ export const Profile = () => {
           <Loading />
         ) : (
           <>
-            <button className="absolute right-3 top-3">
+            <button
+              className="absolute right-3 top-3"
+              onClick={() => navigate("/setting")}>
               <Bolt size={22} />
             </button>
             <Avatar className="w-24 h-24 border-4 border-zinc-700">

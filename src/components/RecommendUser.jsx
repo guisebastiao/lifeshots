@@ -3,6 +3,8 @@ import { User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 
+import { useAuth } from "@/context/AuthProvider";
+
 import { useRecommendUser } from "@/hooks/useRecommendUser";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -10,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Loading } from "./Loading";
 
 export const RecommendedUser = () => {
-  const { username } = JSON.parse(localStorage.getItem("auth"));
+  const { username } = useAuth();
 
   const { getAllRecommendUsers } = useRecommendUser();
   const { data, isLoading, fetchNextPage, hasNextPage } =
@@ -27,8 +29,6 @@ export const RecommendedUser = () => {
   }, [inView]);
 
   const handleNavigate = ({ userId }) => {
-    document.body.style.pointerEvents = "auto";
-
     if (username.toLowerCase() === userId.toLowerCase().trim()) {
       navigate("/profile");
     } else {

@@ -8,7 +8,7 @@ export const useLikeComment = () => {
 
   const likeComment = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onSuccess: () => {
         queryClient.invalidateQueries(["get-all-comments"]);
       },

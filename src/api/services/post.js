@@ -18,18 +18,22 @@ export const GetAll = async ({ userId, pageParam }) => {
   const { data: response } = await axiosInstance.get(`/posts/all/${userId}`, {
     params: {
       offset: pageParam,
-      limit: 10,
+      limit: 12,
     },
   });
   return response;
 };
 
-export const Update = async ({ postId }) => {
-  const { data: response } = await axiosInstance.put(`/posts/${postId}`);
+export const Update = async ({ postId, data }) => {
+  const { data: response } = await axiosInstance.put(`/posts/${postId}`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return response;
 };
 
-export const Delete = async () => {
-  const { data: response } = await axiosInstance.put("/posts/");
+export const Delete = async ({ postId }) => {
+  const { data: response } = await axiosInstance.delete(`/posts/${postId}`);
   return response;
 };

@@ -20,6 +20,6 @@ export const sendPostSchema = z.object({
     ),
   content: z
     .string()
-    .min(1, "A legenda não pode ficar vazia")
-    .max(300, "A legenda tem que ter no máximo 300 caracteres"),
+    .min(1, "A descrição não pode ficar vazia")
+    .max(300, "A descrição tem que ter no máximo 300 caracteres"),
 });

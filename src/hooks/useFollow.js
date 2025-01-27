@@ -12,7 +12,7 @@ export const useFollow = () => {
 
   const createFollow = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onSuccess: () => {
         queryClient.invalidateQueries(["follows"]);
       },

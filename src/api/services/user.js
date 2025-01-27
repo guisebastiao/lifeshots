@@ -5,8 +5,8 @@ export const Get = async ({ userId }) => {
   return response;
 };
 
-export const Update = async () => {
-  const { data: response } = await axiosInstance.put("/users/");
+export const Update = async ({ data }) => {
+  const { data: response } = await axiosInstance.put("/users/", data);
   return response;
 };
 

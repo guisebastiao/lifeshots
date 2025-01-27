@@ -11,12 +11,14 @@ import { UserPending } from "@/pages/UserPending";
 import { ForgotPassword } from "@/pages/ForgotPassword";
 import { ResetPassword } from "@/pages/ResetPassword";
 import { Notifications } from "@/pages/Notifications";
+import { Setting } from "@/pages/Setting";
 import { Feed } from "@/pages/Feed";
 import { Explorer } from "@/pages/Explorer";
 import { Post } from "@/pages/Post";
 import { Search } from "@/pages/Search";
 import { Profile } from "@/pages/Profile";
 import { User } from "@/pages/User";
+import { EditPost } from "@/pages/EditPost";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +62,10 @@ export const router = createBrowserRouter([
         element: <Notifications />,
       },
       {
+        path: "/setting",
+        element: <Setting />,
+      },
+      {
         path: "/",
         element: <Feed />,
       },
@@ -82,6 +88,10 @@ export const router = createBrowserRouter([
       {
         path: "/post",
         element: <Post />,
+      },
+      {
+        path: "/edit-post/:postId",
+        element: <EditPost />,
       },
     ],
   },

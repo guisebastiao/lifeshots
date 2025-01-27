@@ -8,7 +8,7 @@ export const useLikeStory = () => {
 
   const likeStory = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onSuccess: () => {
         queryClient.invalidateQueries(["get-user-story"]);
       },

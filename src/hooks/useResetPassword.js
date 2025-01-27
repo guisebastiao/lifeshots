@@ -21,7 +21,7 @@ export const useResetPassword = () => {
 
   const updatePassword = () => {
     return useMutation({
-      mutationFn: Update,
+      mutationFn: ({ data, tokenId }) => Update({ data, tokenId }),
       onSuccess: ({ response }) => {
         toast.success(response?.data.success[0]);
       },

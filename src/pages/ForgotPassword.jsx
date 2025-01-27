@@ -35,7 +35,7 @@ export const ForgotPassword = () => {
   };
 
   return (
-    <main className="w-screen h-screen flex items-center justify-center bg-zinc-950">
+    <main className="w-screen h-screen flex items-center justify-center">
       <Form {...forgotPasswordForm}>
         <form
           onSubmit={forgotPasswordForm.handleSubmit(handleForgotPassword)}

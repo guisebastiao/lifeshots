@@ -6,7 +6,7 @@ import { Create } from "@/api/services/register";
 export const useRegister = () => {
   const register = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onSuccess: ({ response }) => {
         toast.success(response?.data?.success[0]);
       },

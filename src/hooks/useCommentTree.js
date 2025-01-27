@@ -12,7 +12,7 @@ export const useCommentTree = () => {
 
   const createCommentTree = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
@@ -42,7 +42,7 @@ export const useCommentTree = () => {
 
   const updateCommentTree = () => {
     return useMutation({
-      mutationFn: Update,
+      mutationFn: ({ commentTreeId }) => Update({ commentTreeId }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
@@ -55,9 +55,9 @@ export const useCommentTree = () => {
     });
   };
 
-  const deleteCommentTree = () => {
+  const deleteCommentTree = ({ commentTreeId }) => {
     return useMutation({
-      mutationFn: Delete,
+      mutationFn: () => Delete({ commentTreeId }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||

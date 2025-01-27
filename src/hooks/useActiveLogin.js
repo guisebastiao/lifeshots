@@ -6,7 +6,7 @@ import { Create } from "@/api/services/activeLogin";
 export const useActiveLogin = () => {
   const activeLogin = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||

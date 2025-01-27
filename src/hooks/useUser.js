@@ -21,15 +21,16 @@ export const useUser = () => {
 
   const updateUser = () => {
     return useMutation({
-      mutationFn: Update,
+      mutationFn: ({ data }) => Update({ data }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
             "Algo deu errado, tente novamente mais tarde."
         );
       },
-      onSuccess: () => {
+      onSuccess: (response) => {
         queryClient.invalidateQueries(["users"]);
+        toast.success(response?.success[0]);
       },
     });
   };
@@ -45,6 +46,7 @@ export const useUser = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries(["users"]);
+        toast.success(response?.success[0]);
       },
     });
   };

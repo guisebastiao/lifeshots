@@ -3,13 +3,15 @@ import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import { BellOff } from "lucide-react";
 
+import { useAuth } from "@/context/AuthProvider";
+
 import { useNotifications } from "@/hooks/useNotifications";
 
 import { Notification } from "@/components/Notification";
 import { Loading } from "@/components/Loading";
 
 export const Notifications = () => {
-  const { username } = JSON.parse(localStorage.getItem("auth"));
+  const { username } = useAuth();
 
   const { getAllNotifications, updateAllNotifications } = useNotifications();
 
@@ -30,8 +32,6 @@ export const Notifications = () => {
   }, [inView, hasNextPage, fetchNextPage]);
 
   const handleNavigate = ({ userId }) => {
-    document.body.style.pointerEvents = "auto";
-
     if (username.toLowerCase() === userId.toLowerCase().trim()) {
       navigate("/profile");
     } else {

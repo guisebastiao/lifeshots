@@ -6,7 +6,7 @@ import { Create } from "@/api/services/activeAccount";
 export const useActiveAccount = () => {
   const activeAccount = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||

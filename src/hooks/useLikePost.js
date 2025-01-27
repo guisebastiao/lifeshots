@@ -12,7 +12,7 @@ export const useLikePost = () => {
 
   const likePost = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onSuccess: () => {
         queryClient.invalidateQueries(["get-feed"]);
       },

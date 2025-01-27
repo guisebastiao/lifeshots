@@ -6,7 +6,7 @@ import { Create } from "@/api/services/login";
 export const useLogin = () => {
   const login = () => {
     return useMutation({
-      mutationFn: Create,
+      mutationFn: ({ data }) => Create({ data }),
       onSuccess: (response) => {
         toast.success(response?.success[0]);
       },

@@ -20,7 +20,9 @@ export const Update = async ({ commentId }) => {
   return response;
 };
 
-export const Delete = async () => {
-  const { data: response } = await axiosInstance.delete("/comments/");
+export const Delete = async ({ commentId }) => {
+  const { data: response } = await axiosInstance.delete(
+    `/comments/${commentId}`
+  );
   return response;
 };

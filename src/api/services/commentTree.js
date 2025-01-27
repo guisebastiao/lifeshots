@@ -25,7 +25,9 @@ export const Update = async ({ commentTreeId }) => {
   return response;
 };
 
-export const Delete = async () => {
-  const { data: response } = await axiosInstance.put("/comments-tree/");
+export const Delete = async ({ commentTreeId }) => {
+  const { data: response } = await axiosInstance.delete(
+    `/comments-tree/${commentTreeId}`
+  );
   return response;
 };

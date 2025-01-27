@@ -24,12 +24,20 @@ export const GetAll = async ({ pageParam }) => {
   return response;
 };
 
-export const Update = async ({ storyId }) => {
-  const { data: response } = await axiosInstance.put(`/stories/${storyId}`);
+export const Update = async ({ storyId, data }) => {
+  const { data: response } = await axiosInstance.put(
+    `/stories/${storyId}`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
   return response;
 };
 
-export const Delete = async () => {
-  const { data: response } = await axiosInstance.put("/stories/");
+export const Delete = async ({ storyId }) => {
+  const { data: response } = await axiosInstance.delete(`/stories/${storyId}`);
   return response;
 };

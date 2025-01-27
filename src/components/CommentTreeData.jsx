@@ -54,7 +54,7 @@ export const CommentTreeData = ({ commentId }) => {
       <DialogTrigger className="flex" onClick={() => setIsOpen(true)}>
         <span className="text-xs text-zinc-400">Comentar</span>
       </DialogTrigger>
-      <DialogContent posClose="top-[11px] right-3">
+      <DialogContent className="media-448:h-auto" posClose="top-[11px] right-3">
         <DialogHeader>
           <div className="py-4 px-3">
             <DialogTitle>Comentar</DialogTitle>
@@ -89,7 +89,11 @@ export const CommentTreeData = ({ commentId }) => {
                 disabled={isPending}
                 variant="secondary"
                 className="w-9 h-9 px-0 py-0">
-                {isPending ? <Loading /> : <SendHorizontal />}
+                {isPending ? (
+                  <Loading className="w-4 h-4" />
+                ) : (
+                  <SendHorizontal />
+                )}
               </Button>
             </form>
           </Form>

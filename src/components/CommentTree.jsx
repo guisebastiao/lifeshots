@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { ptBR } from "date-fns/locale";
 import {
   EllipsisVertical,
   PencilRuler,
@@ -5,9 +9,8 @@ import {
   User,
   ShieldBan,
 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { useNavigate } from "react-router-dom";
-import { ptBR } from "date-fns/locale";
+
+import { useAuth } from "@/context/AuthProvider";
 
 import { useCommentTree } from "@/hooks/useCommentTree";
 import { useLikeCommentTree } from "@/hooks/useLikeCommentTree";
@@ -24,15 +27,17 @@ import { ButtonLike } from "@/components/ButtonLike";
 import { Loading } from "@/components/Loading";
 
 export const CommentTree = ({ commentId, isMyPost }) => {
+  const { username } = useAuth();
+
   const { getAllCommentTree } = useCommentTree();
   const { likeCommentTree } = useLikeCommentTree();
   const { blockUser } = useBlock();
 
+  const { mutate: mutateLikeCommentTree } = likeCommentTree();
+  const { mutate: mutateBlock, isPending: pendingBlock } = blockUser();
   const { data, fetchNextPage, isFetching, isLoading } = getAllCommentTree({
     commentId,
   });
-  const { mutate: mutateLikeCommentTree } = likeCommentTree();
-  const { mutate: mutateBlock, isPending: pendingBlock } = blockUser();
 
   const navigate = useNavigate();
 
@@ -49,7 +54,6 @@ export const CommentTree = ({ commentId, isMyPost }) => {
   };
 
   const handleNavigate = ({ userId }) => {
-    const { username } = JSON.parse(localStorage.getItem("auth"));
     document.body.style.pointerEvents = "auto";
 
     if (username.toLowerCase() === userId.toLowerCase().trim()) {
