@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Heart, EllipsisVertical, PencilRuler, Trash } from "lucide-react";
+import {
+  Heart,
+  EllipsisVertical,
+  PencilRuler,
+  Trash,
+  Plus,
+} from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import { ptBR } from "date-fns/locale";
@@ -69,6 +76,8 @@ export const ModalStory = ({ story }) => {
   const { mutate: mutateDelete, isLoading: loadingDelete } = deleteStory();
   const { data, isLoading } = getProfilePicture();
 
+  const navigate = useNavigate();
+
   const handlePrev = () => {
     if (storyCurrent > 0) {
       setStoryCurrent((prev) => prev - 1);
@@ -105,10 +114,10 @@ export const ModalStory = ({ story }) => {
 
   return (
     <Dialog onOpenChange={handleOpen}>
-      <DialogTrigger disabled={story.length <= 0}>
+      <DialogTrigger disabled={story.length <= 0} asChild>
         <div
           className={twMerge(
-            "relative w-[52px] h-[52px] rounded-full",
+            "relative w-[52px] h-[52px] rounded-full cursor-pointer",
             story.length > 0 ? "bg-gradient" : "bg-zinc-500"
           )}>
           <Avatar className="absolute w-full h-full border-[3px] border-transparent">
@@ -117,6 +126,11 @@ export const ModalStory = ({ story }) => {
               <img src="/notUserPicture.png" alt="user-not-picture" />
             </AvatarFallback>
           </Avatar>
+          <button
+            className="absolute -right-[2px] -bottom-[2px] w-[22px] h-[22px] rounded-full bg-blue-500 flex items-center justify-center"
+            onClick={() => navigate("/send-story")}>
+            <Plus />
+          </button>
         </div>
       </DialogTrigger>
       {story.length > 0 && (
@@ -270,7 +284,7 @@ export const ModalStory = ({ story }) => {
           </DialogHeader>
           <section className="absolute top-0 w-full h-[92%] rounded-b-lg bg-zinc-800 overflow-hidden">
             <img
-              src={story[storyCurrent].storyImages[0].url}
+              src={story[storyCurrent].storyImages[0]?.url}
               alt="story-image"
               className="absolute top-0 w-full h-full object-cover"
             />

@@ -14,10 +14,11 @@ import { Notifications } from "@/pages/Notifications";
 import { Setting } from "@/pages/Setting";
 import { Feed } from "@/pages/Feed";
 import { Explorer } from "@/pages/Explorer";
-import { Post } from "@/pages/Post";
+import { SendPost } from "@/pages/SendPost";
 import { Search } from "@/pages/Search";
 import { Profile } from "@/pages/Profile";
 import { User } from "@/pages/User";
+import { SendStory } from "@/pages/SendStory";
 import { EditPost } from "@/pages/EditPost";
 
 export const router = createBrowserRouter([
@@ -86,8 +87,12 @@ export const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/post",
-        element: <Post />,
+        path: "/send-post",
+        element: <SendPost />,
+      },
+      {
+        path: "/send-story",
+        element: <SendStory />,
       },
       {
         path: "/edit-post/:postId",

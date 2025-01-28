@@ -7,8 +7,8 @@ export const useResetPassword = () => {
   const createReset = () => {
     return useMutation({
       mutationFn: Create,
-      onSuccess: ({ response }) => {
-        toast.success(response?.data?.success[0]);
+      onSuccess: (response) => {
+        toast.success(response?.success[0]);
       },
       onError: ({ response }) => {
         toast.error(
@@ -22,14 +22,14 @@ export const useResetPassword = () => {
   const updatePassword = () => {
     return useMutation({
       mutationFn: ({ data, tokenId }) => Update({ data, tokenId }),
-      onSuccess: ({ response }) => {
-        toast.success(response?.data.success[0]);
-      },
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
             "Algo deu errado, tente novamente mais tarde."
         );
+      },
+      onSuccess: (response) => {
+        toast.success(response?.success[0]);
       },
     });
   };

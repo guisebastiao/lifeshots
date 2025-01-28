@@ -29,7 +29,7 @@ export const Nav = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/post">
+            <NavLink to="/send-post">
               {({ isActive }) => (
                 <SquarePlus
                   size={22}

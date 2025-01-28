@@ -59,7 +59,6 @@ import { formatDistance } from "@/utils/formatDate";
 
 export const Post = ({ post }) => {
   const [isOpenDialogDelete, setIsOpenDialogDelete] = useState(false);
-  const [dropdownMenuIsOpen, setDropdownMenuIsOpen] = useState(false);
 
   const { username } = useAuth();
 
@@ -151,9 +150,7 @@ export const Post = ({ post }) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <DropdownMenu
-          open={dropdownMenuIsOpen}
-          onOpenChange={setDropdownMenuIsOpen}>
+        <DropdownMenu>
           <DropdownMenuTrigger>
             <EllipsisVertical size={20} />
           </DropdownMenuTrigger>
@@ -168,7 +165,6 @@ export const Post = ({ post }) => {
                 <DropdownMenuItem
                   onClick={() => {
                     setIsOpenDialogDelete(true);
-                    setDropdownMenuIsOpen(false);
                   }}>
                   <Trash size={18} />
                   <span>Excluir</span>

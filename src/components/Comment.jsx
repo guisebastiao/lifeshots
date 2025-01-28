@@ -165,9 +165,7 @@ export const Comment = ({ postId, isMyPost }) => {
                       {comment.amountLikes}
                     </span>
                   </button>
-                  <DropdownMenu
-                    open={dropdownMenuIsOpen}
-                    onOpenChange={setDropdownMenuIsOpen}>
+                  <DropdownMenu>
                     <DropdownMenuTrigger>
                       <EllipsisVertical size={22} />
                     </DropdownMenuTrigger>
@@ -193,8 +191,6 @@ export const Comment = ({ postId, isMyPost }) => {
                           )}
                           <DropdownMenuItem
                             onClick={() => {
-                              setDropdownMenuIsOpen(false);
-
                               handleNavigate({
                                 userId: comment.userComments.username,
                               });

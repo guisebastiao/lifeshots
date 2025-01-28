@@ -33,21 +33,39 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import { editUserSchema } from "@/schemas/editUserSchema";
+import { profilePictureSchema } from "@/schemas/profilePictureSchema";
 import { mimetypes } from "@/utils/mimetypes";
 
 export const Setting = () => {
-  const settingsUserForm = useForm({
+  const editUserForm = useForm({
     resolver: zodResolver(editUserSchema),
     mode: "onSubmit",
     defaultValues: {
-      file: null,
       name: "",
       surname: "",
       bio: "",
     },
   });
+
+  const profilePictureForm = useForm({
+    resolver: zodResolver(profilePictureSchema),
+    mode: "onSubmit",
+    defaultValues: {
+      file: null,
+    },
+  });
+
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   const [accountActions, setAccountActions] = useState({
     privateAccount: null,
@@ -80,22 +98,24 @@ export const Setting = () => {
 
   useEffect(() => {
     if (!isLoading) {
-      settingsUserForm.setValue("name", data.name);
-      settingsUserForm.setValue("surname", data.surname);
-      settingsUserForm.setValue("bio", data.bio || "");
+      editUserForm.setValue("name", data.name);
+      editUserForm.setValue("surname", data.surname);
+      editUserForm.setValue("bio", data.bio || "");
     }
   }, [isLoading, data]);
 
   const handleSaveProfile = () => {
-    const { name, surname, bio, file } = settingsUserForm.getValues();
+    const { name, surname, bio } = editUserForm.getValues();
     const data = { name, surname, bio };
     updateUserFn({ data });
+  };
 
-    if (file) {
-      const formData = new FormData();
-      formData.append("profilePicture", file);
-      sendProfilePictureFn({ data: formData });
-    }
+  const handleSaveProfilePicture = () => {
+    const { file } = profilePictureForm.getValues();
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+    sendProfilePictureFn({ data: formData });
+    setDialogIsOpen(false);
   };
 
   const handleDeleteAccount = () => {
@@ -139,9 +159,9 @@ export const Setting = () => {
   return (
     <main className="relative w-screen h-screen flex items-center justify-center">
       <section className="absolute top-14 flex max-w-md w-full h-container flex-col items-center justify-start overflow-y-scroll px-4 gap-9 pb-5">
-        <Form {...settingsUserForm}>
+        <Form {...editUserForm}>
           <form
-            onSubmit={settingsUserForm.handleSubmit(handleSaveProfile)}
+            onSubmit={editUserForm.handleSubmit(handleSaveProfile)}
             className="w-full flex flex-col items-center gap-2">
             <div className="w-full flex justify-between items-center">
               <h2 className="inline py-2 text-lg font-semibold">Perfil</h2>
@@ -170,37 +190,99 @@ export const Setting = () => {
                 </AlertDialogContent>
               </AlertDialog>
             </div>
+            <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
+              <DialogTrigger asChild>
+                <Avatar className="relative w-20 h-20 border-2 border-zinc-700">
+                  <button
+                    type="button"
+                    className="absolute w-full h-full flex items-center justify-center rounded-full opacity-0 hover:opacity-100 bg-transparent-color z-10 transition-all duration-200 overflow-hidden">
+                    <Upload className="stroke-zinc-400" />
+                  </button>
+                  <AvatarImage src={data?.profilePicture?.url} />
+                  <AvatarFallback>
+                    <img src="/notUserPicture.png" alt="user-not-picture" />
+                  </AvatarFallback>
+                </Avatar>
+              </DialogTrigger>
+              <DialogContent
+                posClose="right-3 top-[11px]"
+                className="media-448:h-auto">
+                <DialogHeader>
+                  <div className="py-4">
+                    <DialogTitle className="text-center">
+                      Foto de Perfil
+                    </DialogTitle>
+                    <DialogDescription />
+                  </div>
+                </DialogHeader>
+                <Form {...profilePictureForm}>
+                  <form
+                    onSubmit={profilePictureForm.handleSubmit(
+                      handleSaveProfilePicture
+                    )}
+                    className="w-full flex flex-col items-center gap-2">
+                    <FormField
+                      control={profilePictureForm.control}
+                      name="file"
+                      render={({ field }) => (
+                        <FormItem className="w-full flex justify-center items-center flex-col mb-2">
+                          <Avatar className="relative w-24 h-24 border-2 border-zinc-700">
+                            <button className="absolute w-full h-full flex items-center justify-center rounded-full opacity-0 hover:opacity-100 bg-transparent-color z-10 transition-all duration-200 overflow-hidden">
+                              <Upload className="stroke-zinc-400" />
+                              <FormControl>
+                                <Input
+                                  type="file"
+                                  accept={mimetypes.join(",")}
+                                  className="absolute w-full h-full"
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0] || null;
+                                    field.onChange(file);
+                                  }}
+                                />
+                              </FormControl>
+                            </button>
+                            <AvatarImage
+                              src={
+                                profilePictureForm.getValues("file")
+                                  ? URL.createObjectURL(
+                                      profilePictureForm.getValues("file")
+                                    )
+                                  : data?.profilePicture?.url
+                              }
+                            />
+                            <AvatarFallback>
+                              <img
+                                src="/notUserPicture.png"
+                                alt="user-not-picture"
+                              />
+                            </AvatarFallback>
+                          </Avatar>
+                          <FormMessage className="absolute left-0 top-3/4 w-full text-center text-red-500" />
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      type="submit"
+                      size="sm"
+                      disabled={profilePicturePending}
+                      className="mb-4">
+                      {profilePicturePending ? (
+                        <>
+                          <Loading className="border-black w-4 h-4" />
+                          <span>Salvando Foto de Perfil</span>
+                        </>
+                      ) : (
+                        <span className="font-semibold">
+                          Salvar Foto de Perfil
+                        </span>
+                      )}
+                    </Button>
+                  </form>
+                </Form>
+              </DialogContent>
+            </Dialog>
             <FormField
-              control={settingsUserForm.control}
-              name="file"
-              render={({ field }) => (
-                <FormItem className="w-full flex justify-center items-center flex-col mb-2">
-                  <Avatar className="relative w-20 h-20 border-2 border-zinc-700">
-                    <button className="absolute w-full h-full flex items-center justify-center rounded-full opacity-0 hover:opacity-100 bg-transparent-color z-10 transition-all duration-200 overflow-hidden">
-                      <Upload className="stroke-zinc-400" />
-                      <FormControl>
-                        <Input
-                          type="file"
-                          accept={mimetypes.join(",")}
-                          className="absolute w-full h-full"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0] || null;
-                            field.onChange(file);
-                          }}
-                        />
-                      </FormControl>
-                    </button>
-                    <AvatarImage src={data?.profilePicture?.url} />
-                    <AvatarFallback>
-                      <img src="/notUserPicture.png" alt="user-not-picture" />
-                    </AvatarFallback>
-                  </Avatar>
-                  <FormMessage className="absolute left-0 top-3/4 w-full text-center text-red-500" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={settingsUserForm.control}
+              control={editUserForm.control}
               name="name"
               render={({ field }) => (
                 <FormItem className="w-full">
@@ -221,7 +303,7 @@ export const Setting = () => {
               )}
             />
             <FormField
-              control={settingsUserForm.control}
+              control={editUserForm.control}
               name="surname"
               render={({ field }) => (
                 <FormItem className="w-full">
@@ -242,7 +324,7 @@ export const Setting = () => {
               )}
             />
             <FormField
-              control={settingsUserForm.control}
+              control={editUserForm.control}
               name="bio"
               render={({ field }) => (
                 <FormItem className="w-full">
@@ -261,9 +343,9 @@ export const Setting = () => {
             <Button
               type="submit"
               size="sm"
-              disabled={updatePending || profilePicturePending}
+              disabled={updatePending}
               className="mt-2">
-              {updatePending || profilePicturePending ? (
+              {updatePending ? (
                 <>
                   <Loading className="border-black w-4 h-4" />
                   <span>Salvando Perfil</span>
