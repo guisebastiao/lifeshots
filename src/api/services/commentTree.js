@@ -18,9 +18,10 @@ export const GetAll = async ({ commentId, pageParam }) => {
   return response;
 };
 
-export const Update = async ({ commentTreeId }) => {
+export const Update = async ({ commentTreeId, data }) => {
   const { data: response } = await axiosInstance.put(
-    `/comments-tree/${commentTreeId}`
+    `/comments-tree/${commentTreeId}`,
+    data
   );
   return response;
 };

@@ -15,8 +15,11 @@ export const GetAll = async ({ postId, pageParam }) => {
   return response;
 };
 
-export const Update = async ({ commentId }) => {
-  const { data: response } = await axiosInstance.put(`/comments/${commentId}`);
+export const Update = async ({ commentId, data }) => {
+  const { data: response } = await axiosInstance.put(
+    `/comments/${commentId}`,
+    data
+  );
   return response;
 };
 

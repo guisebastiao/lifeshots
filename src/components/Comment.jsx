@@ -48,8 +48,28 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import { commentSchema } from "@/schemas/commentSchema";
+import { editCommentSchema } from "@/schemas/editCommentSchema";
 
 export const Comment = ({ postId, isMyPost }) => {
   const commentForm = useForm({
@@ -60,14 +80,28 @@ export const Comment = ({ postId, isMyPost }) => {
     },
   });
 
+  const editCommentForm = useForm({
+    resolver: zodResolver(editCommentSchema),
+    mode: "onSubmit",
+    defaultValues: {
+      content: "",
+    },
+  });
+
   const { username } = useAuth();
 
   const [commentId, setCommentId] = useState(null);
+  const [modalDeleteCommentIsOpen, setModalDeleteCommentIsOpen] =
+    useState(null);
+  const [modalUpdateCommentIsOpen, setModalUpdateCommentIsOpen] =
+    useState(null);
+  const [commentContent, setCommentContent] = useState(null);
 
   const { ref, inView } = useInView();
   const navigate = useNavigate();
 
-  const { createComment, getAllComments } = useComment();
+  const { createComment, getAllComments, updateComment, deleteComment } =
+    useComment();
   const { likeComment } = useLikeComment();
   const { blockUser } = useBlock();
 
@@ -76,6 +110,10 @@ export const Comment = ({ postId, isMyPost }) => {
   const { data, fetchNextPage, hasNextPage, isLoading } = getAllComments({
     postId,
   });
+  const { mutate: mutateUpdateCommentFn, isPending: updatePending } =
+    updateComment();
+  const { mutate: mutateDeleteComment, isPending: deletePending } =
+    deleteComment();
 
   const { mutate: mutateBlock, isPending: pendingBlock } = blockUser();
 
@@ -85,11 +123,29 @@ export const Comment = ({ postId, isMyPost }) => {
     }
   }, [inView]);
 
+  useEffect(() => {
+    if (commentContent) {
+      editCommentForm.setValue("content", commentContent);
+    }
+  }, [commentContent]);
+
   const handleComment = () => {
     const { content } = commentForm.watch();
     const data = { content, postId };
     mutateComment({ data });
     commentForm.reset();
+  };
+
+  const updateCommentFn = () => {
+    const { content } = editCommentForm.getValues();
+    const data = { content };
+    mutateUpdateCommentFn({ data, commentId });
+    setModalUpdateCommentIsOpen(false);
+  };
+
+  const deleteCommentFn = ({ commentId }) => {
+    mutateDeleteComment({ commentId });
+    setModalDeleteCommentIsOpen(false);
   };
 
   const handleLike = ({ commentId }) => {
@@ -165,6 +221,95 @@ export const Comment = ({ postId, isMyPost }) => {
                       {comment.amountLikes}
                     </span>
                   </button>
+                  <Dialog
+                    open={modalUpdateCommentIsOpen}
+                    onOpenChange={setModalUpdateCommentIsOpen}>
+                    <DialogTrigger asChild>
+                      <button className="hidden" />
+                    </DialogTrigger>
+                    <DialogContent
+                      className="media-448:h-auto px-4 py-5 flex flex-col justify-center"
+                      posClose="right-3 top-[11px]">
+                      <DialogHeader>
+                        <DialogTitle>Editar Comentário</DialogTitle>
+                        <DialogDescription>
+                          Editar a descrição do seu comentário
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex w-full py-4">
+                        <Form {...editCommentForm}>
+                          <form
+                            className="w-full space-y-3"
+                            onSubmit={editCommentForm.handleSubmit(
+                              updateCommentFn
+                            )}>
+                            <FormField
+                              control={editCommentForm.control}
+                              name="content"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input
+                                      placeholder="Descrição"
+                                      autoComplete="off"
+                                      maxLength={300}
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormMessage className="text-red-500" />
+                                </FormItem>
+                              )}
+                            />
+                            <div className="flex justify-end gap-2">
+                              <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => setIsAlertUpdateOpen(false)}>
+                                Cancelar
+                              </Button>
+                              <Button type="submit" disabled={updatePending}>
+                                {updatePending ? (
+                                  <>
+                                    <Loading />
+                                    <span>Salvando</span>
+                                  </>
+                                ) : (
+                                  <span className="font-semibold">Salvar</span>
+                                )}
+                              </Button>
+                            </div>
+                          </form>
+                        </Form>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                  <AlertDialog
+                    open={modalDeleteCommentIsOpen}
+                    onOpenChange={setModalDeleteCommentIsOpen}>
+                    <AlertDialogTrigger asChild>
+                      <button className="hidden" />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="max-w-md">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Excluir Comentário</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Você tem certeza que deseja excluir esse comentário?
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => deleteCommentFn({ commentId })}
+                          className="bg-red-500 hover:bg-red-600 text-white">
+                          {deletePending ? (
+                            <Loading className="w-4 h-4" />
+                          ) : (
+                            <span>Excluir</span>
+                          )}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                   <DropdownMenu>
                     <DropdownMenuTrigger>
                       <EllipsisVertical size={22} />
@@ -172,11 +317,20 @@ export const Comment = ({ postId, isMyPost }) => {
                     <DropdownMenuContent>
                       {comment.isMyComment ? (
                         <>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => {
+                              setModalUpdateCommentIsOpen(true);
+                              setCommentId(comment.id);
+                              setCommentContent(comment.content);
+                            }}>
                             <PencilRuler size={17} />
                             <span>Editar</span>
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => {
+                              setModalDeleteCommentIsOpen(true);
+                              setCommentId(comment.id);
+                            }}>
                             <Trash size={17} />
                             <span>Excluir</span>
                           </DropdownMenuItem>
@@ -184,7 +338,11 @@ export const Comment = ({ postId, isMyPost }) => {
                       ) : (
                         <>
                           {!!isMyPost && (
-                            <DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setModalDeleteCommentIsOpen(true);
+                                setCommentId(comment.id);
+                              }}>
                               <Trash size={17} />
                               <span>Excluir</span>
                             </DropdownMenuItem>
@@ -258,6 +416,7 @@ export const Comment = ({ postId, isMyPost }) => {
                   <FormControl>
                     <Input
                       placeholder="Adicionar um comentário..."
+                      maxLength={300}
                       autoComplete="off"
                       {...field}
                     />

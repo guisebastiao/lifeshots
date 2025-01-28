@@ -42,7 +42,7 @@ export const useComment = () => {
 
   const updateComment = () => {
     return useMutation({
-      mutationFn: ({ commentId }) => Update({ commentId }),
+      mutationFn: ({ commentId, data }) => Update({ commentId, data }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
@@ -55,9 +55,9 @@ export const useComment = () => {
     });
   };
 
-  const deleteComment = ({ commentId }) => {
+  const deleteComment = () => {
     return useMutation({
-      mutationFn: () => Delete({ commentId }),
+      mutationFn: ({ commentId }) => Delete({ commentId }),
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
