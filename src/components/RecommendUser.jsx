@@ -37,7 +37,7 @@ export const RecommendedUser = () => {
   };
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 overflow-x-scroll">
       {!isLoading &&
         data.pages[0].users.length > 0 &&
         data.pages.map((page) =>

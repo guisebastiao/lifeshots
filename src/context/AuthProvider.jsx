@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const login = ({ auth }) => {
     localStorage.setItem("auth", JSON.stringify(auth));
     setIsAuthenticated(true);
+    setUsername(auth.username);
   };
 
   const logout = () => {

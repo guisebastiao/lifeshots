@@ -7,14 +7,14 @@ export const useRegister = () => {
   const register = () => {
     return useMutation({
       mutationFn: ({ data }) => Create({ data }),
-      onSuccess: ({ response }) => {
-        toast.success(response?.data?.success[0]);
-      },
       onError: ({ response }) => {
         toast.error(
           response?.data?.errors[0] ||
             "Algo deu errado, tente novamente mais tarde."
         );
+      },
+      onSuccess: (response) => {
+        toast.success(response?.success[0]);
       },
     });
   };
