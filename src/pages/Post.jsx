@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { CameraOff } from "lucide-react";
 
 import { usePost } from "@/hooks/usePost";
 
@@ -13,9 +14,20 @@ export const Post = ({}) => {
 
   return (
     <main className="relative w-screen h-screen flex items-center justify-center">
-      <section className="absolute top-14 flex max-w-md w-full h-container flex-col items-center justify-center pt-5 px-4">
-        {isLoading ? <Loading /> : <PostComponent post={post} />}
-      </section>
+      {isLoading ? (
+        <Loading />
+      ) : !post ? (
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-12 h-12 border rounded-full border-white flex items-center justify-center">
+            <CameraOff />
+          </div>
+          <h1 className="text-lg">Essa publicação não está presente</h1>
+        </div>
+      ) : (
+        <section className="absolute top-14 flex max-w-md w-full h-container flex-col items-center justify-center pt-5 px-4">
+          <PostComponent post={post} />
+        </section>
+      )}
     </main>
   );
 };
