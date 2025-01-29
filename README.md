@@ -36,7 +36,7 @@ LifeShots é uma rede social simples desenvolvida por GuiSebastião para aprimor
 
 3. Instale a API:
    
- > `Instale a API [**LifeShotsAPI**](https://github.com/guisebastiao/lifeshots-api), para que tudo funcione.`
+ > `Instale a API, presente em meus repositórios. > lifeshots-api <`
 
 4. Inicie o LifeShots:
 
