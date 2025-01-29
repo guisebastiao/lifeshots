@@ -10,6 +10,8 @@ import {
   User,
   Trash,
   PencilRuler,
+  Copy,
+  Check,
 } from "lucide-react";
 
 import { useAuth } from "@/context/AuthProvider";
@@ -59,6 +61,9 @@ import { formatDistance } from "@/utils/formatDate";
 
 export const Post = ({ post }) => {
   const [isOpenDialogDelete, setIsOpenDialogDelete] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const shareUrl = encodeURIComponent(`${location.origin}/post/${post.id}`);
 
   const { username } = useAuth();
 
@@ -109,6 +114,18 @@ export const Post = ({ post }) => {
 
   const deletePostFn = ({ postId }) => {
     mutateDeletePost({ postId });
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard
+      .writeText(`${location.origin}/post/${post.id}`)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(() => {
+        console.error("Error copying to clipboard");
+      });
   };
 
   return (
@@ -249,9 +266,48 @@ export const Post = ({ post }) => {
               {post.amountComments}
             </span>
           </div>
-          <button className="flex items-center">
-            <Send size={20} className="text-zinc-50" />
-          </button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="flex items-center">
+                <Send size={20} className="text-zinc-50" />
+              </button>
+            </DialogTrigger>
+            <DialogContent
+              posClose="right-3 top-[11px]"
+              className="h-auto media-448:h-auto">
+              <DialogHeader>
+                <div className="py-4 text-center space-y-1">
+                  <DialogTitle>Compartilhar</DialogTitle>
+                  <DialogDescription>
+                    Escolha como você deseja compartilhar
+                  </DialogDescription>
+                </div>
+              </DialogHeader>
+              <div className="flex px-3 gap-1 justify-center">
+                <div className="flex gap-2 pb-4">
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-facebook p-[6px]"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    <ion-icon name="logo-facebook" size="large" />
+                  </a>
+                  <a
+                    href={`https://api.whatsapp.com/send?text=${shareUrl}`}
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-whatsapp p-[6px]"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    <ion-icon name="logo-whatsapp" size="large" />
+                  </a>
+                  <button
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-zinc-600 active:bg-zinc-700 transition-all duration-100"
+                    onClick={handleCopy}>
+                    {copied ? <Check size={20} /> : <Copy size={20} />}
+                  </button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
         <span className="text-[11px] flex items-center text-zinc-400">
           Publicada {formatDistance(post.createdAt)}
@@ -264,7 +320,7 @@ export const Post = ({ post }) => {
             <div className="flex items-center gap-1 py-2 cursor-pointer">
               <Avatar className="w-6 h-6">
                 <AvatarImage
-                  src={post.likes[0].userLikedPost.profilePicture?.url}
+                  src={post.likes?.[0].userLikedPost.profilePicture?.url}
                 />
                 <AvatarFallback>
                   <img src="/notUserPicture.png" alt="user-not-picture" />
@@ -275,7 +331,7 @@ export const Post = ({ post }) => {
                   <>
                     Curtido por{" "}
                     <span className="text-zinc-300 text-xs font-semibold">
-                      {post.likes[0].userLikedPost.username}
+                      {post.likes?.[0].userLikedPost.username}
                     </span>
                   </>
                 ) : (

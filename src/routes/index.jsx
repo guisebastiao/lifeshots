@@ -20,6 +20,7 @@ import { Profile } from "@/pages/Profile";
 import { User } from "@/pages/User";
 import { SendStory } from "@/pages/SendStory";
 import { EditPost } from "@/pages/EditPost";
+import { Post } from "@/pages/Post";
 
 export const router = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ export const router = createBrowserRouter([
       {
         path: "/edit-post/:postId",
         element: <EditPost />,
+      },
+      {
+        path: "/post/:postId",
+        element: <Post />,
       },
     ],
   },

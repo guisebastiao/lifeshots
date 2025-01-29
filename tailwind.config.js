@@ -38,6 +38,8 @@ export default {
         "transparent-color": "rgba(0, 0, 0, 0.5)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        whatsapp: "#25D366",
+        facebook: "#1877F2",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
