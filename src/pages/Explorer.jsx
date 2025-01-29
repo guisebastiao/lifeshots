@@ -24,8 +24,8 @@ export const Explorer = () => {
   return (
     <main className="relative w-screen h-screen flex items-center justify-center">
       <section className="absolute top-14 max-w-md w-full h-container overflow-y-scroll">
-        <div className="flex h-full flex-col gap-2 px-2">
-          <RecommendedUser />
+        <RecommendedUser />
+        <div className="flex h-full flex-col gap-2 mt-2 px-2">
           {isLoading ? (
             <Loading className="w-5 h-5 text-zinc-50 border-2 self-center" />
           ) : data.pages[0].posts.length <= 0 ? (
