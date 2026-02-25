@@ -6,9 +6,6 @@ export const useAuth = () => {
   const useLogin = () => {
     return useMutation({
       mutationFn: authService.login,
-      onError: (error) => {
-        toast.error(error.message);
-      },
     });
   };
 

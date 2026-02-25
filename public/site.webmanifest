@@ -3,6 +3,12 @@
   "short_name": "Lifeshots",
   "icons": [
     {
+      "src": "/web-app-manifest-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
       "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",

@@ -1,7 +1,7 @@
 import type { AuthResponse, LoginRequest, RegisterRequest } from "@/types/auth-types";
-import { handleAxiosError } from "@/utils/handle-axios-error";
+import { handleAxiosError } from "@/lib/http/errors/handle-axios-error";
 import type { DefaultResponse } from "@/types/api-types";
-import { api } from "@/services/api";
+import { api } from "@/lib/http/api";
 
 export const authService = {
   async login({ data }: { data: LoginRequest }): Promise<DefaultResponse<AuthResponse>> {

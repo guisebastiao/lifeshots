@@ -15,7 +15,7 @@ export type ValidationDetail = {
 export type ApiErrorDetails = {
   code: string;
   message: string;
-  details: ValidationDetail[] | null | unknown;
+  details?: ValidationDetail[];
 };
 
 export type ApiSuccess<T> = {

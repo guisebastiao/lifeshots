@@ -19,6 +19,7 @@ export const loginSchema = z.object({
     .regex(/(?:.*\d){2,}.*/, {
       message: "Senha deve conter pelo menos dois números",
     }),
+  errorCredentials: z.string().optional(),
 });
 
 export const registerSchema = z
