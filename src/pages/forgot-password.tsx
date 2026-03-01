@@ -1,9 +1,8 @@
 import { useFormAutoClearErrors } from "@/hooks/use-form-auto-clear-errors";
 import type { ForgotPasswordRequest } from "@/types/recover-password-types";
 import { forgotPasswordSchema } from "@/schemas/recover-password-schemas";
+import { useRecoverPassword } from "@/hooks/domain/use-recover-password";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { useRecoverPassword } from "@/hooks/use-recover-password";
-import { ApiException } from "@/lib/http/errors/api-exception";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { Spinner } from "@/components/ui/spinner";
@@ -11,11 +10,9 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
-import { toast } from "sonner";
 
 export const ForgotPassword = () => {
-  const { useForgotPassword } = useRecoverPassword();
-  const { mutate, isPending, isSuccess } = useForgotPassword();
+  const { forgotPassword } = useRecoverPassword();
 
   const navigate = useNavigate();
 
@@ -27,24 +24,23 @@ export const ForgotPassword = () => {
   });
 
   const onSubmit = (data: ForgotPasswordRequest) => {
-    mutate(
+    forgotPassword.mutate(
       { data },
       {
         onSuccess: () => {
           form.reset();
         },
-        onError: (error) => {
-          if (error instanceof ApiException) {
-            if (error.code === "VALIDATION_ERROR" && error.details) {
-              error.details.forEach((detail) => {
-                form.setError(detail.field as keyof ForgotPasswordRequest, { type: "server", message: detail.error });
+        onError: (err) => {
+          if (!err) return;
+
+          if (err.error.code === "VALIDATION_ERROR") {
+            err.error.details.forEach((err) => {
+              form.setError(err.field, {
+                type: "server",
+                message: err.error,
               });
-
-              return;
-            }
+            });
           }
-
-          toast.error(error.message);
         },
       },
     );
@@ -52,22 +48,22 @@ export const ForgotPassword = () => {
 
   useFormAutoClearErrors({ submitCount: form.formState.submitCount, clearErrors: form.clearErrors });
 
-  if (isSuccess) {
+  if (forgotPassword.isSuccess) {
     return (
-      <section className="max-w-lg w-full mx-auto self-center">
+      <section className="max-w-lg w-full mx-auto my-auto px-3">
         <h1 className="text-2xl font-semibold tracking-tight text-center mb-1">Verifique seu e-mail</h1>
         <p className="leading-7 text-foreground/75 text-center mb-3 text-[15px]">
           Se o endereço informado estiver associado a uma conta, enviaremos um link para redefinição de senha.
         </p>
-        <Button type="button" className="w-full" onClick={() => navigate("/login")}>
-          <span>Voltar para login</span>
+        <Button type="button" className="w-full" onClick={() => navigate(-1)}>
+          <span>Voltar</span>
         </Button>
       </section>
     );
   }
 
   return (
-    <section className="max-w-lg w-full mx-auto self-center">
+    <section className="max-w-lg w-full mx-auto my-auto">
       <h1 className="text-2xl font-semibold tracking-tight text-center mb-1">Recuperar senha</h1>
       <p className="leading-7 text-foreground/75 text-center mb-3 text-[15px]">
         Informe o e-mail cadastrado em sua conta e enviaremos um link para redefinir sua senha
@@ -84,7 +80,7 @@ export const ForgotPassword = () => {
                 id="email"
                 type="text"
                 icon={Mail}
-                disabled={isPending}
+                disabled={forgotPassword.isPending}
                 placeholder="você@exemplo.com"
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
@@ -93,11 +89,17 @@ export const ForgotPassword = () => {
             </Field>
           )}
         />
-        <Button type="submit" form="login-form" className="w-full" disabled={isPending}>
-          {isPending && <Spinner className="text-white" />}
+        <Button type="submit" form="login-form" className="w-full" disabled={forgotPassword.isPending}>
+          {forgotPassword.isPending && <Spinner className="text-white" />}
           <span>Enviar</span>
         </Button>
-        <Button variant="secondary" type="button" className="w-full" disabled={isPending} onClick={() => navigate(-1)}>
+        <Button
+          variant="secondary"
+          type="button"
+          className="w-full"
+          disabled={forgotPassword.isPending}
+          onClick={() => navigate(-1)}
+        >
           <span>Voltar</span>
         </Button>
       </form>

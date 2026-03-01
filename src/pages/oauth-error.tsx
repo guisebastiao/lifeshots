@@ -1,11 +1,12 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { Spinner } from "@/components/ui/spinner";
 import { useSession } from "@/hooks/use-session";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
 export const OauthError = () => {
   const [searchParams] = useSearchParams();
-  const { logOut } = useSession();
+  const { sessionLogout } = useSession();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,7 +14,7 @@ export const OauthError = () => {
     const email = searchParams.get("email");
     const name = searchParams.get("name");
 
-    logOut();
+    sessionLogout();
 
     if (reason?.toLocaleLowerCase() === "user_not_registered") {
       navigate("/register", { state: { email, name }, replace: true });
@@ -24,5 +25,13 @@ export const OauthError = () => {
     navigate("/login", { replace: true });
   }, []);
 
-  return <span className="mx-auto self-center text-center">Erro na autenticação! Redirecionando...</span>;
+  return (
+    <section className="mx-auto my-auto space-y-3">
+      <h1 className="text-2xl font-semibold tracking-tight text-center">Autenticação mal sucedida</h1>
+      <div className="flex justify-center items-center gap-1.5">
+        <Spinner />
+        <span>Redirecionando...</span>
+      </div>
+    </section>
+  );
 };

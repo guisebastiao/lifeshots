@@ -1,6 +1,5 @@
 import { useFormAutoClearErrors } from "@/hooks/use-form-auto-clear-errors";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { ApiException } from "@/lib/http/errors/api-exception";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { RegisterRequest } from "@/types/auth-types";
 import { registerSchema } from "@/schemas/auth-schemas";
@@ -9,13 +8,12 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/domain/use-auth";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 
 export const Register = () => {
-  const { useRegister } = useAuth();
-  const { mutate, isPending } = useRegister();
+  const { register } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,7 +32,7 @@ export const Register = () => {
   });
 
   const onSubmit = (data: RegisterRequest) => {
-    mutate(
+    register.mutate(
       { data },
       {
         onSuccess: () => {
@@ -43,18 +41,17 @@ export const Register = () => {
             state: { email: data.email },
           });
         },
-        onError: (error) => {
-          if (error instanceof ApiException) {
-            if (error.code === "VALIDATION_ERROR" && error.details) {
-              error.details.forEach((detail) => {
-                form.setError(detail.field as keyof RegisterRequest, { type: "server", message: detail.error });
+        onError: (err) => {
+          if (!err) return;
+
+          if (err.error.code === "VALIDATION_ERROR") {
+            err.error.details.forEach((err) => {
+              form.setError(err.field, {
+                type: "server",
+                message: err.error,
               });
-
-              return;
-            }
+            });
           }
-
-          toast.error(error.message);
         },
       },
     );
@@ -63,7 +60,7 @@ export const Register = () => {
   useFormAutoClearErrors({ submitCount: form.formState.submitCount, clearErrors: form.clearErrors });
 
   return (
-    <section className="max-w-lg w-full mx-auto self-center">
+    <section className="max-w-lg w-full mx-auto my-auto px-3">
       <h1 className="text-2xl font-semibold tracking-tight text-center mb-1">Criar conta</h1>
       <p className="leading-7 text-foreground/75 text-center mb-3 text-[15px]">
         Insira seus dados abaixo para criar sua conta.
@@ -80,7 +77,7 @@ export const Register = () => {
                 id="fullName"
                 type="text"
                 icon={User}
-                disabled={isPending}
+                disabled={register.isPending}
                 placeholder="João Silva"
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
@@ -100,7 +97,7 @@ export const Register = () => {
                 id="handle"
                 type="text"
                 icon={AtSign}
-                disabled={isPending}
+                disabled={register.isPending}
                 placeholder="joao-silva"
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
@@ -120,7 +117,7 @@ export const Register = () => {
                 id="email"
                 type="text"
                 icon={Mail}
-                disabled={isPending}
+                disabled={register.isPending}
                 placeholder="você@exemplo.com"
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
@@ -140,7 +137,7 @@ export const Register = () => {
                 id="password"
                 type="password"
                 icon={Lock}
-                disabled={isPending}
+                disabled={register.isPending}
                 placeholder="••••••••"
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
@@ -160,7 +157,7 @@ export const Register = () => {
                 id="confirmPassword"
                 type="password"
                 icon={Lock}
-                disabled={isPending}
+                disabled={register.isPending}
                 placeholder="••••••••"
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
@@ -169,8 +166,8 @@ export const Register = () => {
             </Field>
           )}
         />
-        <Button type="submit" form="login-form" className="w-full mt-3" disabled={isPending}>
-          {isPending && <Spinner className="text-white" />}
+        <Button type="submit" form="login-form" className="w-full mt-3" disabled={register.isPending}>
+          {register.isPending && <Spinner className="text-white" />}
           <span>Criar conta</span>
         </Button>
         <div className="flex justify-center items-center ">
@@ -179,7 +176,7 @@ export const Register = () => {
             type="button"
             variant="link"
             className="text-foreground/80 underline px-1"
-            disabled={isPending}
+            disabled={register.isPending}
             onClick={() => navigate("/login")}
           >
             <span>Entrar</span>

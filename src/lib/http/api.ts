@@ -1,10 +1,11 @@
-import { generatePushSubscription } from "@/lib/push/generate-push-subscription";
-import type { ApiError } from "@/types/api-types";
-import { eventBus } from "@/lib/event-bus";
+import { type ErrorResponse } from "@/types/api-types";
+import { AXIOS_CODE } from "@/lib/http/axios-code";
+import { authEmitter } from "@/lib/auth-events";
 import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:8080",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
@@ -14,40 +15,40 @@ export const api = axios.create({
 
 api.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
-    const { error: apiError } = error.response?.data as ApiError;
-
-    if (!apiError) {
-      return Promise.reject(error);
-    }
-
-    if (apiError.code === "TOKEN_EXPIRED") {
-      try {
-        await authMutate("/auth/refresh");
-        eventBus.emit("authenticate");
-        generatePushSubscription();
-      } catch (err) {
-        await authMutate("/auth/logout");
-        localStorage.setItem("is_authenticated", JSON.stringify(false));
-        eventBus.emit("deauthenticate");
-        return Promise.reject(err);
+  async (error: AxiosError<ErrorResponse>) => {
+    if (!error.response) {
+      if (error.code === AXIOS_CODE.ERR_CANCELED) {
+        toast.error("A requisição foi cancelada.");
+        return Promise.reject(null);
       }
+
+      if (error.code === AXIOS_CODE.ECONNABORTED || error.code === AXIOS_CODE.ETIMEDOUT) {
+        toast.error("A requisição excedeu o tempo limite.");
+        return Promise.reject(null);
+      }
+
+      toast.error("Sem conexão com o servidor. Verifique sua internet.");
+      return Promise.reject(null);
     }
 
-    if (apiError.code === "TOKEN_INVALID" || apiError.code === "SESSION_EXPIRED") {
-      eventBus.emit("deauthenticate");
+    const code = error.response.data.error.code;
+    const data = error.response.data;
+
+    if (code === "TOKEN_EXPIRED") {
+      authEmitter.emit("auth:refresh");
+      return Promise.reject(null);
     }
 
-    return Promise.reject(error);
+    if (code === "SESSION_EXPIRED" || code === "TOKEN_INVALID" || code === "USER_NOT_FOUND") {
+      authEmitter.emit("auth:logout");
+      return Promise.reject(null);
+    }
+
+    if (code === "BAD_CREDENTIALS" || code === "VALIDATION_ERROR") {
+      return Promise.reject(data);
+    }
+
+    toast.error("Aconteceu um erro inesperado, tente novamente mais tarde.");
+    return Promise.reject(null);
   },
 );
-
-const authMutate = async (path: string): Promise<void> => {
-  await axios.post(
-    import.meta.env.VITE_API_URL + path,
-    {},
-    {
-      withCredentials: true,
-    },
-  );
-};

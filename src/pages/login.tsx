@@ -1,7 +1,6 @@
-import { generatePushSubscription } from "@/lib/push/generate-push-subscription";
+// import { generatePushSubscription } from "@/lib/push/generate-push-subscription";
 import { useFormAutoClearErrors } from "@/hooks/use-form-auto-clear-errors";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { ApiException } from "@/lib/http/errors/api-exception";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { LoginRequest } from "@/types/auth-types";
 import { Separator } from "@/components/ui/separator";
@@ -9,18 +8,14 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GoogleIcon } from "@/components/google-icon";
 import { loginSchema } from "@/schemas/auth-schemas";
+import { useAuth } from "@/hooks/domain/use-auth";
 import { Spinner } from "@/components/ui/spinner";
-import { useSession } from "@/hooks/use-session";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/hooks/use-auth";
 import { Lock, Mail } from "lucide-react";
-import { toast } from "sonner";
 
 export const Login = () => {
-  const { useLogin } = useAuth();
-  const { mutate, isPending } = useLogin();
-  const { logIn } = useSession();
+  const { login } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,33 +32,20 @@ export const Login = () => {
   });
 
   const onSubmit = (data: LoginRequest) => {
-    mutate(
+    login.mutate(
       { data },
       {
-        onSuccess: async () => {
-          logIn();
-          await generatePushSubscription();
-        },
-        onError: (error) => {
-          if (error instanceof ApiException) {
-            if (error.code === "BAD_CREDENTIALS" && error.details) {
-              error.details.forEach((detail) => {
-                form.setError(detail.field as keyof LoginRequest, { type: "server", message: detail.error });
+        onError: (err) => {
+          if (!err) return;
+
+          if (err.error.code === "BAD_CREDENTIALS" || err.error.code === "VALIDATION_ERROR") {
+            err.error.details.forEach((err) => {
+              form.setError(err.field, {
+                type: "server",
+                message: err.error,
               });
-
-              return;
-            }
-
-            if (error.code === "VALIDATION_ERROR" && error.details) {
-              error.details.forEach((detail) => {
-                form.setError(detail.field as keyof LoginRequest, { type: "server", message: detail.error });
-              });
-
-              return;
-            }
+            });
           }
-
-          toast.error(error.message);
         },
       },
     );
@@ -76,24 +58,34 @@ export const Login = () => {
   useFormAutoClearErrors({ submitCount: form.formState.submitCount, clearErrors: form.clearErrors });
 
   return (
-    <section className="max-w-lg w-full mx-auto self-center">
+    <section className="max-w-lg w-full mx-auto my-auto px-3">
       <h1 className="text-2xl font-semibold tracking-tight text-center mb-1">Entrar</h1>
       <p className="leading-7 text-foreground/75 text-center mb-3 text-[15px]">
         Insira suas credenciais ou entre com o google para acessar sua conta
       </p>
       <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-3">
         <Controller
+          control={form.control}
+          name="errorCredentials"
+          render={({ fieldState }) => (
+            <FieldError
+              errors={[fieldState.error]}
+              className="text-center py-0.5 bg-destructive/10 dark:bg-destructive/20 rounded-[5px] border border-destructive/40"
+            />
+          )}
+        />
+        <Controller
           name="email"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
+            <Field data-={fieldState.invalid}>
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input
                 {...field}
                 id="email"
                 type="text"
                 icon={Mail}
-                disabled={isPending}
+                disabled={login.isPending}
                 placeholder="você@exemplo.com"
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
@@ -113,7 +105,7 @@ export const Login = () => {
                 id="password"
                 type="password"
                 icon={Lock}
-                disabled={isPending}
+                disabled={login.isPending}
                 placeholder="••••••••"
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
@@ -122,27 +114,17 @@ export const Login = () => {
             </Field>
           )}
         />
-        <Controller
-          control={form.control}
-          name="errorCredentials"
-          render={({ fieldState }) => (
-            <FieldError
-              errors={[fieldState.error]}
-              className="bg-destructive/10 border border-destructive/40 text-center py-0.5 rounded-[6px]"
-            />
-          )}
-        />
         <Button
           type="button"
           variant="link"
           className="text-foreground/80 underline px-0"
-          disabled={isPending}
+          disabled={login.isPending}
           onClick={() => navigate("/forgot-password")}
         >
           Esqueceu sua senha?
         </Button>
-        <Button type="submit" form="login-form" className="w-full" disabled={isPending}>
-          {isPending && <Spinner className="text-white" />}
+        <Button type="submit" form="login-form" className="w-full" disabled={login.isPending}>
+          {login.isPending && <Spinner className="text-white" />}
           <span>Entrar</span>
         </Button>
         <div className="flex justify-center items-center overflow-hidden mt-4 mb-6">
@@ -150,7 +132,13 @@ export const Login = () => {
           <span className="shrink-0 text-xs uppercase text-muted-foreground px-2">Ou continue com</span>
           <Separator />
         </div>
-        <Button type="button" variant="secondary" className="w-full" disabled={isPending} onClick={handleGoogleLogin}>
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-full"
+          disabled={login.isPending}
+          onClick={handleGoogleLogin}
+        >
           <GoogleIcon />
           <span>Continuar com Google</span>
         </Button>
@@ -160,7 +148,7 @@ export const Login = () => {
             type="button"
             variant="link"
             className="text-foreground/80 underline px-1"
-            disabled={isPending}
+            disabled={login.isPending}
             onClick={() => navigate("/register")}
           >
             <span>Inscreva-se</span>

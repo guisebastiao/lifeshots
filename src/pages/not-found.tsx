@@ -6,7 +6,7 @@ export const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="mx-auto self-center flex flex-col items-center mb-1">
+    <section className="mx-auto my-auto flex flex-col items-center px-3">
       <span className="text-muted-foreground tracking-widest text-center">ERROR 404</span>
       <h1 className="text-3xl font-semibold tracking-tight text-center mb-2">Página não encontrada</h1>
       <p className="text-sm text-muted-foreground leading-relaxed text-center mb-4">

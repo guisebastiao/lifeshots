@@ -1,6 +1,8 @@
 import { Spinner } from "@/components/ui/spinner";
 import { useSession } from "@/hooks/use-session";
 import { Navigate, Outlet } from "react-router-dom";
+import { Sidebar } from "@/components/sidebar";
+import { Header } from "@/components/header";
 
 export const PrivateRoutes = () => {
   const { isAuthenticated } = useSession();
@@ -9,5 +11,13 @@ export const PrivateRoutes = () => {
     return <Spinner className="size-5 mx-auto self-center" />;
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  return isAuthenticated ? (
+    <>
+      <Sidebar />
+      <Outlet />
+      <Header />
+    </>
+  ) : (
+    <Navigate to="/login" />
+  );
 };

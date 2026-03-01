@@ -1,41 +1,63 @@
-import { createContext, type PropsWithChildren, useEffect, useState } from "react";
-import { queryClient } from "@/context/query-context";
-import { eventBus } from "@/lib/event-bus";
+import { createContext, type PropsWithChildren, useCallback, useEffect, useState } from "react";
+import { useAuth } from "@/hooks/domain/use-auth";
+import { authEmitter } from "@/lib/auth-events";
 
 interface SessionState {
   isAuthenticated: boolean | null;
-  logIn: () => void;
-  logOut: () => void;
+  logoutPending: boolean;
+  sessionLogin: () => void;
+  sessionLogout: () => void;
+  sessionRefresh: () => void;
 }
 
 export const SessionContext = createContext<SessionState>({} as SessionState);
 
 export const SessionProvider = ({ children }: PropsWithChildren) => {
-  const storage = localStorage.getItem("is_authenticated");
-  const initialState: boolean | null = storage ? JSON.parse(storage) : false;
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(() => {
+    const storage = localStorage.getItem("is_authenticated");
+    return storage ? JSON.parse(storage) : false;
+  });
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(initialState);
+  const [logoutPending, setLogoutPending] = useState(false);
 
-  const logIn = () => {
+  const { logout, refresh } = useAuth();
+
+  const sessionLogin = useCallback(() => {
     localStorage.setItem("is_authenticated", JSON.stringify(true));
     setIsAuthenticated(true);
-  };
-
-  const logOut = () => {
-    localStorage.setItem("is_authenticated", JSON.stringify(false));
-    setIsAuthenticated(false);
-    queryClient.clear();
-  };
-
-  useEffect(() => {
-    eventBus.on("authenticate", logIn);
-    eventBus.on("deauthenticate", logOut);
-
-    return () => {
-      eventBus.off("authenticate", logIn);
-      eventBus.off("deauthenticate", logOut);
-    };
   }, []);
 
-  return <SessionContext.Provider value={{ isAuthenticated, logIn, logOut }}>{children}</SessionContext.Provider>;
+  const sessionLogout = useCallback(async () => {
+    setLogoutPending(true);
+
+    await logout
+      .mutateAsync()
+      .catch(() => setLogoutPending(false))
+      .finally(() => setLogoutPending(false));
+
+    localStorage.setItem("is_authenticated", JSON.stringify(false));
+    setIsAuthenticated(false);
+  }, []);
+
+  const sessionRefresh = useCallback(async () => {
+    await refresh.mutateAsync();
+    localStorage.setItem("is_authenticated", JSON.stringify(true));
+    setIsAuthenticated(true);
+  }, []);
+
+  useEffect(() => {
+    authEmitter.on("auth:logout", sessionLogout);
+    authEmitter.on("auth:refresh", sessionRefresh);
+
+    return () => {
+      authEmitter.off("auth:logout", sessionLogout);
+      authEmitter.off("auth:refresh", sessionRefresh);
+    };
+  }, [sessionLogout]);
+
+  return (
+    <SessionContext.Provider value={{ isAuthenticated, logoutPending, sessionLogin, sessionLogout, sessionRefresh }}>
+      {children}
+    </SessionContext.Provider>
+  );
 };
