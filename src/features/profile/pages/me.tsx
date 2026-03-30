@@ -6,6 +6,7 @@ import { Posts } from "@/features/profile/components/posts";
 import { useMe } from "@/features/profile/hooks/use-me";
 import { Spinner } from "@/components/ui/spinner";
 import { useState } from "react";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogTrigger,
@@ -19,7 +20,7 @@ export const Me = () => {
   const [activePostId, setActivePostId] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data, isLoading } = useMe();
+  const { data, isLoading, isError, error } = useMe();
 
   if (isLoading || !data) {
     return (
@@ -27,6 +28,10 @@ export const Me = () => {
         <Spinner />
       </div>
     );
+  }
+
+  if (isError) {
+    toast.error(error.message);
   }
 
   return (

@@ -12,6 +12,7 @@ import { OauthError } from "@/features/oauth/pages/error";
 import { Me } from "@/features/profile/pages/me";
 import { Profile } from "@/features/profile/pages/profile";
 import { Notification } from "@/features/notification/pages/notification";
+import { Setting } from "@/features/setting/pages/setting";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
           {
             path: "/notifications",
             element: <Notification />,
+          },
+          {
+            path: "/settings",
+            element: <Setting />,
           },
         ],
       },

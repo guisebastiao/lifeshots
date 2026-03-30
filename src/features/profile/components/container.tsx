@@ -7,7 +7,7 @@ interface ContainerProps {
 
 export const Container = ({ profile }: ContainerProps) => {
   return (
-    <div className="space-y-3">
+    <div className="relative space-y-3">
       <Avatar className="size-20 mx-auto mb-2" profilePicture={profile.profilePicture} />
       <h1 className="text-lg text-center font-extrabold tracking-tight text-balance">{profile.handle}</h1>
       <span className="block text-sm text-muted-foreground text-center">{profile.fullName}</span>

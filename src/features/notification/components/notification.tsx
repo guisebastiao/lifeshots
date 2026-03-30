@@ -59,7 +59,13 @@ export const Notification = ({ notification, checked = false, setChecked, setAll
     ({ notificationId }: { notificationId: string }) => {
       setChecked((prev) => {
         const next = new Set(prev);
-        next.has(notificationId) ? next.delete(notificationId) : next.add(notificationId);
+
+        if (next.has(notificationId)) {
+          next.delete(notificationId);
+        } else {
+          next.add(notificationId);
+        }
+
         return next;
       });
     },

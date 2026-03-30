@@ -22,4 +22,14 @@ export default [
       },
     },
   },
+  {
+    files: ["public/service-worker.js"],
+    languageOptions: {
+      globals: {
+        self: "readonly",
+        clients: "readonly",
+        caches: "readonly",
+      },
+    },
+  },
 ];
