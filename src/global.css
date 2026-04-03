@@ -147,6 +147,18 @@
   html {
     @apply font-sans;
   }
+
+  .ReactCrop__child-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ReactCrop__child-wrapper img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+  }
 }
 
 @theme {

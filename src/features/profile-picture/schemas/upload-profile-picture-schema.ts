@@ -4,15 +4,12 @@ import { z } from "zod";
 
 export const uploadProfilePictureSchema = z.object({
   file: z
-    .instanceof(File)
-    .optional()
-    .refine((file) => !file || file.size > 0, {
-      message: "Envie sua foto de perfil.",
-    })
+    .instanceof(File, { message: "Envie sua foto de perfil." })
+    .nullable()
     .refine((file) => !file || ACCEPTED_MIMETYPES.includes(file.type), {
       message: "Sua foto de perfil está no formato inválido.",
     })
     .refine((file) => !file || file.size <= ACCEPT_FILESIZE, {
-      message: "Sua foto de perfil tem que ser menor que 5MB.",
+      message: "Sua foto de perfil deve ter no máximo 5MB.",
     }),
 });
