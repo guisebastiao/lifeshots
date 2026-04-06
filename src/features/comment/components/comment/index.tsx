@@ -1,8 +1,8 @@
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/shared/components/ui/empty";
 import { CommentContent } from "@/features/comment/components/comment/comment";
 import { useGetComments } from "@/features/comment/hooks/use-get-comments";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useCallback, useMemo, useRef } from "react";
-import { Spinner } from "@/components/ui/spinner";
 import { MessageCircleOff } from "lucide-react";
 import { toast } from "sonner";
 

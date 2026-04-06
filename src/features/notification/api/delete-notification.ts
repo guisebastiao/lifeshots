@@ -1,4 +1,4 @@
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const deleteNotification = async ({ notificationId }: { notificationId: string }) => {
   const response = await http.delete(`/notifications/${notificationId}`);

@@ -1,4 +1,4 @@
-import { api } from "@/shared/lib/axios";
+import { api } from "@/shared/api/axios";
 import { useCallback } from "react";
 
 export function usePush() {

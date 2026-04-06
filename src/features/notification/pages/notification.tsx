@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import { useReadAll } from "@/features/notification/hooks/use-read-all";
 import { Container } from "@/features/notification/components/contaner";
 import { Toolbar } from "@/features/notification/components/toolbar";

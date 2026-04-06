@@ -5,7 +5,7 @@ import { Footer } from "@/features/comment/components/comment/footer";
 import type { PostResponse } from "@/features/post/types/post-types";
 import { Comment } from "@/features/comment/components/comment";
 import { formatNumber } from "@/shared/utils/format-numbers";
-import { LikeButton } from "@/components/like-button";
+import { LikeButton } from "@/shared/components/like-button";
 import { MessageCircle, Send } from "lucide-react";
 import { useRef } from "react";
 import { toast } from "sonner";
@@ -16,7 +16,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerDescription,
-} from "@/components/ui/drawer";
+} from "@/shared/components/ui/drawer";
 
 interface ContentProps {
   post: PostResponse;

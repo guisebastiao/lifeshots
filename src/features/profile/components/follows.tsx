@@ -1,12 +1,12 @@
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/shared/components/ui/empty";
 import type { ProfileResponse } from "@/features/profile/types/profile-types";
 import { useGetFollows } from "@/features/follow/hooks/use-get-follows";
 import { type FollowType } from "@/features/follow/types/follow-types";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Button } from "@/shared/components/ui/button";
 import { useCallback, useRef, useMemo } from "react";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
+import { Avatar } from "@/shared/components/avatar";
 import { useNavigate } from "react-router-dom";
-import { Avatar } from "@/components/avatar";
 import { Aperture } from "lucide-react";
 import { toast } from "sonner";
 

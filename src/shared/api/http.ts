@@ -1,6 +1,6 @@
 import type { DefaultResponse, ErrorPayload } from "@/shared/types/api-types";
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { api } from "@/shared/lib/axios";
+import { api } from "@/shared/api/axios";
 
 export const http = {
   get: <T>(url: string, config?: AxiosRequestConfig) => request<T>(api.get(url, config)),

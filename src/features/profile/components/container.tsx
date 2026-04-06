@@ -1,5 +1,5 @@
 import type { ProfileResponse } from "@/features/profile/types/profile-types";
-import { Avatar } from "@/components/avatar";
+import { Avatar } from "@/shared/components/avatar";
 
 interface ContainerProps {
   profile: ProfileResponse;

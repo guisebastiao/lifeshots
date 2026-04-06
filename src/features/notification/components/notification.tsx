@@ -2,18 +2,18 @@ import type { NotificationResponse, NotificationType } from "@/features/notifica
 import { useDeleteNotification } from "@/features/notification/hooks/use-delete-notification";
 import { EllipsisVertical, Heart, MessageCircle, UserPlus } from "lucide-react";
 import { handleFormatDistanceToNow } from "@/shared/utils/format-date";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/shared/components/ui/checkbox";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Button } from "@/shared/components/ui/button";
+import { Avatar } from "@/shared/components/avatar";
 import { useCallback, useState } from "react";
-import { Avatar } from "@/components/avatar";
 import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+} from "@/shared/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +23,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from "@/shared/components/ui/alert-dialog";
 
 interface NotificationProps {
   notification: NotificationResponse;

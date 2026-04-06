@@ -1,5 +1,5 @@
 import type { LoginRequest } from "@/features/auth/types/login-types";
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const login = async ({ data }: { data: LoginRequest }) => {
   const response = await http.post("/auth/login", data);

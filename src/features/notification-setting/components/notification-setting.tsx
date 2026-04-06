@@ -2,11 +2,11 @@ import { useUpdateNotificationSetting } from "@/features/notification-setting/ho
 import type { NotificationSettingRequest } from "@/features/notification-setting/types/notification-setting-types";
 import { useFindNotificationSetting } from "@/features/notification-setting/hooks/use-find-notification-setting";
 import { notificationSettingSchema } from "@/features/notification-setting/schemas/notification-setting-schema";
+import { Field, FieldLabel, FieldDescription } from "@/shared/components/ui/field";
 import { NotifyAll } from "@/features/notification-setting/components/notify-all";
-import { Field, FieldLabel, FieldDescription } from "@/components/ui/field";
+import { Switch } from "@/shared/components/ui/switch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
 export const NotificationSetting = () => {

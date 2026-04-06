@@ -7,10 +7,10 @@ import { useLikeComment } from "@/features/like-comment/hooks/use-like-comment";
 import type { CommentResponse } from "@/features/comment/types/comment-types";
 import { handleFormatDistanceToNow } from "@/shared/utils/format-date";
 import { formatNumber } from "@/shared/utils/format-numbers";
-import { LikeButton } from "@/components/like-button";
-import { Button } from "@/components/ui/button";
+import { LikeButton } from "@/shared/components/like-button";
+import { Button } from "@/shared/components/ui/button";
+import { Avatar } from "@/shared/components/avatar";
 import { EllipsisVertical } from "lucide-react";
-import { Avatar } from "@/components/avatar";
 import { forwardRef, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -18,7 +18,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/shared/components/ui/dropdown-menu";
 
 interface CommentContentProps {
   comment: CommentResponse;

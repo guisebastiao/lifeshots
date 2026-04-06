@@ -1,4 +1,4 @@
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const deleteReplyComment = async ({ replyCommentId }: { replyCommentId: string }) => {
   const response = await http.delete(`/reply-comments/${replyCommentId}`);

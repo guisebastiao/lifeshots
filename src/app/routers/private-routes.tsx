@@ -1,8 +1,8 @@
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Sidebar } from "@/shared/components/sidebar";
 import { useSession } from "@/app/hooks/use-session";
 import { Navigate, Outlet } from "react-router-dom";
-import { Spinner } from "@/components/ui/spinner";
-import { Sidebar } from "@/components/sidebar";
-import { Header } from "@/components/header";
+import { Header } from "@/shared/components/header";
 
 export const PrivateRoutes = () => {
   const { session } = useSession();

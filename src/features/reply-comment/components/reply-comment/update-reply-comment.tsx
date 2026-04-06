@@ -1,12 +1,12 @@
-import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from "@/components/ui/input-group";
+import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from "@/shared/components/ui/input-group";
 import { updateReplyCommentSchema } from "@/features/reply-comment/schema/update-reply-comment-schema";
 import { useReplyUpdateComment } from "@/features/reply-comment/hooks/use-update-reply-comment";
-import { Field, FieldError, FieldGroup } from "@/components/ui/field";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { Field, FieldError, FieldGroup } from "@/shared/components/ui/field";
+import { DropdownMenuItem } from "@/shared/components/ui/dropdown-menu";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Button } from "@/shared/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -23,7 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/shared/components/ui/dialog";
 
 interface UpdateReplyCommentProps {
   replyComment: ReplyCommentResponse;

@@ -1,5 +1,5 @@
 import type { NotificationSettingResponse } from "@/features/notification-setting/types/notification-setting-types";
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const findNotificationSetting = async () => {
   const response = await http.get<NotificationSettingResponse>("/notification-setting");

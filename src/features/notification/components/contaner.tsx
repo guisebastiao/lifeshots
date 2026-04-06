@@ -1,7 +1,7 @@
-import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/shared/components/ui/empty";
 import { Notification as NotificationRoot } from "@/features/notification/components/notification";
 import { useGetNotifications } from "@/features/notification/hooks/use-get-notifications";
-import { Spinner } from "@/components/ui/spinner";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useEffect, useMemo } from "react";
 import { BellOff } from "lucide-react";
 import { toast } from "sonner";

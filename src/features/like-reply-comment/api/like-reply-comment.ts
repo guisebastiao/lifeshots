@@ -1,5 +1,5 @@
 import type { LikeReplyCommentRequest } from "@/features/like-reply-comment/types/like-reply-comment-types";
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const likeReplyComment = async ({
   replyCommentId,

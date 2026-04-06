@@ -1,5 +1,5 @@
 import type { ProfilePictureResponse } from "@/features/profile-picture/types/profile-picture-types";
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const uploadProfilePicture = async ({ data }: { data: FormData }) => {
   const response = await http.post<ProfilePictureResponse>("/profile-picture", data, {

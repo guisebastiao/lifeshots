@@ -1,16 +1,16 @@
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field";
 import type { LoginRequest } from "@/features/auth/types/login-types";
 import { loginSchema } from "@/features/auth/schemas/login-schema";
+import { Separator } from "@/shared/components/ui/separator";
+import { GoogleIcon } from "@/shared/components/google-icon";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLogin } from "@/features/auth/hooks/use-login";
-import { Separator } from "@/components/ui/separator";
-import { GoogleIcon } from "@/components/google-icon";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Button } from "@/shared/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/shared/components/ui/input";
 import { useSession } from "@/app/hooks/use-session";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Lock, Mail } from "lucide-react";
 import { toast } from "sonner";
 

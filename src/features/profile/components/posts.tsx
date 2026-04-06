@@ -1,9 +1,9 @@
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/shared/components/ui/empty";
 import { useGetPublications } from "@/features/profile/hooks/use-get-publications";
 import type { ProfileResponse } from "@/features/profile/types/profile-types";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { Post } from "@/features/post/components/post";
 import { useCallback, useMemo, useRef } from "react";
-import { Spinner } from "@/components/ui/spinner";
 import { Aperture } from "lucide-react";
 import { toast } from "sonner";
 

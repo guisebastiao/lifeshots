@@ -1,5 +1,5 @@
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useSession } from "@/app/hooks/use-session";
-import { Spinner } from "@/components/ui/spinner";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 

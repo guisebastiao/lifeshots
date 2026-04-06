@@ -1,14 +1,14 @@
+import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field";
 import type { RegisterRequest } from "@/features/auth/types/register-types";
 import { registerSchema } from "@/features/auth/schemas/register-schema";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { useRegister } from "@/features/auth/hooks/use-register";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { Lock, Mail, User, AtSign } from "lucide-react";
+import { Button } from "@/shared/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/shared/components/ui/input";
 import { toast } from "sonner";
 
 export const Register = () => {

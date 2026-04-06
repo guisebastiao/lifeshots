@@ -1,4 +1,4 @@
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 import type {
   ReplyCommentResponse,
   CreateReplyCommentRequest,

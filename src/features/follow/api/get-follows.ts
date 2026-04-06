@@ -1,6 +1,6 @@
 import type { ProfileResponse } from "@/features/profile/types/profile-types";
 import type { FollowType } from "@/features/follow/types/follow-types";
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const getFollows = async ({
   type,

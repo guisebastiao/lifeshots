@@ -15,7 +15,10 @@ export default [
       "jsx-a11y": jsxA11y,
       prettier,
     },
-    rules: {},
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-empty-object-type": "off"
+    },
     settings: {
       react: {
         version: "detect",

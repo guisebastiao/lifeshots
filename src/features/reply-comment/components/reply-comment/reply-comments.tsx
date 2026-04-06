@@ -1,16 +1,16 @@
 import { UpdateReplyComment } from "@/features/reply-comment/components/reply-comment/update-reply-comment";
 import { DeleteReplyComment } from "@/features/reply-comment/components/reply-comment/delete-reply-comment";
-import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/shared/components/ui/empty";
 import { useLikeReplyComment } from "@/features/like-reply-comment/hooks/use-like-reply-comment";
 import { useGetReplyComments } from "@/features/reply-comment/hooks/use-get-reply-comments";
 import type { LikeCommentRequest } from "@/features/like-comment/types/like-comment-types";
 import { handleFormatDistanceToNow } from "@/shared/utils/format-date";
 import { formatNumber } from "@/shared/utils/format-numbers";
+import { LikeButton } from "@/shared/components/like-button";
 import { Aperture, EllipsisVertical } from "lucide-react";
-import { LikeButton } from "@/components/like-button";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/avatar";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Button } from "@/shared/components/ui/button";
+import { Avatar } from "@/shared/components/avatar";
 import { twMerge } from "tailwind-merge";
 import { toast } from "sonner";
 import { useMemo } from "react";
@@ -19,7 +19,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/shared/components/ui/dropdown-menu";
 
 interface ReplyCommentsProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   commentId: string;

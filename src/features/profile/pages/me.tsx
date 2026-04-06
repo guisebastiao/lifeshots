@@ -3,8 +3,8 @@ import { Container } from "@/features/profile/components/container";
 import { followTypes } from "@/features/follow/types/follow-types";
 import { Follows } from "@/features/profile/components/follows";
 import { Posts } from "@/features/profile/components/posts";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useMe } from "@/features/profile/hooks/use-me";
-import { Spinner } from "@/components/ui/spinner";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
+} from "@/shared/components/ui/dialog";
 
 export const Me = () => {
   const [activePostId, setActivePostId] = useState<string | null>(null);

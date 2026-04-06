@@ -1,8 +1,8 @@
 import type { DeleteNotificationsRequest } from "@/features/notification/types/notification-types";
 import { useDeleteNotifications } from "@/features/notification/hooks/use-delete-notifications";
 import { X, Trash, GalleryVerticalEnd } from "lucide-react";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Button } from "@/shared/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -15,7 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/shared/components/ui/alert-dialog";
 
 interface ToolbarProps {
   allIds: string[];

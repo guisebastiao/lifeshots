@@ -1,11 +1,11 @@
 import { createCommentSchema } from "@/features/comment/schema/create-comment-schema";
 import type { CreateCommentRequest } from "@/features/comment/types/comment-types";
 import { useCreateComment } from "@/features/comment/hooks/use-create-comment";
-import { Field, FieldError, FieldGroup } from "@/components/ui/field";
-import { DrawerFooter } from "@/components/ui/drawer";
+import { Field, FieldError, FieldGroup } from "@/shared/components/ui/field";
+import { DrawerFooter } from "@/shared/components/ui/drawer";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { twMerge } from "tailwind-merge";
 import { Send } from "lucide-react";
 import { toast } from "sonner";
@@ -15,7 +15,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroupButton,
-} from "@/components/ui/input-group";
+} from "@/shared/components/ui/input-group";
 
 interface FooterProps {
   postId: string;

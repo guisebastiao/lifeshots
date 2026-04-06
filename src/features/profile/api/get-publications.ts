@@ -1,5 +1,5 @@
 import type { PostResponse } from "@/features/post/types/post-types";
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const getPublications = async ({ profileId, offset }: { profileId: string; offset: number }) => {
   const response = await http.get<PostResponse[]>(`/profiles/${profileId}/posts`, {

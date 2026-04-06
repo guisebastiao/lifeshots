@@ -1,9 +1,9 @@
 import { Form } from "@/features/profile-picture/components/form";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useMe } from "@/features/profile/hooks/use-me";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Avatar } from "@/components/avatar";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
+import { Avatar } from "@/shared/components/avatar";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/shared/components/ui/dialog";
 
 export const UploadProfilePicture = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,17 +1,17 @@
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { InputGroup, InputGroupTextarea, InputGroupAddon, InputGroupText } from "@/shared/components/ui/input-group";
 import { updateProfileSchema } from "@/features/profile/schemas/update-profile-schema";
 import type { UpdateProfileRequest } from "@/features/profile/types/profile-types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "lucide-react";
-import { Controller, useForm } from "react-hook-form";
+import { useUpdateProfile } from "@/features/profile/hooks/use-update-profile";
+import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useMe } from "@/features/profile/hooks/use-me";
-import { Spinner } from "@/components/ui/spinner";
-import { toast } from "sonner";
-import { useUpdateProfile } from "../hooks/use-update-profile";
-import { InputGroup, InputGroupTextarea, InputGroupAddon, InputGroupText } from "@/components/ui/input-group";
+import { Button } from "@/shared/components/ui/button";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/shared/components/ui/input";
 import { twMerge } from "tailwind-merge";
-import { Button } from "@/components/ui/button";
+import { User } from "lucide-react";
+import { toast } from "sonner";
 
 export const UpdateProfile = () => {
   const { data, isLoading, isError, error } = useMe();

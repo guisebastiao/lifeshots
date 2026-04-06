@@ -1,4 +1,4 @@
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/shared/components/ui/empty";
 import { useGetByHandle } from "@/features/profile/hooks/use-get-by-handle";
 import { Publications } from "@/features/profile/components/publications";
 import { Container } from "@/features/profile/components/container";
@@ -7,9 +7,9 @@ import { Follows } from "@/features/profile/components/follows";
 import { useFollow } from "@/features/follow/hooks/use-follow";
 import { Posts } from "@/features/profile/components/posts";
 import { useNavigate, useParams } from "react-router-dom";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Button } from "@/shared/components/ui/button";
 import { useSession } from "@/app/hooks/use-session";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
 import { UserRoundX, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -20,7 +20,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
+} from "@/shared/components/ui/dialog";
 
 export const Profile = () => {
   const { handle } = useParams();

@@ -1,6 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useSession } from "@/app/hooks/use-session";
-import { Spinner } from "@/components/ui/spinner";
 import { useEffect } from "react";
 import { toast } from "sonner";
 

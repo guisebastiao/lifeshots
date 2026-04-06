@@ -1,8 +1,8 @@
-import { Carousel, CarouselContent, CarouselItem, CarouselDots } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselDots } from "@/shared/components/ui/carousel";
 import type { PostResponse } from "@/features/post/types/post-types";
 import { Content } from "@/features/post/components/post/content";
 import { Header } from "@/features/post/components/post/header";
-import { LazyImage } from "@/components/lazy-image";
+import { LazyImage } from "@/shared/components/lazy-image";
 
 interface PostProps {
   post: PostResponse;

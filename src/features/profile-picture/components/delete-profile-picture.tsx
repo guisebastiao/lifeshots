@@ -1,7 +1,7 @@
 import { useDeleteProfilePicture } from "@/features/profile-picture/hooks/use-delete-profile-picture";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useMe } from "@/features/profile/hooks/use-me";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -14,7 +14,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/shared/components/ui/alert-dialog";
 
 export const DeleteProfilePicture = () => {
   const [isOpen, setIsOpen] = useState(false);

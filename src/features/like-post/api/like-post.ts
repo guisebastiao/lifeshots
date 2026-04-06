@@ -1,5 +1,5 @@
 import type { LikePostRequest } from "@/features/like-post/types/like-post-types";
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const likePost = async ({ postId, data }: { postId: string; data: LikePostRequest }) => {
   const response = await http.post(`/like-posts/${postId}`, data);

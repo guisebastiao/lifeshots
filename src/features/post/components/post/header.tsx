@@ -1,11 +1,11 @@
 import type { ProfileResponse } from "@/features/profile/types/profile-types";
 import type { FollowRequest } from "@/features/follow/types/follow-types";
 import { useFollow } from "@/features/follow/hooks/use-follow";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Button } from "@/shared/components/ui/button";
+import { Avatar } from "@/shared/components/avatar";
 import { EllipsisVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Avatar } from "@/components/avatar";
 import { toast } from "sonner";
 import {
   DropdownMenu,
@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/shared/components/ui/dropdown-menu";
 
 interface HeaderProps {
   profile: ProfileResponse;

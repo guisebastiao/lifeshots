@@ -1,5 +1,5 @@
 import type { ReplyCommentResponse } from "@/features/reply-comment/types/reply-comment-types";
-import { http } from "@/shared/lib/http";
+import { http } from "@/shared/api/http";
 
 export const getReplyComments = async ({ commentId, offset }: { commentId: string; offset: number }) => {
   const response = await http.get<ReplyCommentResponse[]>(`/reply-comments/${commentId}`, {

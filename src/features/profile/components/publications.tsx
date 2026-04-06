@@ -1,8 +1,8 @@
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/shared/components/ui/empty";
 import { useGetPublications } from "@/features/profile/hooks/use-get-publications";
+import { LazyImage } from "@/shared/components/lazy-image";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useCallback, useMemo, useRef } from "react";
-import { LazyImage } from "@/components/lazy-image";
-import { Spinner } from "@/components/ui/spinner";
 import { Aperture } from "lucide-react";
 import { toast } from "sonner";
 

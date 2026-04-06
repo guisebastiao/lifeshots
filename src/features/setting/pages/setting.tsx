@@ -1,9 +1,8 @@
 import { NotificationSetting } from "@/features/notification-setting/components/notification-setting";
 import { UploadProfilePicture } from "@/features/profile-picture/components/upload-profile-picture";
 import { DeleteProfilePicture } from "@/features/profile-picture/components/delete-profile-picture";
-import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/shared/components/ui/tabs";
 import { UpdateProfile } from "@/features/profile/components/update-profile";
-import { LogoutAlert } from "@/features/auth/components/logout-alert";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -12,8 +11,8 @@ const TABS = {
   editProfile: "edit-profile",
   notification: "notification",
   privacy: "privacy",
-  password: "password",
-  logout: "logout",
+  changePassword: "changePassword",
+  deleteAccount: "deleteAccount",
 };
 
 export const Setting = () => {
@@ -39,14 +38,14 @@ export const Setting = () => {
       </header>
       <Tabs value={active} onValueChange={handleChangeTab}>
         <TabsList
-          className="flex items-start w-full overflow-x-scroll overflow-y-hidden whitespace-nowrap no-scrollbar my-2"
+          className="flex w-full justify-start items-start overflow-x-auto whitespace-nowrap no-scrollbar my-2"
           variant="line"
         >
           <TabsTrigger value={TABS.editProfile}>Editar perfil</TabsTrigger>
           <TabsTrigger value={TABS.notification}>Notificações</TabsTrigger>
           <TabsTrigger value={TABS.privacy}>Privacidade</TabsTrigger>
-          <TabsTrigger value={TABS.password}>Atualizar senha</TabsTrigger>
-          <TabsTrigger value={TABS.logout}>Sair</TabsTrigger>
+          <TabsTrigger value={TABS.changePassword}>Atualizar senha</TabsTrigger>
+          <TabsTrigger value={TABS.deleteAccount}>Deletar Conta</TabsTrigger>
         </TabsList>
         <TabsContent value={TABS.editProfile} className="space-y-1">
           <UploadProfilePicture />
@@ -59,11 +58,11 @@ export const Setting = () => {
         <TabsContent value={TABS.privacy} className="space-y-1">
           <h1>Privacy</h1>
         </TabsContent>
-        <TabsContent value={TABS.password} className="space-y-1">
+        <TabsContent value={TABS.changePassword} className="space-y-1">
           <h1>Password</h1>
         </TabsContent>
-        <TabsContent value={TABS.logout} className="space-y-1">
-          <LogoutAlert />
+        <TabsContent value={TABS.deleteAccount} className="space-y-1">
+          <h1>Delete Account</h1>
         </TabsContent>
       </Tabs>
     </section>

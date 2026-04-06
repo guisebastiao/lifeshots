@@ -1,6 +1,6 @@
 import { useDeleteReplyComment } from "@/features/reply-comment/hooks/use-delete-reply-comment";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { Spinner } from "@/components/ui/spinner";
+import { DropdownMenuItem } from "@/shared/components/ui/dropdown-menu";
+import { Spinner } from "@/shared/components/ui/spinner";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -13,7 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/shared/components/ui/alert-dialog";
 
 interface DeleteReplyCommentProps {
   replyCommentId: string;

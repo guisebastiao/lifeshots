@@ -1,16 +1,16 @@
+import { ImageCrop, ImageCropApply, ImageCropContent, ImageCropReset } from "@/shared/components/kibo-ui/image-crop";
 import { uploadProfilePictureSchema } from "@/features/profile-picture/schemas/upload-profile-picture-schema";
-import { ImageCrop, ImageCropApply, ImageCropContent, ImageCropReset } from "@/components/kibo-ui/image-crop";
 import type { UploadProfilePictureRequest } from "@/features/profile-picture/types/profile-picture-types";
 import { useUploadProfilePicture } from "@/features/profile-picture/hooks/use-upload-profile-picture";
-import { Dropzone, DropzoneContent, DropzoneEmptyState } from "@/components/kibo-ui/dropzone";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Dropzone, DropzoneContent, DropzoneEmptyState } from "@/shared/components/kibo-ui/dropzone";
+import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field";
 import { ACCEPTED_MIMETYPES } from "@/shared/utils/accept-mimetypes";
 import { ACCEPT_FILESIZE } from "@/shared/utils/accept-filesize";
 import { base64ToFile } from "@/shared/utils/base64-to-file";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { Button } from "@/shared/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 
