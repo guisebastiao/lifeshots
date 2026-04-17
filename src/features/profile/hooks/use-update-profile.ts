@@ -1,8 +1,8 @@
 import type { ProfileResponse, UpdateProfileRequest } from "@/features/profile/types/profile-types";
 import type { ErrorPayload } from "@/shared/types/api-types";
+import { queryClient } from "@/app/providers/query-client";
 import { updateProfile } from "@/features/profile/api";
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "@/app/providers/query-client";
 
 type UpdateProfileContext = {
   previousProfile?: ProfileResponse;

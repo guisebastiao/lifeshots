@@ -35,7 +35,7 @@ export const NotifyAll = () => {
       name="notifyAllNotifications"
       control={form.control}
       render={({ field, fieldState }) => (
-        <Field data-={fieldState.invalid}>
+        <Field data-invalid={fieldState.invalid}>
           <FieldLabel>Notificar Tudo</FieldLabel>
           <FieldDescription>Notificar todas as notificações ou desativar todas as notificaçõoes.</FieldDescription>
           <Switch

@@ -1,5 +1,8 @@
 import type { PostPictureResponse } from "@/features/post-picture/types/post-picture-types";
+import type { createPostSchema } from "@/features/post/schemas/create-post-schema";
+import type { updatePostSchema } from "@/features/post/schemas/update-post-schema";
 import type { ProfileResponse } from "@/features/profile/types/profile-types";
+import { z } from "zod";
 
 export interface PostResponse {
   id: string;
@@ -13,3 +16,6 @@ export interface PostResponse {
   profile: ProfileResponse;
   postPictures: PostPictureResponse[];
 }
+
+export type CreatePostRequest = z.infer<typeof createPostSchema>;
+export type UpdatePostRequest = z.infer<typeof updatePostSchema>;

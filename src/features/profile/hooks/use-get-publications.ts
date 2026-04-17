@@ -6,7 +6,7 @@ import { getPublications } from "@/features/profile/api";
 export const useGetPublications = ({ profileId }: { profileId: string }) => {
   return useInfiniteQuery<SuccessResponse<PostResponse[]>, ErrorPayload>({
     queryKey: ["profile-publications", profileId],
-    queryFn: ({ pageParam = 0 }) => getPublications({ profileId, offset: pageParam as number }),
+    queryFn: ({ pageParam = 1 }) => getPublications({ profileId, offset: pageParam as number }),
     getNextPageParam: ({ meta }) => {
       const nextPage = meta.currentPage + 1;
       const hasMore = nextPage < meta.totalPages;

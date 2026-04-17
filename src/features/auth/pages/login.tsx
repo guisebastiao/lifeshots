@@ -1,3 +1,4 @@
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/shared/components/ui/input-group";
 import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field";
 import type { LoginRequest } from "@/features/auth/types/login-types";
 import { loginSchema } from "@/features/auth/schemas/login-schema";
@@ -7,14 +8,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useLogin } from "@/features/auth/hooks/use-login";
 import { Spinner } from "@/shared/components/ui/spinner";
 import { Button } from "@/shared/components/ui/button";
+import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/shared/components/ui/input";
 import { useSession } from "@/app/hooks/use-session";
-import { Lock, Mail } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const { mutate, isPending } = useLogin();
 
   const navigate = useNavigate();
@@ -62,27 +65,30 @@ export const Login = () => {
   };
 
   return (
-    <section className="max-w-lg w-full mx-auto my-auto px-3 py-8">
+    <section className="max-w-2xl w-full mx-auto my-auto px-3 py-8">
       <h1 className="text-2xl font-semibold tracking-tight text-center mb-1">Entrar</h1>
       <p className="leading-7 text-foreground/75 text-center mb-3 text-[15px]">
         Insira suas credenciais ou entre com o google para acessar sua conta
       </p>
-      <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-3">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-3">
         <Controller
           name="email"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field data-={fieldState.invalid}>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                {...field}
-                id="email"
-                type="text"
-                icon={Mail}
-                disabled={isPending}
-                placeholder="você@exemplo.com"
-                aria-invalid={fieldState.invalid}
-              />
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Email</FieldLabel>
+              <InputGroup>
+                <InputGroupInput
+                  {...field}
+                  type="email"
+                  disabled={isPending}
+                  placeholder="Informe seu e-mail"
+                  aria-invalid={fieldState.invalid}
+                />
+                <InputGroupAddon>
+                  <Mail />
+                </InputGroupAddon>
+              </InputGroup>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -92,16 +98,24 @@ export const Login = () => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="password">Senha</FieldLabel>
-              <Input
-                {...field}
-                id="password"
-                type="password"
-                icon={Lock}
-                disabled={isPending}
-                placeholder="••••••••"
-                aria-invalid={fieldState.invalid}
-              />
+              <FieldLabel>Senha</FieldLabel>
+              <InputGroup>
+                <InputGroupInput
+                  {...field}
+                  type={showPassword ? "text" : "password"}
+                  disabled={isPending}
+                  placeholder="Informe sua senha"
+                  aria-invalid={fieldState.invalid}
+                />
+                <InputGroupAddon>
+                  <Lock />
+                </InputGroupAddon>
+                <InputGroupAddon align="inline-end">
+                  <Button type="button" variant="ghost" size="icon-sm" onClick={() => setShowPassword((prev) => !prev)}>
+                    {showPassword ? <EyeOff /> : <Eye />}
+                  </Button>
+                </InputGroupAddon>
+              </InputGroup>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -115,7 +129,7 @@ export const Login = () => {
         >
           Esqueceu sua senha?
         </Button>
-        <Button type="submit" form="login-form" className="w-full" disabled={isPending}>
+        <Button type="submit" className="w-full" disabled={isPending}>
           {isPending && <Spinner className="text-white" />}
           <span>Entrar</span>
         </Button>

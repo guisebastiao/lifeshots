@@ -7,7 +7,7 @@ import { Button } from "@/shared/components/ui/button";
 import { useCallback, useRef, useMemo } from "react";
 import { Avatar } from "@/shared/components/avatar";
 import { useNavigate } from "react-router-dom";
-import { Aperture } from "lucide-react";
+import { UserRoundX } from "lucide-react";
 import { toast } from "sonner";
 
 interface FollowsProps {
@@ -59,7 +59,7 @@ export const Follows = ({ profile, type }: FollowsProps) => {
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">
-            <Aperture />
+            <UserRoundX />
           </EmptyMedia>
           <EmptyTitle>Nenhuma conexão ainda</EmptyTitle>
           <EmptyDescription>Quando houver pessoas seguindo ou sendo seguidas, elas aparecerão aqui.</EmptyDescription>
@@ -79,9 +79,19 @@ export const Follows = ({ profile, type }: FollowsProps) => {
             ref={isLast ? lastItemRef : undefined}
             className="flex justify-between items-center py-2"
           >
-            <div className="flex items-center gap-2">
-              <Avatar profilePicture={follow.profilePicture} />
-              <h4 className="font-semibold">{follow.handle}</h4>
+            <div className="flex gap-2">
+              <Avatar className="size-10" profilePicture={follow.profilePicture} />
+              <div className="space-y-px">
+                <h2 className="text-[15px] font-semibold text-ellipsis leading-4">{follow.handle}</h2>
+                <h3 className="text-sm font-medium text-foreground/75 text-ellipsis">{follow.fullName}</h3>
+                <div className="flex items-center gap-1 text-xs font-medium text-foreground/60 leading-5">
+                  <span>{follow.postsCount} publicação</span>
+                  <span>&bull;</span>
+                  <span>{follow.followingCount} seguindo</span>
+                  <span>&bull;</span>
+                  <span>{follow.followersCount} seguidor</span>
+                </div>
+              </div>
             </div>
             <Button size="sm" variant="ghost" className="text-xs" onClick={() => navigate(`/profile/${follow.handle}`)}>
               Ver Perfil

@@ -20,7 +20,7 @@ export const DeleteProfilePicture = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate, isPending } = useDeleteProfilePicture();
-  const { data, isSuccess } = useMe();
+  const { data, isSuccess, isError, error } = useMe();
 
   const handleDeleteProfilePicture = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -33,6 +33,10 @@ export const DeleteProfilePicture = () => {
       },
     });
   };
+
+  if (isError) {
+    toast.error(error.message);
+  }
 
   return (
     <div className="w-full mb-3">

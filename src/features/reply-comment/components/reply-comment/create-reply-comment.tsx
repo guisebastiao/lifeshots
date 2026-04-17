@@ -9,6 +9,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogClose,
@@ -19,7 +20,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui/dialog";
-import { toast } from "sonner";
 
 interface CreateReplyCommentProps {
   commentId: string;
@@ -62,8 +62,13 @@ export const CreateReplyComment = ({ commentId }: CreateReplyCommentProps) => {
     );
   };
 
+  const onOpenChange = () => {
+    form.reset();
+    setIsOpen((prev) => !prev);
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <button className="font-semibold text-foreground/75 text-[13px] cursor-pointer">Responder</button>
       </DialogTrigger>
@@ -82,10 +87,9 @@ export const CreateReplyComment = ({ commentId }: CreateReplyCommentProps) => {
                   <InputGroup>
                     <InputGroupTextarea
                       {...field}
-                      id="content"
                       disabled={isPending}
                       placeholder="Escreva uma resposta para esse comentário"
-                      className="min-h-29 max-h-24 no-scrollbar"
+                      className="min-h-9 no-scrollbar"
                       aria-invalid={fieldState.invalid}
                     />
                     <InputGroupAddon align="block-end">

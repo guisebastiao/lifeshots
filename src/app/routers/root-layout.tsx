@@ -14,7 +14,7 @@ export const RootLayout = () => {
   }, [session]);
 
   return (
-    <div className="min-h-screen min-w-68.75 flex bg-background md:flex-row flex-col-reverse">
+    <div className="min-h-dvh min-w-68.75 flex bg-background md:flex-row flex-col-reverse">
       <Outlet />
     </div>
   );

@@ -10,7 +10,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export const NotificationSetting = () => {
-  const { data, isLoading } = useFindNotificationSetting();
+  const { data, isLoading, isError, error } = useFindNotificationSetting();
   const { mutate, isPending } = useUpdateNotificationSetting();
 
   const form = useForm<NotificationSettingRequest>({
@@ -37,14 +37,18 @@ export const NotificationSetting = () => {
     );
   };
 
+  if (isError) {
+    toast.error(error.message);
+  }
+
   return (
-    <form className="w-full space-y-5 mt-2" onSubmit={form.handleSubmit(handleUpdateNotification)}>
+    <form className="w-full space-y-5" onSubmit={form.handleSubmit(handleUpdateNotification)}>
       <NotifyAll />
       <Controller
         name="notifyLikePost"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field data-={fieldState.invalid}>
+          <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Gostei em Publicações</FieldLabel>
             <FieldDescription>Notificar quando alguém curtir suas publicações.</FieldDescription>
             <Switch
@@ -60,7 +64,7 @@ export const NotificationSetting = () => {
         name="notifyLikeComment"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field data-={fieldState.invalid}>
+          <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Gostei em Comentários</FieldLabel>
             <FieldDescription>Notificar quando alguém curtir seus comentários.</FieldDescription>
             <Switch
@@ -76,7 +80,7 @@ export const NotificationSetting = () => {
         name="notifyLikeStory"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field data-={fieldState.invalid}>
+          <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Gostei em Stories</FieldLabel>
             <FieldDescription>Notificar quando alguém curtir seus stories.</FieldDescription>
             <Switch
@@ -92,7 +96,7 @@ export const NotificationSetting = () => {
         name="notifyLikeReplyComment"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field data-={fieldState.invalid}>
+          <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Gostei em Respostas de Comentários</FieldLabel>
             <FieldDescription>Notificar quando alguém curtir sua resposta em um comentário.</FieldDescription>
             <Switch
@@ -108,7 +112,7 @@ export const NotificationSetting = () => {
         name="notifyCommentPost"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field data-={fieldState.invalid}>
+          <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Notificar Comentários</FieldLabel>
             <FieldDescription>Notificar quando alguém comentar em suas publicações.</FieldDescription>
             <Switch
@@ -124,7 +128,7 @@ export const NotificationSetting = () => {
         name="notifyReplyComment"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field data-={fieldState.invalid}>
+          <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Notificar Respostas de Comentários</FieldLabel>
             <FieldDescription>Notificar quando alguém responder seus comentários.</FieldDescription>
             <Switch

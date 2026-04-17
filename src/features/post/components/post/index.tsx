@@ -11,14 +11,12 @@ interface PostProps {
 export const Post = ({ post }: PostProps) => {
   return (
     <div className="overflow-hidden h-full rounded-md">
-      <Header profile={post.profile} />
-      <Carousel>
+      <Header postId={post.id} profile={post.profile} />
+      <Carousel className="bg-foreground/3 rounded-md">
         <CarouselContent>
           {post.postPictures.map((picture) => (
             <CarouselItem key={picture.id}>
-              <div className="relative size-full aspect-square">
-                <LazyImage src={picture.url} className="absolute size-full object-cover rounded-md" />
-              </div>
+              <LazyImage src={picture.url} className="object-cover aspect-square" />
             </CarouselItem>
           ))}
         </CarouselContent>

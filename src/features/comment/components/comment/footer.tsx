@@ -57,11 +57,7 @@ export const Footer = ({ postId }: FooterProps) => {
 
   return (
     <DrawerFooter className="bg-background z-10">
-      <form
-        id="create-comment-form"
-        className="w-full max-w-xl mx-auto"
-        onSubmit={form.handleSubmit(handleCreateComment)}
-      >
+      <form className="w-full max-w-xl mx-auto" onSubmit={form.handleSubmit(handleCreateComment)}>
         <Controller
           name="content"
           control={form.control}
@@ -71,23 +67,16 @@ export const Footer = ({ postId }: FooterProps) => {
                 <InputGroup>
                   <InputGroupTextarea
                     {...field}
-                    id="content"
                     disabled={isPending}
                     placeholder="Escreva seu comentário..."
-                    className="min-h-9 max-h-24 no-scrollbar"
+                    className="min-h-9 no-scrollbar"
                     aria-invalid={fieldState.invalid}
                   />
                   <InputGroupAddon align="block-end">
                     <InputGroupText className={twMerge(field.value.length > 300 && "text-destructive")}>
                       {field.value.length}/300
                     </InputGroupText>
-                    <InputGroupButton
-                      type="submit"
-                      variant="default"
-                      size="icon-sm"
-                      className="ml-auto"
-                      disabled={isPending}
-                    >
+                    <InputGroupButton type="submit" size="icon-sm" className="ml-auto" disabled={isPending}>
                       {isPending ? <Spinner className="text-white" /> : <Send />}
                     </InputGroupButton>
                   </InputGroupAddon>

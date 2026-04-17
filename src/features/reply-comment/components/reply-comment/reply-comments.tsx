@@ -12,8 +12,8 @@ import { Spinner } from "@/shared/components/ui/spinner";
 import { Button } from "@/shared/components/ui/button";
 import { Avatar } from "@/shared/components/avatar";
 import { twMerge } from "tailwind-merge";
-import { toast } from "sonner";
 import { useMemo } from "react";
+import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +26,9 @@ interface ReplyCommentsProps extends React.DetailedHTMLProps<React.HTMLAttribute
 }
 
 export const ReplyComments = ({ commentId, className, ...props }: ReplyCommentsProps) => {
-  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useGetReplyComments({ commentId });
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, isError, error } = useGetReplyComments({
+    commentId,
+  });
 
   const { mutate } = useLikeReplyComment();
 
@@ -49,6 +51,10 @@ export const ReplyComments = ({ commentId, className, ...props }: ReplyCommentsP
         <Spinner />
       </div>
     );
+  }
+
+  if (isError) {
+    toast.error(error.message);
   }
 
   if (!data || replyComments.length === 0) {

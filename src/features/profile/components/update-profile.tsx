@@ -1,4 +1,3 @@
-import { InputGroup, InputGroupTextarea, InputGroupAddon, InputGroupText } from "@/shared/components/ui/input-group";
 import { updateProfileSchema } from "@/features/profile/schemas/update-profile-schema";
 import type { UpdateProfileRequest } from "@/features/profile/types/profile-types";
 import { useUpdateProfile } from "@/features/profile/hooks/use-update-profile";
@@ -8,10 +7,16 @@ import { useMe } from "@/features/profile/hooks/use-me";
 import { Button } from "@/shared/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/shared/components/ui/input";
 import { twMerge } from "tailwind-merge";
 import { User } from "lucide-react";
 import { toast } from "sonner";
+import {
+  InputGroup,
+  InputGroupTextarea,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroupInput,
+} from "@/shared/components/ui/input-group";
 
 export const UpdateProfile = () => {
   const { data, isLoading, isError, error } = useMe();
@@ -54,22 +59,25 @@ export const UpdateProfile = () => {
   };
 
   return (
-    <form id="update-profile-form" onSubmit={form.handleSubmit(handleUpdateProfile)} className="w-full space-y-3">
+    <form onSubmit={form.handleSubmit(handleUpdateProfile)} className="w-full space-y-3">
       <Controller
         name="fullName"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field data-={fieldState.invalid}>
-            <FieldLabel htmlFor="fullName">Nome Completo</FieldLabel>
-            <Input
-              {...field}
-              id="fullName"
-              type="text"
-              icon={User}
-              disabled={isPending || isLoading}
-              placeholder="Seu nome completo"
-              aria-invalid={fieldState.invalid}
-            />
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Nome Completo</FieldLabel>
+            <InputGroup>
+              <InputGroupInput
+                {...field}
+                type="text"
+                disabled={isPending}
+                placeholder="Informe seu nome completo"
+                aria-invalid={fieldState.invalid}
+              />
+              <InputGroupAddon>
+                <User />
+              </InputGroupAddon>
+            </InputGroup>
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
         )}
@@ -78,15 +86,14 @@ export const UpdateProfile = () => {
         name="bio"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field data-={fieldState.invalid}>
-            <FieldLabel htmlFor="bio">Bio</FieldLabel>
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Bio</FieldLabel>
             <InputGroup>
               <InputGroupTextarea
                 {...field}
-                id="content"
                 disabled={isPending || isLoading}
                 placeholder="Escreva sua bio..."
-                className="max-h-29 no-scrollbar"
+                className="min-h-9 no-scrollbar"
                 aria-invalid={fieldState.invalid}
               />
               <InputGroupAddon align="block-end">
@@ -99,7 +106,7 @@ export const UpdateProfile = () => {
           </Field>
         )}
       />
-      <Button type="submit" className="w-full" disabled={isPending}>
+      <Button type="submit" variant="secondary" className="w-full" disabled={isPending || !form.formState.isDirty}>
         {isPending && <Spinner className="text-white" />}
         <span>Salvar</span>
       </Button>

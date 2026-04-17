@@ -2,7 +2,6 @@ import { Form } from "@/features/profile-picture/components/form";
 import { Spinner } from "@/shared/components/ui/spinner";
 import { useMe } from "@/features/profile/hooks/use-me";
 import { Button } from "@/shared/components/ui/button";
-import { Label } from "@/shared/components/ui/label";
 import { Avatar } from "@/shared/components/avatar";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -26,7 +25,6 @@ export const UploadProfilePicture = () => {
 
   return (
     <div className="mt-2">
-      <Label>Foto de Perfil</Label>
       <div className="flex justify-center mb-3">
         {isLoading || !data ? (
           <div className="size-20 flex justify-center items-center">

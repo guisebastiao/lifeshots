@@ -65,7 +65,7 @@ export const Publications = ({ profileId, setActivePostId, setIsOpen }: Publicat
   }
 
   return (
-    <div className="grid grid-cols-3 gap-1">
+    <div className="grid sm:grid-cols-4 grid-cols-3 gap-1">
       {posts.map((post, index) => {
         const isLast = index === posts.length - 1;
 

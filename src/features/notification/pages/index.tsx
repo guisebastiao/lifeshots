@@ -31,9 +31,9 @@ export const Notification = () => {
   }, [location.pathname]);
 
   return (
-    <section className="max-w-lg flex-1 w-full mx-auto px-3 py-8">
+    <section className="max-w-2xl flex-1 w-full mx-auto p-3">
       <header className="w-full">
-        <h1 className="text-lg font-medium tracking-tight text-balance">Notificações</h1>
+        <h1 className="text-base font-medium tracking-tight text-balance">Notificações</h1>
       </header>
       <Tabs defaultValue="all">
         <TabsList className="my-2" variant="line">

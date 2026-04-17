@@ -35,7 +35,7 @@ export const Me = () => {
   }
 
   return (
-    <section className="max-w-lg flex-1 w-full mx-auto px-3 py-8">
+    <section className="max-w-2xl flex-1 w-full mx-auto px-3 py-8">
       <Container profile={data} />
       <div className="grid grid-cols-3 h-16 my-2">
         <Dialog open={isOpen} onOpenChange={setIsOpen}>

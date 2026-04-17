@@ -55,8 +55,13 @@ export const UpdateReplyComment = ({ replyComment }: UpdateReplyCommentProps) =>
     );
   };
 
+  const onOpenChange = () => {
+    form.reset();
+    setIsOpen((prev) => !prev);
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Editar</DropdownMenuItem>
       </DialogTrigger>
@@ -75,10 +80,9 @@ export const UpdateReplyComment = ({ replyComment }: UpdateReplyCommentProps) =>
                   <InputGroup>
                     <InputGroupTextarea
                       {...field}
-                      id="content"
                       disabled={isPending}
                       placeholder="Escreva seu comentário..."
-                      className="min-h-29 no-scrollbar"
+                      className="min-h-9 no-scrollbar"
                       aria-invalid={fieldState.invalid}
                     />
                     <InputGroupAddon align="block-end">

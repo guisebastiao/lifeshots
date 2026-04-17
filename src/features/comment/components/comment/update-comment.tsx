@@ -82,7 +82,6 @@ export const UpdateComment = ({ comment }: UpdateCommentProps) => {
                   <InputGroup>
                     <InputGroupTextarea
                       {...field}
-                      id="content"
                       disabled={isPending}
                       placeholder="Escreva seu comentário..."
                       className="min-h-29 no-scrollbar"

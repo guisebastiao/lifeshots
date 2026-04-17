@@ -1,5 +1,4 @@
 import { Bell, Globe, Home, PanelLeftOpen, PlusSquare, Search, Settings } from "lucide-react";
-import { LogoutAlert } from "@/features/auth/components/logout-alert";
 import { useUnread } from "@/features/notification/hooks/use-unread";
 import { Spinner } from "@/shared/components/ui/spinner";
 import { useMe } from "@/features/profile/hooks/use-me";
@@ -30,7 +29,7 @@ export const Sidebar = () => {
   return (
     <aside
       data-open={isOpen}
-      className="group sticky md:top-0 bottom-0 md:h-screen md:w-16 md:data-[open=true]:w-64 h-14 md:border-r border-t transition-[width] duration-300 bg-background flex md:flex-col flex-row"
+      className="group sticky md:top-0 bottom-0 md:h-screen md:w-16 md:data-[open=true]:w-64 h-14 md:border-r border-t transition-[width] duration-300 bg-background flex md:flex-col flex-row z-50"
     >
       <header className="relative md:block hidden h-12 border-b">
         <h1 className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lg text-center font-extrabold tracking-tight text-balance opacity-0 group-data-[open=true]:opacity-100 transition-opacity duration-200 select-none">
@@ -175,9 +174,6 @@ export const Sidebar = () => {
           </li>
         </ul>
       </nav>
-      <div className="h-16 px-3.5 md:flex items-center hidden">
-        <LogoutAlert isOpen={isOpen} />
-      </div>
     </aside>
   );
 };

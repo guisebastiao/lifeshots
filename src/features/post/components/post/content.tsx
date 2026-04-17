@@ -39,6 +39,37 @@ export const Content = ({ post }: ContentProps) => {
     );
   };
 
+  const handleSharePost = async () => {
+    try {
+      const canShare = typeof navigator !== "undefined" && "share" in navigator;
+      const url = `${window.location.origin}/post/${post.id}`;
+
+      if (canShare) {
+        await navigator.share({
+          title: `Publicação de ${post.profile.handle}`,
+          text: `Veja essa publicação de ${post.profile.handle}`,
+          url,
+        });
+        return;
+      }
+
+      const copied = await navigator.clipboard
+        .writeText(url)
+        .then(() => true)
+        .catch(() => false);
+
+      if (copied) {
+        toast.success("Link da publicação copiado!");
+      } else {
+        toast.error("Não foi possível copiar o link.");
+      }
+    } catch (err) {
+      alert(err);
+      if ((err as Error).name === "AbortError") return;
+      toast.error("Não foi possível compartilhar. Tente novamente ou copie o link.");
+    }
+  };
+
   return (
     <div>
       <div className="flex gap-2 px-1 py-2">
@@ -73,11 +104,11 @@ export const Content = ({ post }: ContentProps) => {
         </div>
         <div className="flex items-center gap-1">
           <button type="button" className="cursor-pointer">
-            <Send className="size-5 text-foreground/85" />
+            <Send className="size-5 text-foreground/85" onClick={handleSharePost} />
           </button>
         </div>
       </div>
-      <p className="font-medium px-0.5 text-foreground/90">{post.content}</p>
+      <p className="font-medium text-[15px] px-0.5 text-foreground/90">{post.content}</p>
       <span className="block text-right text-xs font-medium text-foreground/75 mt-1.5">
         Publicada há {handleFormatDistanceToNow({ date: post.createdAt })}
       </span>

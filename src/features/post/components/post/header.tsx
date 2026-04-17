@@ -14,12 +14,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu";
+import { DeletePost } from "@/features/post/components/delete-post";
 
 interface HeaderProps {
+  postId: string;
   profile: ProfileResponse;
 }
 
-export const Header = ({ profile }: HeaderProps) => {
+export const Header = ({ postId, profile }: HeaderProps) => {
   const { mutate, isPending } = useFollow();
 
   const navigate = useNavigate();
@@ -49,15 +51,29 @@ export const Header = ({ profile }: HeaderProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="min-w-38">
-          <DropdownMenuLabel>Perfil</DropdownMenuLabel>
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault();
-              navigate(`/profile/${profile.handle}`);
-            }}
-          >
-            <span>Ver perfil</span>
-          </DropdownMenuItem>
+          <DropdownMenuLabel>Publicação</DropdownMenuLabel>
+          {profile.isOwnProfile ? (
+            <>
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  e.preventDefault();
+                  navigate(`/update-post/${postId}`);
+                }}
+              >
+                <span>Editar</span>
+              </DropdownMenuItem>
+              <DeletePost postId={postId} />
+            </>
+          ) : (
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault();
+                navigate(`/profile/${profile.handle}`);
+              }}
+            >
+              <span>Ver perfil</span>
+            </DropdownMenuItem>
+          )}
           {!profile.isOwnProfile &&
             (profile.isFollowing ? (
               <DropdownMenuItem

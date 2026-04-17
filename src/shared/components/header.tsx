@@ -1,4 +1,3 @@
-import { LogoutAlert } from "@/features/auth/components/logout-alert";
 import { useUnread } from "@/features/notification/hooks/use-unread";
 import { Badge } from "@/shared/components/ui/badge";
 import { Link } from "react-router-dom";
@@ -21,7 +20,6 @@ export const Header = () => {
             ) : null}
           </Link>
         </div>
-        <LogoutAlert />
       </div>
     </header>
   );

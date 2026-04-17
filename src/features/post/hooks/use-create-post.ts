@@ -1,0 +1,67 @@
+import type { CreatePostRequest, PostResponse } from "@/features/post/types/post-types";
+import type { ProfileResponse } from "@/features/profile/types/profile-types";
+import type { ErrorPayload, SuccessResponse } from "@/shared/types/api-types";
+import { useMutation, type InfiniteData } from "@tanstack/react-query";
+import { queryClient } from "@/app/providers/query-client";
+import { createPost } from "@/features/post/api";
+
+type CreatePostContext = {
+  previousProfilePublications?: SuccessResponse<PostResponse[]>;
+  previousProfile?: ProfileResponse;
+};
+
+export const useCreatePost = () => {
+  return useMutation<PostResponse, ErrorPayload<CreatePostRequest>, { data: FormData }, CreatePostContext>({
+    mutationFn: createPost,
+    onSuccess: (post) => {
+      const previousProfile = queryClient.getQueryData<ProfileResponse>(["me"]);
+
+      const previousProfilePublications = queryClient.getQueryData<InfiniteData<SuccessResponse<PostResponse[]>>>([
+        "profile-publications",
+      ]);
+
+      queryClient.setQueriesData<ProfileResponse>({ queryKey: ["me"] }, (oldData) => {
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          postsCount: oldData.postsCount + 1,
+        };
+      });
+
+      queryClient.setQueriesData<InfiniteData<SuccessResponse<PostResponse[]>>>(
+        { queryKey: ["profile-publications"] },
+        (oldData) => {
+          if (!oldData) return oldData;
+
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page) => ({
+              ...page,
+              data: {
+                ...post,
+                ...page.data,
+              },
+              meta: {
+                ...page.meta,
+                totalItems: page.meta.totalItems + 1,
+                totalPages: Math.ceil(page.meta.totalItems / page.meta.itemsPerPage),
+              },
+            })),
+          };
+        },
+      );
+
+      return { previousProfilePublications, previousProfile };
+    },
+    onError: (_error, _variables, context) => {
+      if (!context) return;
+      queryClient.setQueryData(["me"], context.previousProfile);
+      queryClient.setQueryData(["profile-publications"], context.previousProfilePublications);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+      queryClient.invalidateQueries({ queryKey: ["profile-publications"] });
+    },
+  });
+};

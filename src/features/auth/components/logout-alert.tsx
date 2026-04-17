@@ -18,11 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/shared/components/ui/alert-dialog";
 
-interface LogoutAlertProps {
-  isOpen?: boolean;
-}
-
-export const LogoutAlert = ({ isOpen }: LogoutAlertProps) => {
+export const LogoutAlert = () => {
   const { logout } = useSession();
 
   const { mutate, isPending } = useLogout();
@@ -44,15 +40,9 @@ export const LogoutAlert = ({ isOpen }: LogoutAlertProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          data-open={isOpen}
-          className="group md:w-full not-md:aspect-square not-md:size-7.75 flex items-center justify-start p-0 gap-2.5 border-destructive/30"
-          variant="destructive"
-        >
-          <LogOut className="md:size-5 size-4 shrink-0 ml-1.75" />
-          <span className="hidden md:block overflow-hidden whitespace-nowrap w-0 opacity-0 transition-all duration-300 md:group-data-[open=true]:w-full md:group-data-[open=true]:opacity-100 tracking-tight text-left">
-            Sair
-          </span>
+        <Button variant="outline" className="w-full">
+          <LogOut />
+          Sair
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
